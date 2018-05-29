@@ -102,5 +102,15 @@ export const store = new Vuex.Store({
     selectedContactItem: state => {
       return state.contactItems.find(item => item.id === state.contentControls.selectedItemId)
     }
+  },
+  mutations: {
+    viewItem: (state, itemId) => {
+      state.contentControls.selectedItemId = itemId
+    }
+  },
+  actions: {
+    viewItem: (context, payload) => {
+      context.commit('viewItem', payload)
+    }
   }
 })

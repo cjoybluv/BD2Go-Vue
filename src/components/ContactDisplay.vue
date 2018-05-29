@@ -1,5 +1,5 @@
 <template>
-  <div id="who">
+  <div id="contact-display">
     <h2>Who</h2>
     <ul>
       <li v-for="contact in contacts" :key="contact.name">
@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: 'Who',
+  name: 'ContactDislay',
   computed: {
     contacts () {
       return this.$store.state.contacts

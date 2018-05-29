@@ -1,12 +1,12 @@
 <template>
-  <div id="where">
+  <div id="location-display">
     <h2>Where</h2>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Where',
+  name: 'LocationDisplay',
   computed: {
 
   }
