@@ -1,5 +1,5 @@
 <template>
-  <div id="when-what">
+  <div id="contact-item-display">
     <h2>When & What</h2>
     <ul>
       <li v-for="item in contactItems"
@@ -21,7 +21,7 @@
 import { mapActions, mapGetters } from 'Vuex'
 
 export default {
-  name: 'WhenWhat',
+  name: 'ContactItemDisplay',
   computed: {
     ...mapGetters([
       'contactItems'
@@ -47,5 +47,6 @@ li {
   text-align: left;
   list-style-type: none;
   margin-bottom: 5px;
+  cursor: pointer;
 }
 </style>
