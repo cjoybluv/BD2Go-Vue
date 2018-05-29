@@ -2,7 +2,9 @@
   <div id="when-what">
     <h2>When & What</h2>
     <ul>
-      <li v-for="item in contactItems" :key="JSON.stringify(item)">
+      <li v-for="item in contactItems"
+        :key="JSON.stringify(item)"
+        @click="viewItem(item.id)">
         <h4>
           <span class="soft-text">{{ item.type | allCaps }}</span>
           &nbsp;
@@ -16,7 +18,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'Vuex'
+import { mapActions, mapGetters } from 'Vuex'
 
 export default {
   name: 'WhenWhat',
@@ -24,8 +26,12 @@ export default {
     ...mapGetters([
       'contactItems'
     ])
+  },
+  methods: {
+    ...mapActions([
+      'viewItem'
+    ])
   }
-
 }
 
 </script>
