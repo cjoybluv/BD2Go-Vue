@@ -48,7 +48,6 @@ export default {
 }
 .content-100 {
   max-height: 70px;
-  white-space: wrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
