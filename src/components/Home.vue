@@ -12,12 +12,16 @@
       </panel>
     </section>
     <section id="viewer">
-      <viewer><contact-item></contact-item></viewer>
+      <viewer>
+        <contact-item v-if="selectedContactItem"></contact-item>
+      </viewer>
     </section>
   </section>
 </template>
 
 <script>
+import { mapGetters } from 'Vuex'
+
 import panel from './Panel.vue'
 import contactItemDisplay from './ContactItemDisplay.vue'
 import contactDisplay from './ContactDisplay.vue'
@@ -34,6 +38,11 @@ export default {
     'location-display': locationDisplay,
     'viewer': viewer,
     'contact-item': contactItem
+  },
+  computed: {
+    ...mapGetters([
+      'selectedContactItem'
+    ])
   }
 }
 </script>

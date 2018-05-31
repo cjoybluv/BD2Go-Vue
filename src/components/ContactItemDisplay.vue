@@ -24,7 +24,7 @@ export default {
   name: 'ContactItemDisplay',
   computed: {
     sortedItems () {
-      return this.contactItems.sort((a, b) => {
+      return this.contactItems.slice().sort((a, b) => {
         return a.dateTime >= b.dateTime
       })
     },
