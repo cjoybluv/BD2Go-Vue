@@ -33,7 +33,7 @@ export default [
     type: 'note',
     subject: 'no date note',
     content: 'keep the formatting',
-    dateTime: null
+    dateTime: new Date(2018, 4, 31, 0, 0, 0)
   },
   {
     id: 5,

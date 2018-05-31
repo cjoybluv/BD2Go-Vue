@@ -2,13 +2,13 @@
   <div id="contact-item-display">
     <h2>When & What</h2>
     <ul>
-      <li v-for="item in contactItems"
+      <li v-for="item in sortedItems"
         :key="JSON.stringify(item)"
         @click="viewItem(item.id)">
         <h4>
           <span class="soft-text">{{ item.type | allCaps }}</span>
           &nbsp;
-          <span>{{ item.dateTime | moment("MM-DD-YYYY") }}</span>
+          <span>{{ item.dateTime | moment("MM-DD-YYYY HH:mm") }}</span>
         </h4>
         <h5>{{ item.contactName }}</h5>
         <p>{{ item.subject }}</p>
@@ -23,6 +23,11 @@ import { mapActions, mapGetters } from 'Vuex'
 export default {
   name: 'ContactItemDisplay',
   computed: {
+    sortedItems () {
+      return this.contactItems.sort((a, b) => {
+        return a.dateTime >= b.dateTime
+      })
+    },
     ...mapGetters([
       'contactItems'
     ])

@@ -3,7 +3,7 @@
     <h4>
       <span class="soft-text">{{ selectedContactItem.type | allCaps }}</span>
       &nbsp;
-      <span>{{ selectedContactItem.dateTime | moment("MM-DD-YYYY") }}</span>
+      <span>{{ selectedContactItem.dateTime | moment("MM-DD-YYYY HH:mm") }}</span>
     </h4>
     <h4>{{ selectedContactItem.contactName }} </h4>
     <h5>{{ selectedContactItem.subject }}</h5>

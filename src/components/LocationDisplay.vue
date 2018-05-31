@@ -2,9 +2,6 @@
   <div id="location-display">
     <h2>Where</h2>
     <ul>
-      <!-- <li v-for="location in locations" :key="location.name">
-        {{ location.name }}
-      </li> -->
       <li v-for="location in locations"
         :key="JSON.stringify(location)">
         <h4>
