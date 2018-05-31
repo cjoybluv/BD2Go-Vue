@@ -31,7 +31,7 @@ export const store = new Vuex.Store({
     },
     selectedContact: state => {
       return state.contacts.find(contact => contact.id === state.contentControls.selectedContactId)
-    }    
+    }
   },
   mutations: {
     viewItem: (state, itemId) => {
