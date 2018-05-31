@@ -1,6 +1,6 @@
 <template>
   <div id="location-display">
-    <h2>Who</h2>
+    <h2>Where</h2>
     <ul>
       <!-- <li v-for="location in locations" :key="location.name">
         {{ location.name }}

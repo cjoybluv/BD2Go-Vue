@@ -33,5 +33,5 @@ export default [
     st: 'OR',
     zip: '97056',
     parentContactId: 3
-  },
+  }
 ]
