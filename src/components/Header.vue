@@ -1,12 +1,11 @@
 <template>
   <div class="header">
     <div class="left">
-      <h1>{{ header.appTitle }}</h1>
-      <h5>by {{ header.us }}</h5>
+      <h1>{{ language.appTitle }}</h1>
+      <h5>by {{ language.us }}</h5>
     </div>
     <div class="right">
       <h1>User</h1>
-
     </div>
   </div>
 </template>
@@ -15,8 +14,8 @@
 export default {
   name: 'Header',
   computed: {
-    header () {
-      return this.$store.state.header
+    language () {
+      return this.$store.state.language.header
     }
   }
 }

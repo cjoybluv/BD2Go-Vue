@@ -1,6 +1,6 @@
 <template>
   <div id="contact-display">
-    <h2>Who</h2>
+    <h2>{{ language.title }}</h2>
     <ul>
       <li
         v-for="contact in contacts"
@@ -20,6 +20,9 @@ export default {
   computed: {
     contacts () {
       return this.$store.state.contacts
+    },
+    language () {
+      return this.$store.state.language.contactDisplay
     }
   },
   methods: {
@@ -28,7 +31,6 @@ export default {
     ])
   }
 }
-
 </script>
 
 <style scoped>
@@ -42,5 +44,6 @@ li {
   text-align: left;
   list-style-type: none;
   margin-bottom: 5px;
+  cursor: pointer;
 }
 </style>

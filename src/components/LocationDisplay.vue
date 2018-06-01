@@ -1,6 +1,6 @@
 <template>
   <div id="location-display">
-    <h2>Where</h2>
+    <h2>{{ language.title }}</h2>
     <ul>
       <li v-for="location in locations"
         :key="JSON.stringify(location)">
@@ -19,6 +19,9 @@ export default {
   computed: {
     locations () {
       return this.$store.state.locations
+    },
+    language () {
+      return this.$store.state.language.locationDisplay
     }
   }
 }

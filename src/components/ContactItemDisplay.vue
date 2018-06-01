@@ -1,6 +1,6 @@
 <template>
   <div id="contact-item-display">
-    <h2>When & What</h2>
+    <h2>{{ language.title }}</h2>
     <ul>
       <li v-for="item in sortedItems"
         :key="JSON.stringify(item)"
@@ -27,6 +27,9 @@ export default {
       return this.contactItems.slice().sort((a, b) => {
         return a.dateTime >= b.dateTime
       })
+    },
+    language () {
+      return this.$store.state.language.contactItemDisplay
     },
     ...mapGetters([
       'contactItems'

@@ -5,19 +5,17 @@ import Vuex from 'vuex'
 import contacts from './mockData/contacts'
 import contactItems from './mockData/contactItems'
 import locations from './mockData/locations'
+import language from './language/en-us'
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
-    header: {
-      appTitle: 'BD 2 Go!',
-      us: 'Flying High Creative'
-    },
     contentControls: {
       selectedItemId: 1, // contactItem.id of selected Item
       selectedContactId: null // contact.id of selected Contact
     },
+    language: language,
     contacts: contacts,
     contactItems: contactItems,
     locations: locations
