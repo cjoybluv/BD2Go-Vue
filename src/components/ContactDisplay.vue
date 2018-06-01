@@ -2,7 +2,10 @@
   <div id="contact-display">
     <h2>Who</h2>
     <ul>
-      <li v-for="contact in contacts" :key="contact.name">
+      <li
+        v-for="contact in contacts"
+        :key="contact.name"
+        @click="viewContact(contact.id)">
         {{ contact.name }}
       </li>
     </ul>
@@ -10,12 +13,19 @@
 </template>
 
 <script>
+import { mapActions } from 'Vuex'
+
 export default {
   name: 'ContactDislay',
   computed: {
     contacts () {
       return this.$store.state.contacts
     }
+  },
+  methods: {
+    ...mapActions([
+      'viewContact'
+    ])
   }
 }
 
