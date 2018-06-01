@@ -1,13 +1,10 @@
 <template>
   <div class = "viewer-content">
-    <h4>
-      <span class="soft-text">{{ selectedContactItem.type | allCaps }}</span>
-      &nbsp;
-      <span>{{ selectedContactItem.dateTime | moment("MM-DD-YYYY HH:mm") }}</span>
-    </h4>
-    <h4>{{ selectedContactItem.contactName }} </h4>
-    <h5>{{ selectedContactItem.subject }}</h5>
-    <p class="content-100">{{ selectedContactItem.content }}</p>
+    <h4>{{ selectedContact.name }}</h4>
+    <h5>{{ selectedContact.contact }}</h5>
+    <p>{{ selectedContact.street }}</p>
+    <p>{{ selectedContact.city }}, {{ selectedContact.st }} {{ selectedContact.zip }}</p>
+    <p>{{ selectedContact.phone }}</p>
   </div>
 </template>
 

@@ -14,6 +14,7 @@
     <section id="viewer">
       <viewer>
         <contact-item v-if="selectedContactItem"></contact-item>
+        <contact v-if="selectedContact"></contact>
       </viewer>
     </section>
   </section>
@@ -28,6 +29,7 @@ import contactDisplay from './ContactDisplay.vue'
 import locationDisplay from './LocationDisplay.vue'
 import viewer from './Viewer.vue'
 import contactItem from './ContactItem.vue'
+import contact from './Contact.vue'
 
 export default {
   name: 'Home',
@@ -37,11 +39,13 @@ export default {
     'contact-display': contactDisplay,
     'location-display': locationDisplay,
     'viewer': viewer,
-    'contact-item': contactItem
+    'contact-item': contactItem,
+    'contact': contact
   },
   computed: {
     ...mapGetters([
-      'selectedContactItem'
+      'selectedContactItem',
+      'selectedContact'
     ])
   }
 }

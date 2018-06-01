@@ -16,7 +16,7 @@ export const store = new Vuex.Store({
     },
     contentControls: {
       selectedItemId: 1, // contactItem.id of selected Item
-      selectedContactId: null
+      selectedContactId: null // contact.id of selected Contact
     },
     contacts: contacts,
     contactItems: contactItems,
@@ -36,11 +36,19 @@ export const store = new Vuex.Store({
   mutations: {
     viewItem: (state, itemId) => {
       state.contentControls.selectedItemId = itemId
+      state.contentControls.selectedContactId = null
+    },
+    viewContact: (state, contactId) => {
+      state.contentControls.selectedContactId = contactId
+      state.contentControls.selectedItemId = null
     }
   },
   actions: {
     viewItem: (context, payload) => {
       context.commit('viewItem', payload)
+    },
+    viewContact: (context, payload) => {
+      context.commit('viewContact', payload)
     }
   }
 })
