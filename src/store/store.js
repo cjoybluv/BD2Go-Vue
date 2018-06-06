@@ -18,7 +18,8 @@ export const store = new Vuex.Store({
     language: language,
     contacts: contacts,
     contactItems: contactItems,
-    locations: locations
+    locations: locations,
+    user: null
   },
   getters: {
     contactItems: state => {
@@ -32,6 +33,14 @@ export const store = new Vuex.Store({
     }
   },
   mutations: {
+    login: (state, user) => {
+      Vue.http.post('http://127.0.0.1:8881/api/login', user).then(function (user) {
+        console.log('LOGGED-IN:', user)
+        state.user = user.body
+
+        // this.$router.push('/')
+      })
+    },
     viewItem: (state, itemId) => {
       state.contentControls.selectedItemId = itemId
       state.contentControls.selectedContactId = null
@@ -42,6 +51,9 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
+    login: (context, payload) => {
+      context.commit('login', payload)
+    },
     viewItem: (context, payload) => {
       context.commit('viewItem', payload)
     },

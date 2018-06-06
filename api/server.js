@@ -1,6 +1,6 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+const express = require('express')
+const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
 
 // const request = require('request');
 // const async = require('async');
@@ -12,6 +12,12 @@ const app = express()
 mongoose.connect('mongodb://127.0.0.1/bd2go')
 
 app.use(bodyParser.json())
+
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+  next()
+})
 
 app.use('/api', require('./routes/api'))
 
