@@ -12,7 +12,7 @@ router.post('/signup', function (req, res, next) {
     } else {
       res.status(401).send({error: 'email exists'})
     }
-  })
+  }).catch(next)
 })
 
 router.post('/login', function (req, res, next) {
