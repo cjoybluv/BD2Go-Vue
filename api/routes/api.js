@@ -24,10 +24,14 @@ router.post('/login', function (req, res, next) {
     if (user.password === req.body.password) {
       // const now = new Date
       jwt.sign({user}, JWT_SECRET_KEY, {expiresIn: '1h'}, (err, token) => {
-        res.json({
-          user,
-          token
-        })
+        if (err) {
+          res.sendStatus(424)
+        } else {
+          res.json({
+            user,
+            token
+          })
+        }
       })
     } else {
       res.status(401).send({error: 'Not Authorized'})
