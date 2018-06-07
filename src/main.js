@@ -11,6 +11,8 @@ Vue.config.productionTip = false
 Vue.use(VueResource)
 Vue.use(moment)
 
+// Vue.http.options.root = 'https://api-demo.websanova.com/api/v1';
+
 Vue.filter('allCaps', (value) => {
   return (typeof value === 'string')
     ? value.toUpperCase()

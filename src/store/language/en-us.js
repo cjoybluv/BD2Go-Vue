@@ -10,7 +10,9 @@ export default {
     us: 'Flying High Creative'
   },
   login: {
-    title: 'Please Login'
+    title: 'Please Login',
+    email: 'Email:',
+    password: 'Password:'
   },
   locationDisplay: {
     title: 'Where'

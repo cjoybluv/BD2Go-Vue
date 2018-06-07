@@ -3,9 +3,9 @@
     <h1>{{ language.title }}</h1>
     <form>
       <fieldset>
-        <label>Email:</label>
+        <label>{{ language.email }}</label>
         <input type="text" v-model="user.email" required>
-        <label>Password:</label>
+        <label>{{ language.password }}</label>
         <input type="password" v-model="user.password" required>
       </fieldset>
       <button v-on:click.prevent="handleSubmit">Login</button>
@@ -30,6 +30,9 @@ export default {
   computed: {
     language () {
       return this.$store.state.language.login
+    },
+    currentUser () {
+      return this.$store.state.user
     }
   },
   methods: {

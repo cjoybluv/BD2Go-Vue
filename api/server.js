@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 
+const PATHNAME = '/api/v1'
 // const request = require('request');
 // const async = require('async');
 // const geocoder = require('geocoder');
@@ -19,7 +20,7 @@ app.use(function (req, res, next) {
   next()
 })
 
-app.use('/api', require('./routes/api'))
+app.use(PATHNAME, require('./routes/api'))
 
 app.use(function (err, req, res, next) {
   // 422 = unprocessable entity
