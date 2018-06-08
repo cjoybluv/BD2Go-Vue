@@ -14,6 +14,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@websanova/vue-auth": "^2.21.11-beta",
     "async": "^2.6.1",
     "bcrypt": "^2.0.1",
     "body-parser": "^1.18.3",

@@ -14,8 +14,6 @@ import locations from './mockData/locations'
 // externalized strings
 import language from './language/en-us'
 
-const PATHNAME = 'http://127.0.0.1:8881/api/v1'
-
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
@@ -62,10 +60,26 @@ export const store = new Vuex.Store({
   actions: {
     login: (context, payload) => {
       context.commit(LOGIN_REQUEST)
-      Vue.http.post(PATHNAME + '/login', payload).then(function (authData) {
+
+      var redirect = Vue.auth.redirect()
+      console.log('actiions-login', redirect)
+      Vue.auth.login({
+        body: payload,
+        rememberMe: true,
+        redirect: {name: redirect ? redirect.from.name : 'Home'},
+        fetchUser: false
+      }).then((authData) => {
+        console.log('success ', authData)
         context.commit(LOGIN_SUCCESS, authData.body)
-        Vue.router.push('/')
+      }, (res) => {
+        console.log('error ')
+        // this.error = res.data;
       })
+
+      // Vue.http.post(PATHNAME + '/login', payload).then(function (authData) {
+      //   context.commit(LOGIN_SUCCESS, authData.body)
+      //   Vue.router.push('/')
+      // })
     },
     viewItem: (context, payload) => {
       context.commit('viewItem', payload)

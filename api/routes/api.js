@@ -19,7 +19,7 @@ router.post('/signup', function (req, res, next) {
   }).catch(next)
 })
 
-router.post('/login', function (req, res, next) {
+router.post('/auth/login', function (req, res, next) {
   User.findOne({email: req.body.email}).then(function (user) {
     if (user.password === req.body.password) {
       // const now = new Date
