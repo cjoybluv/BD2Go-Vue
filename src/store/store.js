@@ -1,11 +1,20 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import {
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS
+} from './mutation-types'
+
 // mock data
 import contacts from './mockData/contacts'
 import contactItems from './mockData/contactItems'
 import locations from './mockData/locations'
+
+// externalized strings
 import language from './language/en-us'
+
+const PATHNAME = 'http://127.0.0.1:8881/api/v1'
 
 Vue.use(Vuex)
 
@@ -18,7 +27,9 @@ export const store = new Vuex.Store({
     language: language,
     contacts: contacts,
     contactItems: contactItems,
-    locations: locations
+    locations: locations,
+    user: null,
+    token: null
   },
   getters: {
     contactItems: state => {
@@ -32,6 +43,13 @@ export const store = new Vuex.Store({
     }
   },
   mutations: {
+    [LOGIN_REQUEST]: (state) => {
+      state.user = null
+    },
+    [LOGIN_SUCCESS]: (state, authData) => {
+      state.user = authData.user
+      state.token = authData.token
+    },
     viewItem: (state, itemId) => {
       state.contentControls.selectedItemId = itemId
       state.contentControls.selectedContactId = null
@@ -42,6 +60,13 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
+    login: (context, payload) => {
+      context.commit(LOGIN_REQUEST)
+      Vue.http.post(PATHNAME + '/login', payload).then(function (authData) {
+        context.commit(LOGIN_SUCCESS, authData.body)
+        Vue.router.push('/')
+      })
+    },
     viewItem: (context, payload) => {
       context.commit('viewItem', payload)
     },

@@ -1,7 +1,8 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+const express = require('express')
+const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
 
+const PATHNAME = '/api/v1'
 // const request = require('request');
 // const async = require('async');
 // const geocoder = require('geocoder');
@@ -13,7 +14,13 @@ mongoose.connect('mongodb://127.0.0.1/bd2go')
 
 app.use(bodyParser.json())
 
-app.use('/api', require('./routes/api'))
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+  next()
+})
+
+app.use(PATHNAME, require('./routes/api'))
 
 app.use(function (err, req, res, next) {
   // 422 = unprocessable entity
