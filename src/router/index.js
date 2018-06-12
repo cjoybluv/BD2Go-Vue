@@ -11,7 +11,17 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home,
-      meta: {auth: true}
+      beforeEnter: (to, from, next) => {
+        const token = localStorage.getItem('token')
+        console.log('router-beforeEnter', token)
+        if (!token) {
+          next({
+            path: '/login'
+          })
+        } else {
+          next()
+        }
+      }
     },
     {
       path: '/login',

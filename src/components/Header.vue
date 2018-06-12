@@ -5,7 +5,7 @@
       <h5>by {{ language.us }}</h5>
     </div>
     <div class="right">
-      <h1>User</h1>
+      <h1>{{ user && user.email }} </h1>
     </div>
   </div>
 </template>
@@ -16,6 +16,9 @@ export default {
   computed: {
     language () {
       return this.$store.state.language.header
+    },
+    user () {
+      return this.$store.state.user
     }
   }
 }

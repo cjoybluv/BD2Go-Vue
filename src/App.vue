@@ -1,8 +1,7 @@
 <template>
   <div id="app">
     <app-header></app-header>
-    <div v-if="$auth.ready()"><router-view/></div>
-    <div v-if="!$auth.ready()">Loading...</div>
+    <router-view/>
   </div>
 </template>
 

@@ -40,7 +40,9 @@ export default {
       'login'
     ]),
     handleSubmit: function () {
-      this.login(this.user)
+      this.$store.dispatch('login', this.user).then(() => {
+        this.$router.push('/')
+      })
     }
   }
 }

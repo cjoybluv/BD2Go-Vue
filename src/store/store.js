@@ -14,6 +14,8 @@ import locations from './mockData/locations'
 // externalized strings
 import language from './language/en-us'
 
+const PATHNAME = 'http://127.0.0.1:8881/api/v1'
+
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
@@ -47,6 +49,7 @@ export const store = new Vuex.Store({
     [LOGIN_SUCCESS]: (state, authData) => {
       state.user = authData.user
       state.token = authData.token
+      localStorage.setItem('token', authData.token)
     },
     viewItem: (state, itemId) => {
       state.contentControls.selectedItemId = itemId
@@ -61,25 +64,14 @@ export const store = new Vuex.Store({
     login: (context, payload) => {
       context.commit(LOGIN_REQUEST)
 
-      var redirect = Vue.auth.redirect()
-      console.log('actiions-login', redirect)
-      Vue.auth.login({
-        body: payload,
-        rememberMe: true,
-        redirect: {name: redirect ? redirect.from.name : 'Home'},
-        fetchUser: false
-      }).then((authData) => {
-        console.log('success ', authData)
-        context.commit(LOGIN_SUCCESS, authData.body)
-      }, (res) => {
-        console.log('error ')
-        // this.error = res.data;
+      return new Promise((resolve, reject) => {
+        Vue.http.post(PATHNAME + '/auth/login', payload).then(function (authData) {
+          context.commit(LOGIN_SUCCESS, authData.body)
+          resolve(authData)
+        }).catch(err => {
+          reject(err)
+        })
       })
-
-      // Vue.http.post(PATHNAME + '/login', payload).then(function (authData) {
-      //   context.commit(LOGIN_SUCCESS, authData.body)
-      //   Vue.router.push('/')
-      // })
     },
     viewItem: (context, payload) => {
       context.commit('viewItem', payload)
