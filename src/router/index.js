@@ -5,7 +5,7 @@ import Login from '@/components/Login'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -13,7 +13,6 @@ export default new Router({
       component: Home,
       beforeEnter: (to, from, next) => {
         const token = localStorage.getItem('token')
-        console.log('router-beforeEnter', token)
         if (!token) {
           next({
             path: '/login'
@@ -32,3 +31,5 @@ export default new Router({
   ],
   mode: 'history'
 })
+
+export default router

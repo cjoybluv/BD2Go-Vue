@@ -4,7 +4,7 @@
     <form>
       <fieldset>
         <label>{{ language.email }}</label>
-        <input type="text" v-model="user.email" required>
+        <input type="email" ref="email" v-model="user.email" required autofocus>
         <label>{{ language.password }}</label>
         <input type="password" v-model="user.password" required>
       </fieldset>
@@ -44,7 +44,10 @@ export default {
         this.$router.push('/')
       })
     }
-  }
+  },
+  mounted(){
+       this.$refs.email.focus()
+   }
 }
 </script>
 

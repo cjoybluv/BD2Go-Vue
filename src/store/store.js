@@ -3,7 +3,9 @@ import Vuex from 'vuex'
 
 import {
   LOGIN_REQUEST,
-  LOGIN_SUCCESS
+  LOGIN_SUCCESS,
+  USER_REQUEST,
+  USER_SUCCESS
 } from './mutation-types'
 
 // mock data
@@ -51,6 +53,12 @@ export const store = new Vuex.Store({
       state.token = authData.token
       localStorage.setItem('token', authData.token)
     },
+    [USER_REQUEST]: (state) => {
+      state.user = null
+    },
+    [USER_SUCCESS]: (state, user) => {
+      state.user = user
+    },
     viewItem: (state, itemId) => {
       state.contentControls.selectedItemId = itemId
       state.contentControls.selectedContactId = null
@@ -61,12 +69,18 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
-    login: (context, payload) => {
-      context.commit(LOGIN_REQUEST)
-
+    getUser: ({ commit }, payload) => {
+      commit(USER_REQUEST)
+      Vue.http.get(PATHNAME + '/users?email=' + payload).then((user) => {
+        commit(USER_SUCCESS, user.body)
+      })
+    },
+    login: ({commit, dispatch}, payload) => {
+      commit(LOGIN_REQUEST)
       return new Promise((resolve, reject) => {
         Vue.http.post(PATHNAME + '/auth/login', payload).then(function (authData) {
-          context.commit(LOGIN_SUCCESS, authData.body)
+          commit(LOGIN_SUCCESS, authData.body)
+          dispatch('getUser', payload.email)
           resolve(authData)
         }).catch(err => {
           reject(err)
