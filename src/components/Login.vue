@@ -45,9 +45,9 @@ export default {
       })
     }
   },
-  mounted(){
-       this.$refs.email.focus()
-   }
+  mounted () {
+    this.$refs.email.focus()
+  }
 }
 </script>
 
