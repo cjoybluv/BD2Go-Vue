@@ -31,7 +31,8 @@ export const store = new Vuex.Store({
     contactItems: contactItems,
     locations: locations,
     user: null,
-    token: null
+    token: null,
+    isAuthenticated: false
   },
   getters: {
     contactItems: state => {
@@ -47,10 +48,13 @@ export const store = new Vuex.Store({
   mutations: {
     [LOGIN_REQUEST]: (state) => {
       state.user = null
+      state.token = null
+      state.isAuthenticated = false
     },
     [LOGIN_SUCCESS]: (state, authData) => {
       state.user = authData.user
       state.token = authData.token
+      state.isAuthenticated = true
       localStorage.setItem('token', authData.token)
     },
     [USER_REQUEST]: (state) => {
