@@ -7,11 +7,18 @@ import router from './router'
 import moment from 'vue-moment'
 import { store } from './store/store'
 
+Vue.router = router
+
 Vue.config.productionTip = false
 Vue.use(VueResource)
 Vue.use(moment)
 
-// Vue.http.options.root = 'https://api-demo.websanova.com/api/v1';
+Vue.http.interceptors.push((request) => {
+  if (!request.url.endsWith('login')) {
+    const token = localStorage.getItem('token')
+    request.headers.set('Authorization', 'Bearer ' + token)
+  }
+})
 
 Vue.filter('allCaps', (value) => {
   return (typeof value === 'string')

@@ -19,7 +19,7 @@ router.post('/signup', function (req, res, next) {
   }).catch(next)
 })
 
-router.post('/login', function (req, res, next) {
+router.post('/auth/login', function (req, res, next) {
   User.findOne({email: req.body.email}).then(function (user) {
     if (user.password === req.body.password) {
       // const now = new Date
@@ -28,7 +28,6 @@ router.post('/login', function (req, res, next) {
           res.sendStatus(424)
         } else {
           res.json({
-            user,
             token
           })
         }
@@ -47,6 +46,20 @@ router.get('/contacts', verifyToken, (req, res, next) => {
       res.json({
         message: 'GET contacts',
         authData
+      })
+    }
+  })
+})
+
+router.get('/users', verifyToken, (req, res, next) => {
+  jwt.verify(req.token, JWT_SECRET_KEY, (err, authData) => {
+    if (err) {
+      res.sendStatus(403)
+    } else {
+      User.findOne({email: req.query.email}).then(user => {
+        res.json(user)
+      }).catch(err => {
+        console.log(err)
       })
     }
   })
