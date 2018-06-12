@@ -4,7 +4,7 @@
     <form>
       <fieldset>
         <label>{{ language.email }}</label>
-        <input type="email" ref="email" v-model="user.email" required autofocus>
+        <input type="email" ref="email" v-model="user.email" required>
         <label>{{ language.password }}</label>
         <input type="password" v-model="user.password" required>
       </fieldset>
