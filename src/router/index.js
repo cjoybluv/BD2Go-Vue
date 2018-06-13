@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/pages/Home'
 import Login from '@/pages/Login'
+import Signup from '@/pages/Signup'
 import {store} from '../store/store.js'
 
 Vue.use(Router)
@@ -19,6 +20,12 @@ const router = new Router({
       name: 'Login',
       component: Login,
       meta: {requiresAuth: false}
+    },
+    {
+      path: '/signup',
+      name: 'Signup',
+      component: Signup,
+      meta: {requiresAuth: false}
     }
   ],
   mode: 'history'
@@ -26,7 +33,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (!store.state.token) {
+    if (!store.state.isAuthenticated) {
       next({
         path: '/login'
       })

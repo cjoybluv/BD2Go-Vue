@@ -8,6 +8,10 @@ const TagsSchema = new Schema({
 })
 
 const UserSchema = new Schema({
+  username: {
+    type: String,
+    required: [true, 'username field is required']
+  },
   email: {
     type: String,
     required: [true, 'email field is required']
