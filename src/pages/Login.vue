@@ -44,7 +44,9 @@ export default {
     handleSubmit: function () {
       this.$store.dispatch('login', this.user).then(() => {
         this.$router.push('/')
-      }).catch(err => this.error = err.body.error)
+      }).catch(err => {
+        this.error = err.body.error
+      })
     }
   },
   mounted () {

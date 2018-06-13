@@ -33,6 +33,7 @@ router.post('/auth/signup', function (req, res, next) {
 
 router.post('/auth/login', function (req, res, next) {
   User.findOne({email: req.body.email}).then(function (user) {
+    if (!user) res.status(401).send({error: 'Not authorized'})
     bcrypt.compare(req.body.password, user.password, function (err, result) {
       if (err) res.status(401).send({error: err})
       if (!result) res.status(401).send({error: 'Not Authorized'})

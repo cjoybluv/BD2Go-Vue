@@ -51,7 +51,9 @@ export default {
       if (this.user.password === this.user.confirmPassword) {
         this.$store.dispatch('signup', this.user).then(() => {
           this.$router.push('/login')
-        }).catch(err => this.error = err.body.error)
+        }).catch(err => {
+          this.error = err.body.error
+        })
       } else {
         this.error = 'Passwords do not match'
       }
