@@ -1,5 +1,6 @@
 const express = require('express')
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
 
 const router = express.Router()
 
@@ -7,22 +8,35 @@ const User = require('../models/users')
 
 const JWT_SECRET_KEY = 'getConnected'
 
-router.post('/signup', function (req, res, next) {
-  User.findOne({email: req.body.email}).then(function (user) {
-    if (!user) {
-      User.create(req.body).then(function (user) {
-        res.send(user)
-      }).catch(next)
-    } else {
-      res.status(401).send({error: 'email exists'})
+const saltRounds = 10
+
+router.post('/auth/signup', function (req, res, next) {
+  const password = req.body.password
+  bcrypt.hash(password, saltRounds, function (err, hash) {
+    if (err) res.status(500).send({error: err})
+    const newUser = {
+      username: req.body.username,
+      email: req.body.email,
+      password: hash
     }
-  }).catch(next)
+    User.findOne({email: newUser.email}).then(function (user) {
+      if (!user) {
+        User.create(newUser).then(function (user) {
+          res.send(user)
+        }).catch(next)
+      } else {
+        res.status(401).send({error: 'email exists'})
+      }
+    }).catch(next)
+  })
 })
 
 router.post('/auth/login', function (req, res, next) {
   User.findOne({email: req.body.email}).then(function (user) {
-    if (user.password === req.body.password) {
-      // const now = new Date
+    if (!user) res.status(401).send({error: 'Not authorized'})
+    bcrypt.compare(req.body.password, user.password, function (err, result) {
+      if (err) res.status(401).send({error: err})
+      if (!result) res.status(401).send({error: 'Not Authorized'})
       jwt.sign({user}, JWT_SECRET_KEY, {expiresIn: '1h'}, (err, token) => {
         if (err) {
           res.sendStatus(424)
@@ -32,9 +46,7 @@ router.post('/auth/login', function (req, res, next) {
           })
         }
       })
-    } else {
-      res.status(401).send({error: 'Not Authorized'})
-    }
+    })
   }).catch(next)
 })
 
