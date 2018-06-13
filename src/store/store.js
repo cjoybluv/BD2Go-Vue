@@ -63,11 +63,11 @@ export const store = new Vuex.Store({
     [USER_SUCCESS]: (state, user) => {
       state.user = user
     },
-    viewItem: (state, itemId) => {
+    selectItem: (state, itemId) => {
       state.contentControls.selectedItemId = itemId
       state.contentControls.selectedContactId = null
     },
-    viewContact: (state, contactId) => {
+    selectContact: (state, contactId) => {
       state.contentControls.selectedContactId = contactId
       state.contentControls.selectedItemId = null
     }
@@ -92,10 +92,10 @@ export const store = new Vuex.Store({
       })
     },
     viewItem: (context, payload) => {
-      context.commit('viewItem', payload)
+      context.commit('selectItem', payload)
     },
     viewContact: (context, payload) => {
-      context.commit('viewContact', payload)
+      context.commit('selectContact', payload)
     }
   }
 })

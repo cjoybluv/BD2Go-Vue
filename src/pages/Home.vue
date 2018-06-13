@@ -23,13 +23,13 @@
 <script>
 import { mapGetters } from 'Vuex'
 
-import panel from './Panel.vue'
-import contactItemDisplay from './ContactItemDisplay.vue'
-import contactDisplay from './ContactDisplay.vue'
-import locationDisplay from './LocationDisplay.vue'
-import viewer from './Viewer.vue'
-import contactItem from './ContactItem.vue'
-import contact from './Contact.vue'
+import panel from '../components/Panel.vue'
+import contactItemDisplay from '../components/ContactItemDisplay.vue'
+import contactDisplay from '../components/ContactDisplay.vue'
+import locationDisplay from '../components/LocationDisplay.vue'
+import viewer from '../components/Viewer.vue'
+import contactItem from '../components/ContactItem.vue'
+import contact from '../components/Contact.vue'
 
 export default {
   name: 'Home',
