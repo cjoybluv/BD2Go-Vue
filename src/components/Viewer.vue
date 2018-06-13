@@ -1,5 +1,5 @@
 <template>
-  <div class = "viewer panel">
+  <div class="viewer panel">
     <h1>{{ language.title }}</h1>
     <slot></slot>
   </div>
