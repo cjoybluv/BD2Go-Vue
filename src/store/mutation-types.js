@@ -6,3 +6,6 @@ export const SIGNUP_SUCCESS = 'SIGNUP_SUCESS'
 
 export const USER_REQUEST = 'USER_REQUEST'
 export const USER_SUCCESS = 'USER_SUCCESS'
+
+export const SELECT_ITEM = 'SELECT_ITEM'
+export const SELECT_CONTACT = 'SELECT_CONTACT'
