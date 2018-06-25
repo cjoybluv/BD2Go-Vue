@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import {
   getUser,
   postLogin,
@@ -15,8 +14,6 @@ import {
   SELECT_ITEM,
   SELECT_CONTACT
 } from './mutation-types'
-
-const PATHNAME = 'http://127.0.0.1:8881/api/v1'
 
 export default {
   fetchUser: ({ commit }, payload) => {
