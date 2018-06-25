@@ -1,4 +1,8 @@
 import Vue from 'vue'
+import {
+  getUser,
+  postLogin
+} from '../api/api'
 
 import {
   LOGIN_REQUEST,
@@ -14,18 +18,22 @@ import {
 const PATHNAME = 'http://127.0.0.1:8881/api/v1'
 
 export default {
-  getUser: ({ commit }, payload) => {
+  fetchUser: ({ commit }, payload) => {
     commit(USER_REQUEST)
-    Vue.http.get(PATHNAME + '/users?email=' + payload).then((user) => {
-      commit(USER_SUCCESS, user.body)
+    return new Promise((resolve, reject) => {
+      getUser(payload).then(user => {
+        commit(USER_SUCCESS, user.body)
+      }).catch(err => {
+        reject(err)
+      })
     })
   },
   login: ({commit, dispatch}, payload) => {
     commit(LOGIN_REQUEST)
     return new Promise((resolve, reject) => {
-      Vue.http.post(PATHNAME + '/auth/login', payload).then(function (authData) {
+      postLogin(payload).then(function (authData) {
         commit(LOGIN_SUCCESS, authData.body)
-        dispatch('getUser', payload.email)
+        dispatch('fetchUser', payload.email)
         resolve(authData)
       }).catch(err => {
         reject(err)
