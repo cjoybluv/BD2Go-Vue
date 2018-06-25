@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import {
   getUser,
-  postLogin
+  postLogin,
+  postSignup
 } from '../api/api'
 
 import {
@@ -48,7 +49,7 @@ export default {
         email: payload.email,
         password: payload.password
       }
-      Vue.http.post(PATHNAME + '/auth/signup', user).then(function (data) {
+      postSignup(user).then(function (data) {
         commit(SIGNUP_SUCCESS, data.body)
         resolve(data)
       }).catch(err => {

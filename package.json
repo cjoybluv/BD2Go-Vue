@@ -66,6 +66,7 @@
     "jest": "^23.1.0",
     "jest-localstorage-mock": "^2.2.0",
     "jest-serializer-vue": "^0.3.0",
+    "lodash.isequal": "^4.5.0",
     "nightwatch": "^0.9.12",
     "node-notifier": "^5.1.2",
     "nodemon": "^1.17.5",

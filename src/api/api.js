@@ -21,3 +21,13 @@ export function postLogin (payload) {
     })
   })
 }
+
+export function postSignup (payload) {
+  return new Promise((resolve, reject) => {
+    Vue.http.post(PATHNAME + '/auth/signup', payload).then(function (data) {
+      resolve(data)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}

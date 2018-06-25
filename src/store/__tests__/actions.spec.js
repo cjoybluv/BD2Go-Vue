@@ -1,16 +1,21 @@
 import flushPromises from 'flush-promises'
+import isEqual from 'lodash.isequal'
+
 import actions from '../actions'
 import {
   getUser,
-  postLogin
+  postLogin,
+  postSignup
 } from '../../api/api'
 import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
+  SIGNUP_REQUEST,
+  SIGNUP_SUCCESS,
   USER_REQUEST,
   USER_SUCCESS
 } from '../mutation-types'
-import { debug } from 'util'
+
 jest.mock('../../api/api')
 
 describe('actions', () => {
@@ -66,5 +71,29 @@ describe('actions', () => {
     expect(context.commit).toBeCalledWith(LOGIN_REQUEST)
     expect(context.commit).toHaveBeenLastCalledWith(LOGIN_SUCCESS, authData.body)
     expect(context.dispatch).toHaveBeenCalledWith('fetchUser', payload.email)
+  })
+
+  test('signup: commits SIGNUP_REQUEST, commits SIGNUP_SUCCESS', async () => {
+    const user = {
+      email: 'test@email.com',
+      password: 'encrypted',
+      username: 'test'
+    }
+    const err = {error: 'unable to post'}
+    postSignup.mockImplementation(calledWith => {
+      console.log('signup', calledWith)
+      return isEqual(calledWith, user)
+        ? Promise.resolve({body: user})
+        : Promise.reject(err)
+    })
+    const context = {
+      commit: jest.fn()
+    }
+
+    actions.signup(context, user)
+    await flushPromises()
+
+    expect(context.commit).toBeCalledWith(SIGNUP_REQUEST)
+    expect(context.commit).toHaveBeenLastCalledWith(SIGNUP_SUCCESS, user)
   })
 })
