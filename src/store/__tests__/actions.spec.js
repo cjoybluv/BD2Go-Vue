@@ -10,6 +10,8 @@ import {
 import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
+  SELECT_CONTACT,
+  SELECT_ITEM,
   SIGNUP_REQUEST,
   SIGNUP_SUCCESS,
   USER_REQUEST,
@@ -81,7 +83,6 @@ describe('actions', () => {
     }
     const err = {error: 'unable to post'}
     postSignup.mockImplementation(calledWith => {
-      console.log('signup', calledWith)
       return isEqual(calledWith, user)
         ? Promise.resolve({body: user})
         : Promise.reject(err)
@@ -95,5 +96,21 @@ describe('actions', () => {
 
     expect(context.commit).toBeCalledWith(SIGNUP_REQUEST)
     expect(context.commit).toHaveBeenLastCalledWith(SIGNUP_SUCCESS, user)
+  })
+
+  test('viewItem: commits SELECT_ITEM', () => {
+    const context = {
+      commit: jest.fn()
+    }
+    actions.viewItem(context, 1)
+    expect(context.commit).toBeCalledWith(SELECT_ITEM, 1)
+  })
+
+  test('viewContact: commits SELECT_CONTACT', () => {
+    const context = {
+      commit: jest.fn()
+    }
+    actions.viewContact(context, 1)
+    expect(context.commit).toBeCalledWith(SELECT_CONTACT, 1)
   })
 })
