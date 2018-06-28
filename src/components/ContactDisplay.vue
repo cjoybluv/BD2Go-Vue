@@ -1,6 +1,9 @@
 <template>
   <div id="contact-display">
-    <h2>{{ language.title }}</h2>
+    <div class="header">
+      <h2>{{ language.title }}</h2>
+      <font-awesome-icon icon="plus" v-b-modal.contactForm/>
+    </div>
     <ul>
       <li
         v-for="contact in contacts"
@@ -9,14 +12,24 @@
         {{ contact.name }}
       </li>
     </ul>
+    <b-modal
+      id="contactForm"
+      size="lg"
+      title="Create New Contact">
+      <contact-form :onSubmit="contactAdded" />
+    </b-modal>
   </div>
 </template>
 
 <script>
 import { mapActions } from 'Vuex'
+import contactForm from './ContactForm.vue'
 
 export default {
   name: 'ContactDislay',
+  components: {
+    'contact-form': contactForm
+  },
   computed: {
     contacts () {
       return this.$store.state.contacts
@@ -26,6 +39,9 @@ export default {
     }
   },
   methods: {
+    contactAdded (message) {
+      console.log('contactAdded', message)
+    },
     ...mapActions([
       'viewContact'
     ])
@@ -34,6 +50,14 @@ export default {
 </script>
 
 <style scoped>
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+.header svg {
+  margin-right: 15px;
+  cursor: pointer;
+}
 ul {
   margin: 0 5px;
   padding-left: 0;
