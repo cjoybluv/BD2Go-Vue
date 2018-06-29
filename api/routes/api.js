@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt')
 const router = express.Router()
 
 const User = require('../models/users')
+const Contact = require('../models/contacts')
 
 const JWT_SECRET_KEY = 'getConnected'
 
@@ -55,11 +56,21 @@ router.get('/contacts', verifyToken, (req, res, next) => {
     if (err) {
       res.sendStatus(403)
     } else {
-      res.json({
-        message: 'GET contacts',
-        authData
+      Contact.find({ownerId: req.query.ownerId}).then(contacts => {
+        res.json(contacts)
+      }).catch(err => {
+        console.log(err)
       })
     }
+  })
+})
+
+router.post('/contacts', verifyToken, (req, res, next) => {
+  console.log('post /contacts', req.body)
+  Contact.create(req.body).then(contact => {
+    res.json(contact)
+  }).catch(err => {
+    res.json({error: err})
   })
 })
 

@@ -31,3 +31,14 @@ export function postSignup (payload) {
     })
   })
 }
+
+export function postContact (payload) {
+  console.log('postContact', payload)
+  return new Promise((resolve, reject) => {
+    Vue.http.post(PATHNAME + '/contacts', payload).then(function (data) {
+      resolve(data)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}

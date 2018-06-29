@@ -1,12 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const TagsSchema = new Schema({
-  contactTags: [String],
-  locationTags: [String],
-  dateTags: [String]
-})
-
 const UserSchema = new Schema({
   username: {
     type: String,
@@ -19,8 +13,7 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: [true, 'password field is required']
-  },
-  tags: TagsSchema
+  }
 })
 
 const User = mongoose.model('user', UserSchema)
