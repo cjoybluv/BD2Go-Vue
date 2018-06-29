@@ -14,11 +14,11 @@
       <b-card>
         <b-form-group
           label="Phone#">
-          <b-form-input v-model="contact.phones.phoneNumber" placeholder="Enter a phone#"/>
+          <b-form-input v-model="contact.phoneNumber" placeholder="Enter a phone#"/>
         </b-form-group>
         <b-form-group
           label="Tag">
-          <b-form-input v-model="contact.phones.phoneTag" placeholder="Enter the phone's Tag"/>
+          <b-form-input v-model="contact.phoneTag" placeholder="Enter the phone's Tag"/>
         </b-form-group>
       </b-card>
     </b-collapse>
@@ -42,13 +42,10 @@ export default {
         ownerId: '',
         name: '',
         email: '',
-        phones: [
-          {
-            phoneNumber: '',
-            phoneTag: ''
-          }
-        ]
-      }
+        phoneNumber: '',
+        phoneTag: ''
+      },
+      phones: []
     }
   },
   props: {

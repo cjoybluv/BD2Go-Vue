@@ -1,6 +1,11 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+const PhoneSchema = new Schema({
+  phoneNumber: Number,
+  phoneTag: String
+})
+
 const ContactSchema = new Schema({
   ownerId: String,
   name: {
@@ -10,12 +15,7 @@ const ContactSchema = new Schema({
   email: {
     type: String
   },
-  phones: [
-    {
-      phoneNumber: Number,
-      phoneTag: String
-    }
-  ],
+  phones: [PhoneSchema],
   locations: [
     {
       street: String,
