@@ -33,15 +33,15 @@ export function postSignup (payload) {
 }
 
 export function postContact (payload) {
-  let contact = {
-    ownerId: payload.ownerId,
-    name: payload.name,
-    email: payload.email,
-    phones: []
-  }
+  // let contact = {
+  //   ownerId: payload.ownerId,
+  //   name: payload.name,
+  //   email: payload.email,
+  //   phones:
+  // }
 
-  contact.phones.push({phoneNumber: payload.phoneNumber, phoneTag: payload.phoneTag})
-  console.log('postContact', contact)
+  // contact.phones.push({phoneNumber: payload.phoneNumber, phoneTag: payload.phoneTag})
+  console.log('postContact', payload)
   // console.log('postContact-pre', payload.phones[0].phoneNumber)
   // payload.phones.forEach((phone, i) => {
   //   console.log('phone', JSON.stringify(payload))
@@ -49,7 +49,7 @@ export function postContact (payload) {
   // })
   // console.log('postContact', contact)
   return new Promise((resolve, reject) => {
-    Vue.http.post(PATHNAME + '/contacts', contact).then(function (data) {
+    Vue.http.post(PATHNAME + '/contacts', payload).then(function (data) {
       resolve(data)
     }).catch(err => {
       reject(err)

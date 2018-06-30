@@ -2,8 +2,8 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const PhoneSchema = new Schema({
-  phoneNumber: Number,
-  phoneTag: String
+  phoneLabel: String,
+  phoneNumber: String
 })
 
 const ContactSchema = new Schema({

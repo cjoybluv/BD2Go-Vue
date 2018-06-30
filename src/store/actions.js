@@ -58,7 +58,7 @@ export default {
     })
   },
   addContact: ({commit}, payload) => {
-    commit(ADD_CONTACT_REQUEST)
+    commit(ADD_CONTACT_REQUEST, payload)
     return new Promise((resolve, reject) => {
       postContact(payload).then(function (data) {
         commit(ADD_CONTACT_SUCCESS, data.body)

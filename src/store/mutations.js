@@ -43,7 +43,7 @@ export default {
     state.contentControls.selectedContactId = contactId
     state.contentControls.selectedItemId = null
   },
-  [ADD_CONTACT_REQUEST]: (state) => {
+  [ADD_CONTACT_REQUEST]: (state, contact) => {
     state.loading = true
   },
   [ADD_CONTACT_SUCCESS]: (state, contact) => {

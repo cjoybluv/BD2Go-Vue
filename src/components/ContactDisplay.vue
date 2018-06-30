@@ -15,6 +15,7 @@
     <b-modal
       id="contactForm"
       size="lg"
+      hide-footer
       title="Create New Contact">
       <contact-form :onSubmit="contactAdded" />
     </b-modal>
