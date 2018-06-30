@@ -1,28 +1,28 @@
 <template>
   <b-form>
       <b-form-group
-        label="Name">
+        :label="language.nameLabel">
         <b-form-input
           v-model="contact.name"
-          placeholder="Enter the contact's name"
+          :placeholder="language.namePlaceholder"
           :autofocus="true"
           required/>
       </b-form-group>
       <b-form-group
-        label="Email">
-        <b-form-input v-model="contact.email" placeholder="Enter the contact's email"/>
+        :label="language.emailLabel">
+        <b-form-input v-model="contact.email" :placeholder="language.emailPlaceholder"/>
       </b-form-group>
 
-      <b-form-group label="Add new Phone Number">
+      <b-form-group :label="language.addPhoneLabel">
         <b-input-group>
-          <b-form-input v-model="phoneForm.phoneLabel" slot="prepend" placeholder="Enter label (eg. mobile)" size="sm"/>
-          <b-form-input v-model="phoneForm.phoneNumber" placeholder="Enter a phone#" size="sm"/>
-          <b-btn @click="addPhone" slot="append" variant="info">Add</b-btn>
+          <b-form-input v-model="phoneForm.phoneLabel" slot="prepend" :placeholder="language.phoneLabelPlaceholder" size="sm"/>
+          <b-form-input v-model="phoneForm.phoneNumber" :placeholder="language.phoneNumberPlaceholder" size="sm"/>
+          <b-btn @click="addPhone" slot="append" variant="info">{{language.add}}</b-btn>
         </b-input-group>
         <b-table striped hover :items="contact.phones"></b-table>
       </b-form-group>
 
-      <b-btn class="float-right" variant="primary" @click="submitForm">Submit</b-btn>
+      <b-btn class="float-right" variant="primary" @click="submitForm">{{language.submit}}</b-btn>
   </b-form>
 </template>
 
@@ -33,6 +33,9 @@ export default {
   computed: {
     user () {
       return this.$store.state.user
+    },
+    language () {
+      return this.$store.state.language.contactForm
     }
   },
   data () {
