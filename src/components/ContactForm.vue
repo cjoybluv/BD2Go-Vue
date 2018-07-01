@@ -66,11 +66,25 @@ export default {
       this.phoneForm.phoneLabel = ''
       this.phoneForm.phoneNumber = ''
     },
+    clearForm () {
+      this.contact = {
+        ownerId: '',
+        name: '',
+        email: '',
+        phones: []
+      }
+      this.phoneForm = {
+        phoneLabel: '',
+        phoneNumber: ''
+      }
+    },
     submitForm () {
+      if (!this.contact.name) return
       this.contact.ownerId = this.user._id
       console.log('submitForm', this.contact)
       this.addContact(this.contact)
       this.onSubmit(this.contact.name + ' added to your contact list')
+      this.clearForm()
     },
     ...mapActions([
       'addContact'

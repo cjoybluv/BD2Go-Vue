@@ -16,6 +16,7 @@
       id="contactForm"
       size="lg"
       hide-footer
+      ref="contactForm"
       title="Create New Contact">
       <contact-form :onSubmit="contactAdded" />
     </b-modal>
@@ -42,6 +43,7 @@ export default {
   methods: {
     contactAdded (message) {
       console.log('contactAdded', message)
+      this.$refs.contactForm.hide()
     },
     ...mapActions([
       'viewContact'
