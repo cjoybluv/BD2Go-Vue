@@ -3,14 +3,14 @@
       <b-form-group
         :label="language.nameLabel">
         <b-form-input
-          v-model="contact.name"
+          v-model="formContact.name"
           :placeholder="language.namePlaceholder"
           :autofocus="true"
           required/>
       </b-form-group>
       <b-form-group
         :label="language.emailLabel">
-        <b-form-input v-model="contact.email" :placeholder="language.emailPlaceholder"/>
+        <b-form-input v-model="formContact.email" :placeholder="language.emailPlaceholder"/>
       </b-form-group>
 
       <b-form-group :label="language.addPhoneLabel">
@@ -19,7 +19,7 @@
           <b-form-input v-model="phoneForm.phoneNumber" :placeholder="language.phoneNumberPlaceholder" size="sm"/>
           <b-btn @click="addPhone" slot="append" variant="info">{{language.add}}</b-btn>
         </b-input-group>
-        <b-table striped hover :items="contact.phones"></b-table>
+        <b-table striped hover :items="formContact.phones"></b-table>
       </b-form-group>
 
       <b-form-group :label="language.addRelationshipLabel">
@@ -28,7 +28,7 @@
           <b-form-input v-model="relationshipForm.relationshipContact" :placeholder="language.relationshipContactPlaceholder" size="sm"/>
           <b-btn @click="addRelationship" slot="append" variant="info">{{language.add}}</b-btn>
         </b-input-group>
-        <b-table striped hover :items="contact.relationships"></b-table>
+        <b-table striped hover :items="formContact.relationships"></b-table>
       </b-form-group>
 
       <b-btn class="float-right" variant="primary" @click="submitForm">{{language.submit}}</b-btn>
@@ -36,8 +36,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'Vuex'
-
 export default {
   computed: {
     user () {
@@ -49,6 +47,9 @@ export default {
   },
   data () {
     return {
+      formContact: {
+        ...this.contact
+      },
       phoneForm: {
         phoneLabel: '',
         phoneNumber: ''
@@ -73,19 +74,19 @@ export default {
     addPhone () {
       if (!this.phoneForm.phoneLabel || !this.phoneForm.phoneNumber) return
       const phone = { ...this.phoneForm }
-      this.contact.phones.push(phone)
+      this.formContact.phones.push(phone)
       this.phoneForm.phoneLabel = ''
       this.phoneForm.phoneNumber = ''
     },
     addRelationship () {
       if (!this.relationshipForm.relationshipLabel || !this.relationshipForm.relationshipContact) return
       const relationship = { ...this.relationshipForm }
-      this.contact.relationships.push(relationship)
+      this.formContact.relationships.push(relationship)
       this.relationshipForm.relationshipLabel = ''
       this.relationshipForm.relationshipContact = ''
     },
     clearForm () {
-      this.contact = {
+      this.formContact = {
         ownerId: '',
         name: '',
         email: '',
@@ -101,9 +102,9 @@ export default {
       }
     },
     submitForm () {
-      if (!this.contact.name) return
-      this.contact.ownerId = this.user._id
-      this.onSubmit(this.contact)
+      if (!this.formContact.name) return
+      this.formContact.ownerId = this.user._id
+      this.onSubmit(this.formContact)
       this.clearForm()
     }
   }

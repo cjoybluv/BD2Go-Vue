@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'Vuex'
+import { mapActions, mapGetters } from 'Vuex'
 import contactForm from './ContactForm.vue'
 
 export default {
@@ -58,9 +58,12 @@ export default {
   },
   methods: {
     contactUpdated (contact) {
-      console.log('contactUpdated', contact)
+      this.updateContact(contact)
       this.$refs.editContactForm.hide()
-    }
+    },
+    ...mapActions([
+      'updateContact'
+    ])
   }
 }
 </script>

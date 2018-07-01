@@ -27,7 +27,7 @@ const ContactSchema = new Schema({
   relationships: [
     {
       relatedContactId: Schema.Types.ObjectId,
-      relationshipTag: String
+      relationshipLabel: String
     }
   ],
   social: [

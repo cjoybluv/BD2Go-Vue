@@ -55,7 +55,6 @@ export default {
   },
   methods: {
     contactAdded (contact) {
-      console.log('contactAdded', contact)
       this.addContact(contact)
       this.$refs.addContactForm.hide()
     },
