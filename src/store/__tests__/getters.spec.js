@@ -27,11 +27,11 @@ describe('getters', () => {
     expect(result).toBe(state.contactItems[1])
   })
 
-  test('selectedContact returns Item for selectedItemId', () => {
+  test('selectedContact returns Contact for selectedContactId', () => {
     const state = {
       contacts: [
-        {id: 11},
-        {id: 12}
+        {_id: 11},
+        {_id: 12}
       ],
       contentControls: { selectedContactId: 12 }
     }

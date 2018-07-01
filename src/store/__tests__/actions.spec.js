@@ -38,7 +38,8 @@ describe('actions', () => {
         : Promise.reject(err)
     })
     const context = {
-      commit: jest.fn()
+      commit: jest.fn(),
+      dispatch: jest.fn()
     }
 
     actions.fetchUser(context, payload)
