@@ -6,7 +6,9 @@ import {
   USER_REQUEST,
   USER_SUCCESS,
   SELECT_ITEM,
-  SELECT_CONTACT
+  SELECT_CONTACT,
+  ADD_CONTACT_REQUEST,
+  ADD_CONTACT_SUCCESS
 } from './mutation-types'
 
 export default {
@@ -40,5 +42,14 @@ export default {
   [SELECT_CONTACT]: (state, contactId) => {
     state.contentControls.selectedContactId = contactId
     state.contentControls.selectedItemId = null
+  },
+  [ADD_CONTACT_REQUEST]: (state, contact) => {
+    state.loading = true
+  },
+  [ADD_CONTACT_SUCCESS]: (state, contact) => {
+    state.loading = false
+    state.contentControls.selectedContactId = contact._id
+    state.contentControls.selectedItemId = null
+    state.contacts.push(contact)
   }
 }

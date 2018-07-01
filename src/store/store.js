@@ -14,6 +14,7 @@ import locations from './mockData/locations'
 import language from './language/en-us'
 
 const state = {
+  loading: false,
   contentControls: {
     selectedItemId: 1, // contactItem.id of selected Item
     selectedContactId: null // contact.id of selected Contact

@@ -1,7 +1,8 @@
 import {
   getUser,
   postLogin,
-  postSignup
+  postSignup,
+  postContact
 } from '../api/api'
 
 import {
@@ -12,7 +13,9 @@ import {
   USER_REQUEST,
   USER_SUCCESS,
   SELECT_ITEM,
-  SELECT_CONTACT
+  SELECT_CONTACT,
+  ADD_CONTACT_REQUEST,
+  ADD_CONTACT_SUCCESS
 } from './mutation-types'
 
 export default {
@@ -48,6 +51,17 @@ export default {
       }
       postSignup(user).then(function (data) {
         commit(SIGNUP_SUCCESS, data.body)
+        resolve(data)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  },
+  addContact: ({commit}, payload) => {
+    commit(ADD_CONTACT_REQUEST, payload)
+    return new Promise((resolve, reject) => {
+      postContact(payload).then(function (data) {
+        commit(ADD_CONTACT_SUCCESS, data.body)
         resolve(data)
       }).catch(err => {
         reject(err)
