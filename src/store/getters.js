@@ -7,5 +7,8 @@ export default {
   },
   selectedContact: state => {
     return state.contacts.find(contact => contact._id === state.contentControls.selectedContactId)
+  },
+  editContact: state => {
+    return state.contacts.find(contact => contact._id === state.contentControls.editContactId)
   }
 }

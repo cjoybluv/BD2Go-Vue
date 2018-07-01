@@ -2,7 +2,7 @@
   <div id="contact-display">
     <div class="header">
       <h2>{{ language.title }}</h2>
-      <font-awesome-icon icon="plus" v-b-modal.contactForm/>
+      <font-awesome-icon icon="plus" v-b-modal.addContactForm/>
     </div>
     <ul>
       <li
@@ -13,12 +13,12 @@
       </li>
     </ul>
     <b-modal
-      id="contactForm"
+      id="addContactForm"
       size="lg"
       hide-footer
-      ref="contactForm"
+      ref="addContactForm"
       title="Create New Contact">
-      <contact-form :onSubmit="contactAdded" />
+      <contact-form :contact="contact" :onSubmit="contactAdded" />
     </b-modal>
   </div>
 </template>
@@ -43,14 +43,26 @@ export default {
       return this.$store.state.user && this.$store.state.user._id
     }
   },
+  data () {
+    return {
+      contact: {
+        ownerId: '',
+        name: '',
+        email: '',
+        phones: []
+      }
+    }
+  },
   methods: {
-    contactAdded (message) {
-      console.log('contactAdded', message)
-      this.$refs.contactForm.hide()
+    contactAdded (contact) {
+      console.log('contactAdded', contact)
+      this.addContact(contact)
+      this.$refs.addContactForm.hide()
     },
     ...mapActions([
       'getContacts',
-      'viewContact'
+      'viewContact',
+      'addContact'
     ])
   }
 }

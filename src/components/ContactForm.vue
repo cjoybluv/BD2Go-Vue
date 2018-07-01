@@ -22,12 +22,21 @@
         <b-table striped hover :items="contact.phones"></b-table>
       </b-form-group>
 
+      <b-form-group :label="language.addRelationshipLabel">
+        <b-input-group>
+          <b-form-input v-model="relationshipForm.relationshipLabel" slot="prepend" :placeholder="language.relationshipLabelPlaceholder" size="sm"/>
+          <b-form-input v-model="relationshipForm.relationshipContact" :placeholder="language.relationshipContactPlaceholder" size="sm"/>
+          <b-btn @click="addRelationship" slot="append" variant="info">{{language.add}}</b-btn>
+        </b-input-group>
+        <b-table striped hover :items="contact.relationships"></b-table>
+      </b-form-group>
+
       <b-btn class="float-right" variant="primary" @click="submitForm">{{language.submit}}</b-btn>
   </b-form>
 </template>
 
 <script>
-import { mapActions } from 'Vuex'
+import { mapGetters } from 'Vuex'
 
 export default {
   computed: {
@@ -40,19 +49,21 @@ export default {
   },
   data () {
     return {
-      contact: {
-        ownerId: '',
-        name: '',
-        email: '',
-        phones: []
-      },
       phoneForm: {
         phoneLabel: '',
         phoneNumber: ''
+      },
+      relationshipForm: {
+        relationshipLabel: '',
+        relationshipContact: ''
       }
     }
   },
   props: {
+    contact: {
+      type: Object,
+      required: true
+    },
     onSubmit: {
       type: Function,
       required: true
@@ -66,6 +77,13 @@ export default {
       this.phoneForm.phoneLabel = ''
       this.phoneForm.phoneNumber = ''
     },
+    addRelationship () {
+      if (!this.relationshipForm.relationshipLabel || !this.relationshipForm.relationshipContact) return
+      const relationship = { ...this.relationshipForm }
+      this.contact.relationships.push(relationship)
+      this.relationshipForm.relationshipLabel = ''
+      this.relationshipForm.relationshipContact = ''
+    },
     clearForm () {
       this.contact = {
         ownerId: '',
@@ -77,18 +95,17 @@ export default {
         phoneLabel: '',
         phoneNumber: ''
       }
+      this.relationshipForm = {
+        relationshipLabel: '',
+        relationshipContact: ''
+      }
     },
     submitForm () {
       if (!this.contact.name) return
       this.contact.ownerId = this.user._id
-      console.log('submitForm', this.contact)
-      this.addContact(this.contact)
-      this.onSubmit(this.contact.name + ' added to your contact list')
+      this.onSubmit(this.contact)
       this.clearForm()
-    },
-    ...mapActions([
-      'addContact'
-    ])
+    }
   }
 }
 </script>

@@ -11,8 +11,11 @@ export default {
     emailLabel: 'Email',
     emailPlaceholder: 'Enter Email',
     addPhoneLabel: 'Add new Phone Number',
-    phoneLabelPlaceholder: 'Enter label (eg. mobile)',
+    phoneLabelPlaceholder: 'Enter label (mobile/work...)',
     phoneNumberPlaceholder: 'Enter a phone#',
+    addRelationshipLabel: 'Add new Relationship',
+    relationshipLabelPlaceholder: 'Enter Label (friend/co-worker...)',
+    relationshipContactPlaceholder: 'Enter Contact Name',
     add: 'Add',
     submit: 'Submit'
   },

@@ -10,7 +10,8 @@ import {
   SELECT_ITEM,
   SELECT_CONTACT,
   ADD_CONTACT_REQUEST,
-  ADD_CONTACT_SUCCESS
+  ADD_CONTACT_SUCCESS,
+  EDIT_CONTACT
 } from './mutation-types'
 
 export default {
@@ -61,5 +62,8 @@ export default {
     state.contentControls.selectedContactId = contact._id
     state.contentControls.selectedItemId = null
     state.contacts.push(contact)
+  },
+  [EDIT_CONTACT]: (state, contactId) => {
+    state.contentControls.editContactId = contactId
   }
 }
