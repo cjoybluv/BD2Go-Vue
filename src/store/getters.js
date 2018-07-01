@@ -6,6 +6,6 @@ export default {
     return state.contactItems.find(item => item.id === state.contentControls.selectedItemId)
   },
   selectedContact: state => {
-    return state.contacts.find(contact => contact.id === state.contentControls.selectedContactId)
+    return state.contacts.find(contact => contact._id === state.contentControls.selectedContactId)
   }
 }

@@ -1,4 +1,7 @@
 export default {
+  contact: {
+    phones: 'Phone'
+  },
   contactDisplay: {
     title: 'Who'
   },

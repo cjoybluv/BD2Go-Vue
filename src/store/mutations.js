@@ -5,6 +5,8 @@ import {
   SIGNUP_SUCCESS,
   USER_REQUEST,
   USER_SUCCESS,
+  CONTACTS_REQUEST,
+  CONTACTS_SUCCESS,
   SELECT_ITEM,
   SELECT_CONTACT,
   ADD_CONTACT_REQUEST,
@@ -34,6 +36,14 @@ export default {
   },
   [USER_SUCCESS]: (state, user) => {
     state.user = user
+  },
+  [CONTACTS_REQUEST]: (state, ownerId) => {
+    state.contacts = []
+    state.loading = true
+  },
+  [CONTACTS_SUCCESS]: (state, contacts) => {
+    state.contacts = contacts
+    state.loading = false
   },
   [SELECT_ITEM]: (state, itemId) => {
     state.contentControls.selectedItemId = itemId

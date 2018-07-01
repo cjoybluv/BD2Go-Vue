@@ -6,7 +6,7 @@ import getters from './getters'
 import mutations from './mutations'
 
 // mock data
-import contacts from './mockData/contacts'
+// import contacts from './mockData/contacts'
 import contactItems from './mockData/contactItems'
 import locations from './mockData/locations'
 
@@ -20,10 +20,14 @@ const state = {
     selectedContactId: null // contact.id of selected Contact
   },
   language: language,
-  contacts: contacts,
+  contacts: [],
   contactItems: contactItems,
   locations: locations,
-  user: null,
+  user: {
+    _id: '',
+    email: '',
+    username: ''
+  },
   token: null,
   isAuthenticated: false
 }

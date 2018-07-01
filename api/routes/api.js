@@ -59,14 +59,13 @@ router.get('/contacts', verifyToken, (req, res, next) => {
       Contact.find({ownerId: req.query.ownerId}).then(contacts => {
         res.json(contacts)
       }).catch(err => {
-        console.log(err)
+        res.json({error: err})
       })
     }
   })
 })
 
 router.post('/contacts', verifyToken, (req, res, next) => {
-  console.log('post /contacts', req.body)
   Contact.create(req.body).then(contact => {
     res.json(contact)
   }).catch(err => {
