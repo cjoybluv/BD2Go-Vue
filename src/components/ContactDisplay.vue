@@ -8,7 +8,7 @@
       <li
         v-for="contact in contacts"
         :key="contact.name"
-        @click="viewContact(contact.id)">
+        @click="viewContact(contact._id)">
         {{ contact.name }}
       </li>
     </ul>
@@ -38,6 +38,9 @@ export default {
     },
     language () {
       return this.$store.state.language.contactDisplay
+    },
+    ownerId () {
+      return this.$store.state.user && this.$store.state.user._id
     }
   },
   methods: {
@@ -46,6 +49,7 @@ export default {
       this.$refs.contactForm.hide()
     },
     ...mapActions([
+      'getContacts',
       'viewContact'
     ])
   }
