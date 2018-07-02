@@ -3,7 +3,8 @@ import {
   postLogin,
   postSignup,
   getContacts,
-  postContact
+  postContact,
+  putContact
 } from '../api/api'
 
 import {
@@ -18,7 +19,9 @@ import {
   SELECT_ITEM,
   SELECT_CONTACT,
   ADD_CONTACT_REQUEST,
-  ADD_CONTACT_SUCCESS
+  ADD_CONTACT_SUCCESS,
+  UPDATE_CONTACT_REQUEST,
+  UPDATE_CONTACT_SUCCESS
 } from './mutation-types'
 
 export default {
@@ -77,6 +80,17 @@ export default {
     return new Promise((resolve, reject) => {
       postContact(payload).then(function (data) {
         commit(ADD_CONTACT_SUCCESS, data.body)
+        resolve(data)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  },
+  updateContact: ({ commit }, payload) => {
+    commit(UPDATE_CONTACT_REQUEST, payload)
+    return new Promise((resolve, reject) => {
+      putContact(payload).then(function (data) {
+        commit(UPDATE_CONTACT_SUCCESS, data.body)
         resolve(data)
       }).catch(err => {
         reject(err)

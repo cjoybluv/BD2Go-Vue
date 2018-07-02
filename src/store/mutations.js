@@ -10,7 +10,9 @@ import {
   SELECT_ITEM,
   SELECT_CONTACT,
   ADD_CONTACT_REQUEST,
-  ADD_CONTACT_SUCCESS
+  ADD_CONTACT_SUCCESS,
+  UPDATE_CONTACT_REQUEST,
+  UPDATE_CONTACT_SUCCESS
 } from './mutation-types'
 
 export default {
@@ -61,5 +63,13 @@ export default {
     state.contentControls.selectedContactId = contact._id
     state.contentControls.selectedItemId = null
     state.contacts.push(contact)
+  },
+  [UPDATE_CONTACT_REQUEST]: (state, contact) => {
+    state.loading = true
+  },
+  [UPDATE_CONTACT_SUCCESS]: (state, updatedContact) => {
+    state.loading = false
+    const contactIdx = state.contacts.findIndex(contact => contact._id === updatedContact._id)
+    state.contacts[contactIdx] = updatedContact
   }
 }

@@ -73,6 +73,14 @@ router.post('/contacts', verifyToken, (req, res, next) => {
   })
 })
 
+router.put('/contacts/:id', verifyToken, (req, res, next) => {
+  Contact.findByIdAndUpdate({_id: req.params.id}, req.body).then(function () {
+    Contact.findOne({_id: req.params.id}).then(function (contact) {
+      res.send(contact)
+    })
+  })
+})
+
 router.get('/users', verifyToken, (req, res, next) => {
   jwt.verify(req.token, JWT_SECRET_KEY, (err, authData) => {
     if (err) {
