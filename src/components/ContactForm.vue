@@ -38,6 +38,9 @@
 <script>
 export default {
   computed: {
+    contacts () {
+      return this.$store.state.contacts
+    },
     user () {
       return this.$store.state.user
     },
@@ -81,9 +84,24 @@ export default {
     addRelationship () {
       if (!this.relationshipForm.relationshipLabel || !this.relationshipForm.relationshipContact) return
       const relationship = { ...this.relationshipForm }
-      this.formContact.relationships.push(relationship)
-      this.relationshipForm.relationshipLabel = ''
-      this.relationshipForm.relationshipContact = ''
+      let relatedContact
+      if (relationship.relationshipContact === '@me') {
+        relatedContact = { _id: '@me' }
+      } else {
+        relatedContact = this.contacts.find(contact => {
+          contact.name.includes(relationship.relationshipContact)
+        })
+      }
+      if (relatedContact) {
+        this.formContact.relationships.push(
+          {
+            relationshipLabel: relationship.relationshipLabel,
+            relatedContactId: relatedContact._id
+          }
+        )
+        this.relationshipForm.relationshipLabel = ''
+        this.relationshipForm.relationshipContact = ''
+      }
     },
     clearForm () {
       this.formContact = {
