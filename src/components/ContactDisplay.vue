@@ -2,7 +2,7 @@
   <div id="contact-display">
     <div class="header">
       <h2>{{ language.title }}</h2>
-      <font-awesome-icon icon="plus" v-b-modal.addContactForm/>
+      <font-awesome-icon icon="plus" v-b-modal.addContactForm class="pointer"/>
     </div>
     <ul>
       <li
@@ -74,7 +74,6 @@ export default {
 }
 .header svg {
   margin-right: 15px;
-  cursor: pointer;
 }
 ul {
   margin: 0 5px;

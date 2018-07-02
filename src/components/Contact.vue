@@ -1,7 +1,7 @@
 <template>
   <div class="viewer-content">
     <div class="tools float-right">
-      <font-awesome-icon icon="pencil-alt" v-b-modal.editContactForm />
+      <font-awesome-icon icon="pencil-alt" v-b-modal.editContactForm class="pointer"/>
     </div>
     <h4>{{ selectedContact.name }}</h4>
     <h5>{{ selectedContact.email }}</h5>
