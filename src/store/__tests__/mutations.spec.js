@@ -37,8 +37,10 @@ describe('mutations', () => {
     expect(state.user).toBe('dave')
     expect(state.token).toBe('xyz')
     expect(state.isAuthenticated).toBe(true)
-    expect(localStorage.setItem).toHaveBeenLastCalledWith('token', 'xyz')
+    expect(localStorage.setItem).toBeCalledWith('token', 'xyz')
     expect(localStorage.__STORE__['token']).toBe('xyz')
+    expect(localStorage.setItem).toHaveBeenLastCalledWith('user', JSON.stringify('dave'))
+    expect(localStorage.__STORE__['user']).toBe(JSON.stringify('dave'))
   })
 
   test('SIGNUP_REQUEST sets user to null', () => {
