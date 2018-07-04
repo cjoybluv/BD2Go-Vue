@@ -42,6 +42,16 @@ export function getContacts (payload) {
   })
 }
 
+export function getContact (payload) {
+  return new Promise((resolve, reject) => {
+    Vue.http.get(PATHNAME + '/contacts/' + payload).then(function (data) {
+      resolve(data)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
 export function postContact (payload) {
   return new Promise((resolve, reject) => {
     Vue.http.post(PATHNAME + '/contacts', payload).then(function (data) {
@@ -56,6 +66,17 @@ export function putContact (payload) {
   return new Promise((resolve, reject) => {
     console.log('putContact', payload)
     Vue.http.put(PATHNAME + '/contacts/' + payload._id, payload).then(function (data) {
+      resolve(data)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
+export function putUser (payload) {
+  return new Promise((resolve, reject) => {
+    console.log('putUser', payload)
+    Vue.http.put(PATHNAME + '/users/' + payload._id, payload).then(function (data) {
       resolve(data)
     }).catch(err => {
       reject(err)

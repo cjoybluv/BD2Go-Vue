@@ -1,19 +1,21 @@
 <template>
   <div id="signup">
     <h1>{{ language.title }}</h1>
-    <form>
-      <fieldset>
-        <label>{{ language.username }}</label>
-        <input type="text" ref="username" v-model="user.username" required>
-        <label>{{ language.email }}</label>
-        <input type="email" v-model="user.email" required>
-        <label>{{ language.password }}</label>
-        <input type="text" v-model="user.password" required>
-        <label>{{ language.confirmPassword }}</label>
-        <input type="text" v-model="user.confirmPassword" required>
-      </fieldset>
-      <button v-on:click.prevent="handleSubmit">{{ language.signup }}</button>
-    </form>
+    <b-form>
+      <b-form-group :label="language.username">
+        <b-form-input type="text" ref="username" v-model="user.username" required />
+      </b-form-group>
+      <b-form-group :label="language.email">
+        <b-form-input type="email" v-model="user.email" required />
+      </b-form-group>
+      <b-form-group :label="language.password">
+        <b-form-input type="text" v-model="user.password" required />
+      </b-form-group>
+      <b-form-group :label="language.confirmPassword">
+        <b-form-input type="text" v-model="user.confirmPassword" required />
+      </b-form-group>
+      <b-btn @click.prevent="handleSubmit" variant="primary">{{ language.signup }}</b-btn>
+    </b-form>
     <div v-if="error">{{ error }}</div>
   </div>
 </template>
@@ -76,26 +78,9 @@ h1 {
   margin: 20px 0;
 }
 form {
-  display: flex;
-  flex-flow: column nowrap;
-  width: 300px;
-}
-fieldset {
-  flex: 1;
-  display: flex;
-  flex-flow: column nowrap;
-  border: none;
-}
-label {
-  margin-top: 10px;
-}
-input {
   width: 300px;
 }
 button {
-  margin: 20px 0;
-  width: 100px;
-  align-self: center;
-  min-height: 18px;
+  width: 100%;
 }
 </style>

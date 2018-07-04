@@ -5,6 +5,9 @@ import {
   SIGNUP_SUCCESS,
   USER_REQUEST,
   USER_SUCCESS,
+  CONTACT_REQUEST,
+  CONTACT_SUCCESS,
+  SET_ME,
   CONTACTS_REQUEST,
   CONTACTS_SUCCESS,
   SELECT_ITEM,
@@ -12,7 +15,10 @@ import {
   ADD_CONTACT_REQUEST,
   ADD_CONTACT_SUCCESS,
   UPDATE_CONTACT_REQUEST,
-  UPDATE_CONTACT_SUCCESS
+  UPDATE_CONTACT_SUCCESS,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  SET_IS_AUTHENTICATED
 } from './mutation-types'
 
 export default {
@@ -22,10 +28,12 @@ export default {
     state.isAuthenticated = false
   },
   [LOGIN_SUCCESS]: (state, authData) => {
+    console.log('login_success', authData)
     state.user = authData.user
     state.token = authData.token
     state.isAuthenticated = true
     localStorage.setItem('token', authData.token)
+    localStorage.setItem('user', JSON.stringify(authData.user))
   },
   [SIGNUP_REQUEST]: (state) => {
     state.user = null
@@ -38,6 +46,15 @@ export default {
   },
   [USER_SUCCESS]: (state, user) => {
     state.user = user
+  },
+  [CONTACT_REQUEST]: (state, contactId) => {
+    state.loading = true
+  },
+  [CONTACT_SUCCESS]: (state, contact) => {
+    state.loading = false
+  },
+  [SET_ME]: (state, contact) => {
+    state.me = contact
   },
   [CONTACTS_REQUEST]: (state, ownerId) => {
     state.contacts = []
@@ -71,5 +88,15 @@ export default {
     state.loading = false
     const contactIdx = state.contacts.findIndex(contact => contact._id === updatedContact._id)
     state.contacts[contactIdx] = updatedContact
+  },
+  [UPDATE_USER_REQUEST]: (state, user) => {
+    state.loading = true
+  },
+  [UPDATE_USER_SUCCESS]: (state, updatedUser) => {
+    state.loading = false
+    state.user = updatedUser
+  },
+  [SET_IS_AUTHENTICATED]: (state, value) => {
+    state.isAuthenticated = value
   }
 }

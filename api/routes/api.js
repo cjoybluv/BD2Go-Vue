@@ -42,9 +42,7 @@ router.post('/auth/login', function (req, res, next) {
         if (err) {
           res.sendStatus(424)
         } else {
-          res.json({
-            token
-          })
+          res.json({user, token})
         }
       })
     })
@@ -58,25 +56,33 @@ router.get('/contacts', verifyToken, (req, res, next) => {
     } else {
       Contact.find({ownerId: req.query.ownerId}).then(contacts => {
         res.json(contacts)
-      }).catch(err => {
-        res.json({error: err})
+      }).catch(error => {
+        res.json({error})
       })
     }
+  })
+})
+
+router.get('/contacts/:id', verifyToken, (req, res, next) => {
+  Contact.findById(req.params.id).then(function (contact) {
+    res.json(contact)
+  }).catch(error => {
+    res.json({error})
   })
 })
 
 router.post('/contacts', verifyToken, (req, res, next) => {
   Contact.create(req.body).then(contact => {
     res.json(contact)
-  }).catch(err => {
-    res.json({error: err})
+  }).catch(error => {
+    res.json({error})
   })
 })
 
 router.put('/contacts/:id', verifyToken, (req, res, next) => {
   Contact.findByIdAndUpdate({_id: req.params.id}, req.body).then(function () {
     Contact.findOne({_id: req.params.id}).then(function (contact) {
-      res.send(contact)
+      res.json(contact)
     })
   })
 })
@@ -88,10 +94,22 @@ router.get('/users', verifyToken, (req, res, next) => {
     } else {
       User.findOne({email: req.query.email}).then(user => {
         res.json(user)
-      }).catch(err => {
-        console.log(err)
+      }).catch(error => {
+        res.json({error})
       })
     }
+  })
+})
+
+router.put('/users/:id', verifyToken, (req, res, next) => {
+  User.findByIdAndUpdate({_id: req.params.id}, req.body).then(function () {
+    User.findById(req.params.id).then(function (user) {
+      res.json(user)
+    }).catch(error => {
+      res.json({error})
+    })
+  }).catch(error => {
+    res.json({error})
   })
 })
 

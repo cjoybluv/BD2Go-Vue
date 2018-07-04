@@ -51,6 +51,10 @@ export default {
   data () {
     return {
       formContact: {
+        name: '',
+        email: '',
+        phones: [],
+        relationships: [],
         ...this.contact
       },
       phoneForm: {
@@ -89,7 +93,7 @@ export default {
         relatedContact = { _id: '@me' }
       } else {
         relatedContact = this.contacts.find(contact => {
-          contact.name.includes(relationship.relationshipContact)
+          return contact.name.includes(relationship.relationshipContact)
         })
       }
       if (relatedContact) {
