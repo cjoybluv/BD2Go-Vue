@@ -3,15 +3,17 @@
     <h1>{{ language.title }}</h1>
     <b-form>
       <b-form-group :label="language.username">
-        <b-form-input type="text" ref="username" v-model="user.username" required />
+        <b-form-input type="text" ref="username" v-model="user.username" required disabled />
       </b-form-group>
       <b-form-group :label="language.email">
-        <b-form-input type="email" v-model="user.email" required />
+        <b-form-input type="email" v-model="user.email" required disabled />
       </b-form-group>
 
-      <b-btn v-on:click.prevent="handleSubmit">{{ language.update }}</b-btn>
+      <!-- <b-btn v-on:click.prevent="handleSubmit">{{ language.update }}</b-btn> -->
     </b-form>
+
     <contact-form :contact="me" :onSubmit="meUpdated" />
+
     <div v-if="error">{{ error }}</div>
   </div>
 </template>
