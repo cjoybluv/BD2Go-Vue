@@ -1,8 +1,44 @@
 const express = require('express')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const findIndex = require('lodash.findindex')
 
 const router = express.Router()
+
+const nodeData = [
+  {
+    hostLabels: ['grandpa', 'grandfather', 'grandma', 'grandmother'],
+    hostType: 'child',
+    targetLabels: ['grandchild', 'grandson', 'granddaughter'],
+    targetType: 'parent',
+    viaLabels: ['child', 'son', 'daughter'],
+    viaReciprocalLabels: ['parent', 'father', 'mother', 'dad', 'mom']
+  },
+  {
+    hostLabels: ['child', 'son', 'daughter'],
+    hostType: 'parent',
+    targetLabels: ['parent', 'father', 'mother', 'dad', 'mom'],
+    targetType: 'child',
+    viaLabels: [],
+    viaReciprocalLabels: []
+  },
+  {
+    hostLabels: ['parent', 'father', 'mother', 'dad', 'mom'],
+    hostType: 'child',
+    targetLabels: ['child', 'son', 'daughter'],
+    targetType: 'parent',
+    viaLabels: [],
+    viaReciprocalLabels: []
+  },
+  {
+    hostLabels: ['grandchild', 'grandson', 'granddaughter'],
+    hostType: 'parent',
+    targetLabels: ['grandpa', 'grandfather', 'grandma', 'grandmother'],
+    targetType: 'child',
+    viaLabels: ['parent', 'father', 'mother', 'dad', 'mom'],
+    viaReciprocalLabels: ['child', 'son', 'daughter']
+  }
+]
 
 const User = require('../models/users')
 const Contact = require('../models/contacts')
@@ -113,6 +149,53 @@ router.put('/users/:id', verifyToken, (req, res, next) => {
   })
 })
 
+router.post('/setRelationship', verifyToken, (req, res, next) => {
+  const { hostId, label, targetId } = req.body
+  const nodeInfo = getNodeInfo(label)
+
+  Contact.findById(hostId).then(host => {
+    const updatedHost = {
+      node: {
+        parent: [],
+        sibling: [],
+        child: []
+      },
+      ...host.body
+    }
+    updatedHost.node[nodeInfo.hostType].push({
+      label: nodeInfo.targetLabels[0],
+      contactId: targetId
+    })
+    Contact.findByIdAndUpdate({_id: hostId}, updatedHost).then(() => {
+      Contact.findById(targetId).then(target => {
+        const updatedTarget = {
+          node: {
+            parent: [],
+            sibling: [],
+            child: []
+          },
+          ...target.body
+        }
+        updatedTarget.node[nodeInfo.targetType].push({
+          label,
+          contactId: hostId
+        })
+        Contact.findByIdAndUpdate({_id: targetId}, updatedTarget).then(() => {
+          res.json({ message: 'all set' })
+        }).catch(error => {
+          res.status(422).json({error})
+        })
+      }).catch(error => {
+        res.status(422).json({error})
+      })
+    }).catch(error => {
+      res.status(422).json({error})
+    })
+  }).catch(error => {
+    res.sStatus(422).json({error})
+  })
+})
+
 function verifyToken (req, res, next) {
   const bearerHeader = req.headers['authorization']
   if (typeof bearerHeader !== 'undefined') {
@@ -122,6 +205,10 @@ function verifyToken (req, res, next) {
   } else {
     res.sendStatus('403')
   }
+}
+
+function getNodeInfo (label) {
+  return nodeData[nodeData.findIndex(rec => rec.hostLabels.indexOf(label) !== -1)]
 }
 
 module.exports = router

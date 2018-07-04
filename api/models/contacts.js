@@ -6,6 +6,11 @@ const PhoneSchema = new Schema({
   phoneNumber: String
 })
 
+const NodeSchema = new Schema({
+  label: String,
+  contactId: Schema.Types.ObjectId
+})
+
 const ContactSchema = new Schema({
   ownerId: String,
   name: {
@@ -35,7 +40,12 @@ const ContactSchema = new Schema({
       site: String,
       username: String
     }
-  ]
+  ],
+  node: {
+    parent: [NodeSchema],
+    sibling: [NodeSchema],
+    child: [NodeSchema]
+  }
 })
 
 const Contact = mongoose.model('contact', ContactSchema)
