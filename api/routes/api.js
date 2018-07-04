@@ -42,7 +42,7 @@ router.post('/auth/login', function (req, res, next) {
         if (err) {
           res.sendStatus(424)
         } else {
-          res.json({token})
+          res.json({user, token})
         }
       })
     })

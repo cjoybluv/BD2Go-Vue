@@ -17,7 +17,8 @@ import {
   UPDATE_CONTACT_REQUEST,
   UPDATE_CONTACT_SUCCESS,
   UPDATE_USER_REQUEST,
-  UPDATE_USER_SUCCESS
+  UPDATE_USER_SUCCESS,
+  SET_IS_AUTHENTICATED
 } from './mutation-types'
 
 export default {
@@ -27,10 +28,12 @@ export default {
     state.isAuthenticated = false
   },
   [LOGIN_SUCCESS]: (state, authData) => {
+    console.log('login_success', authData)
     state.user = authData.user
     state.token = authData.token
     state.isAuthenticated = true
     localStorage.setItem('token', authData.token)
+    localStorage.setItem('user', JSON.stringify(authData.user))
   },
   [SIGNUP_REQUEST]: (state) => {
     state.user = null
@@ -92,5 +95,8 @@ export default {
   [UPDATE_USER_SUCCESS]: (state, updatedUser) => {
     state.loading = false
     state.user = updatedUser
+  },
+  [SET_IS_AUTHENTICATED]: (state, value) => {
+    state.isAuthenticated = value
   }
 }

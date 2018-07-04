@@ -1,16 +1,16 @@
 <template>
-  <div id="signup">
+  <div id="profile">
     <h1>{{ language.title }}</h1>
-    <form>
-      <fieldset>
-        <label>{{ language.username }}</label>
-        <input type="text" ref="username" v-model="user.username" required>
-        <label>{{ language.email }}</label>
-        <input type="email" v-model="user.email" required>
-      </fieldset>
+    <b-form>
+      <b-form-group :label="language.username">
+        <b-form-input type="text" ref="username" v-model="user.username" required />
+      </b-form-group>
+      <b-form-group :label="language.email">
+        <b-form-input type="email" v-model="user.email" required />
+      </b-form-group>
 
-      <button v-on:click.prevent="handleSubmit">{{ language.update }}</button>
-    </form>
+      <b-btn v-on:click.prevent="handleSubmit">{{ language.update }}</b-btn>
+    </b-form>
     <contact-form :contact="me" :onSubmit="meUpdated" />
     <div v-if="error">{{ error }}</div>
   </div>
@@ -87,11 +87,16 @@ export default {
 </script>
 
 <style scoped>
-#signup {
+#profile {
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
+}
+.profile-form {
+  width: 100%;
+  /* display: flex;
+  justify-content: center; */
 }
 h1 {
   margin: 20px 0;
@@ -99,7 +104,6 @@ h1 {
 form {
   display: flex;
   flex-flow: column nowrap;
-  width: 300px;
 }
 fieldset {
   flex: 1;
@@ -111,7 +115,7 @@ label {
   margin-top: 10px;
 }
 input {
-  width: 300px;
+  width: 600px;
 }
 button {
   margin: 20px 0;

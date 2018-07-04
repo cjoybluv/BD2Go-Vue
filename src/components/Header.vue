@@ -6,7 +6,7 @@
     </div>
     <div class="right">
       <router-link to="/profile">
-        <font-awesome-icon icon="user"  class="pointer " />
+        <font-awesome-icon icon="user"  class="pointer fa-2x right" />
       </router-link>
     </div>
   </div>
