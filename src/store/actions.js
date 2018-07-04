@@ -37,8 +37,8 @@ export default {
     return new Promise((resolve, reject) => {
       getUser(payload).then(user => {
         commit(USER_SUCCESS, user.body)
-        if (user.body.contactId) {
-          dispatch('fetchMe', user.body.contactId)
+        if (user.body.meContactId) {
+          dispatch('fetchMe', user.body.meContactId)
         }
         dispatch('fetchContacts', user.body._id)
       }).catch(err => {
@@ -74,7 +74,7 @@ export default {
       })
     })
   },
-  fetchMe: ({ commit }, payload) => {
+  fetchMe: ({ commit }, payload) => { // payload = Contact._id to get = currentUser.meContactId
     console.log('actions-fetchMe', payload)
     commit(CONTACT_REQUEST, payload)
     return new Promise((resolve, reject) => {

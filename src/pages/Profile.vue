@@ -49,6 +49,7 @@ export default {
   methods: {
     handleSubmit () {
       console.log('Profile-handleSubmit')
+      this.$router.push('/')
     },
     meUpdated (me) {
       console.log('Profile-meUpdated', me)
@@ -78,6 +79,7 @@ export default {
     ])
   },
   mounted () {
+    console.log('Profile-mounted')
     this.user = this.currentUser
     this.$refs.username.focus()
   }
