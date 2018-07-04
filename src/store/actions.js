@@ -3,8 +3,10 @@ import {
   postLogin,
   postSignup,
   getContacts,
+  getContact,
   postContact,
-  putContact
+  putContact,
+  putUser
 } from '../api/api'
 
 import {
@@ -14,6 +16,9 @@ import {
   SIGNUP_SUCCESS,
   USER_REQUEST,
   USER_SUCCESS,
+  CONTACT_REQUEST,
+  CONTACT_SUCCESS,
+  SET_ME,
   CONTACTS_REQUEST,
   CONTACTS_SUCCESS,
   SELECT_ITEM,
@@ -21,7 +26,9 @@ import {
   ADD_CONTACT_REQUEST,
   ADD_CONTACT_SUCCESS,
   UPDATE_CONTACT_REQUEST,
-  UPDATE_CONTACT_SUCCESS
+  UPDATE_CONTACT_SUCCESS,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS
 } from './mutation-types'
 
 export default {
@@ -30,6 +37,9 @@ export default {
     return new Promise((resolve, reject) => {
       getUser(payload).then(user => {
         commit(USER_SUCCESS, user.body)
+        if (user.body.contactId) {
+          dispatch('fetchMe', user.body.contactId)
+        }
         dispatch('fetchContacts', user.body._id)
       }).catch(err => {
         reject(err)
@@ -64,6 +74,19 @@ export default {
       })
     })
   },
+  fetchMe: ({ commit }, payload) => {
+    console.log('actions-fetchMe', payload)
+    commit(CONTACT_REQUEST, payload)
+    return new Promise((resolve, reject) => {
+      getContact(payload).then(function (data) {
+        commit(CONTACT_SUCCESS, data.body)
+        commit(SET_ME, data.body)
+        resolve(data)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  },
   fetchContacts: ({ commit }, payload) => {
     commit(CONTACTS_REQUEST, payload)
     return new Promise((resolve, reject) => {
@@ -91,6 +114,18 @@ export default {
     return new Promise((resolve, reject) => {
       putContact(payload).then(function (data) {
         commit(UPDATE_CONTACT_SUCCESS, data.body)
+        resolve(data)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  },
+  updateUser: ({ commit }, payload) => {
+    console.log('updateUser', payload)
+    commit(UPDATE_USER_REQUEST, payload)
+    return new Promise((resolve, reject) => {
+      putUser(payload).then(function (data) {
+        commit(UPDATE_USER_SUCCESS, data.body)
         resolve(data)
       }).catch(err => {
         reject(err)

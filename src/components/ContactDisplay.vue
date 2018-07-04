@@ -49,7 +49,8 @@ export default {
         ownerId: '',
         name: '',
         email: '',
-        phones: []
+        phones: [],
+        relationships: []
       }
     }
   },

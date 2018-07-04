@@ -35,6 +35,12 @@ export default {
   locationDisplay: {
     title: 'Where'
   },
+  profile: {
+    title: 'Please update your Profile',
+    username: 'Username',
+    email: 'Email',
+    update: 'Update'
+  },
   signup: {
     title: 'Please Signup',
     username: 'Username',

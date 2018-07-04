@@ -51,6 +51,10 @@ export default {
   data () {
     return {
       formContact: {
+        name: '',
+        email: '',
+        phones: [],
+        relationships: [],
         ...this.contact
       },
       phoneForm: {

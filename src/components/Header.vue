@@ -5,7 +5,9 @@
       <h5>by {{ language.us }}</h5>
     </div>
     <div class="right">
-      <h1>{{ user && user.email }} </h1>
+      <router-link to="/profile">
+        <font-awesome-icon icon="user"  class="pointer " />
+      </router-link>
     </div>
   </div>
 </template>

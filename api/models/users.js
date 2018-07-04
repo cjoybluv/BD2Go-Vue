@@ -13,6 +13,9 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: [true, 'password field is required']
+  },
+  meContactId: {
+    type: Schema.Types.ObjectId
   }
 })
 

@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import Home from '@/pages/Home'
 import Login from '@/pages/Login'
 import Signup from '@/pages/Signup'
+import Profile from '@/pages/Profile'
+
 import {store} from '../store/store.js'
 
 Vue.use(Router)
@@ -26,6 +28,12 @@ const router = new Router({
       name: 'Signup',
       component: Signup,
       meta: {requiresAuth: false}
+    },
+    {
+      path: '/profile',
+      name: 'Profile',
+      component: Profile,
+      meta: {requiresAuth: true}
     }
   ],
   mode: 'history'

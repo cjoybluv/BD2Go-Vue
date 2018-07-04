@@ -26,8 +26,10 @@ const state = {
   user: {
     _id: '',
     email: '',
-    username: ''
+    username: '',
+    meContactId: ''
   },
+  me: {},
   token: null,
   isAuthenticated: false
 }
