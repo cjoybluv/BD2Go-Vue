@@ -1,7 +1,6 @@
 const express = require('express')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
-const findIndex = require('lodash.findindex')
 
 const router = express.Router()
 
@@ -160,7 +159,7 @@ router.post('/setRelationship', verifyToken, (req, res, next) => {
         sibling: [],
         child: []
       },
-      ...host.body
+      ...host._doc
     }
     updatedHost.node[nodeInfo.hostType].push({
       label: nodeInfo.targetLabels[0],
@@ -174,25 +173,27 @@ router.post('/setRelationship', verifyToken, (req, res, next) => {
             sibling: [],
             child: []
           },
-          ...target.body
+          ...target._doc
         }
         updatedTarget.node[nodeInfo.targetType].push({
           label,
           contactId: hostId
         })
         Contact.findByIdAndUpdate({_id: targetId}, updatedTarget).then(() => {
-          res.json({ message: 'all set' })
+          res.json({
+            message: 'all set: ' + updatedHost.name + ' is ' + label + ' of ' + updatedTarget.name
+          })
         }).catch(error => {
-          res.status(422).json({error})
+          res.status(422).json({error: 'target not updated: ' + error})
         })
       }).catch(error => {
-        res.status(422).json({error})
+        res.status(422).json({error: 'targetId not found: ' + error})
       })
     }).catch(error => {
-      res.status(422).json({error})
+      res.status(422).json({error: 'hostId not updated: ' + error})
     })
   }).catch(error => {
-    res.sStatus(422).json({error})
+    res.status(422).json({error: 'hostId not found: ' + error})
   })
 })
 
