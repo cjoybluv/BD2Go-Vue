@@ -124,6 +124,7 @@ router.put('/users/:id', verifyToken, (req, res, next) => {
 router.post('/setRelationship', verifyToken, (req, res, next) => {
   const { hostId, label, targetId } = req.body
   const nodeInfo = getNodeInfo(label)
+  if (!nodeInfo) res.json({error: 'unable to find relationship label'})
 
   Contact.findById(hostId).then(host => {
     const updatedHost = {
