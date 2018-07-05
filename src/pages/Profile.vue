@@ -50,24 +50,20 @@ export default {
   },
   methods: {
     handleSubmit () {
-      console.log('Profile-handleSubmit')
       this.$router.push('/')
     },
     meUpdated (me) {
-      console.log('Profile-meUpdated', me)
       if (me._id) {
         this.updateContact(me).then(me => {
           this.fetchMe(me.body._id)
         })
       } else {
         this.addContact(me).then(me => {
-          console.log('pre-fetch on else', me)
           this.fetchMe(me.body._id).then(me => {
             const updatedUser = {
               ...this.currentUser,
               meContactId: me.body._id
             }
-            console.log('pre-updateUser call', updatedUser)
             this.updateUser(updatedUser)
           })
         })
@@ -81,7 +77,6 @@ export default {
     ])
   },
   mounted () {
-    console.log('Profile-mounted')
     this.user = this.currentUser
     this.$refs.username.focus()
   }

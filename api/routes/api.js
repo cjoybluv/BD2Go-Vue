@@ -144,6 +144,11 @@ router.post('/setRelationship', verifyToken, (req, res, next) => {
           label: hostLabel,
           contactId: hostId
         })
+        updatedTarget.relationships.push({
+          hostLabel: targetLabel,
+          targetContactId: hostId,
+          targetLabel: hostLabel
+        })
         Contact.findByIdAndUpdate({_id: targetId}, updatedTarget).then(() => {
           res.json({
             message: 'all set: ' + updatedHost.name + ' is ' + hostLabel + ' of ' + updatedTarget.name + ', is ' + targetLabel + ' of ' + updatedHost.name

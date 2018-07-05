@@ -121,7 +121,6 @@ export default {
     })
   },
   updateContact: ({ commit, state }, payload) => {
-    console.log('updateContact', state)
     commit(UPDATE_CONTACT_REQUEST, payload)
     return new Promise((resolve, reject) => {
       getContact(payload._id).then(data => {

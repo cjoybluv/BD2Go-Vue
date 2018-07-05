@@ -64,7 +64,6 @@ export function postContact (payload) {
 
 export function putContact (payload) {
   return new Promise((resolve, reject) => {
-    console.log('putContact', payload)
     Vue.http.put(PATHNAME + '/contacts/' + payload._id, payload).then(function (data) {
       resolve(data)
     }).catch(err => {
