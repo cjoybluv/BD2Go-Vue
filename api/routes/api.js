@@ -122,9 +122,7 @@ router.put('/users/:id', verifyToken, (req, res, next) => {
 })
 
 router.post('/setRelationship', verifyToken, (req, res, next) => {
-  const { hostId, label, targetId } = req.body
-  const nodeInfo = getNodeInfo(label)
-  if (!nodeInfo) res.json({error: 'unable to find relationship label'})
+  const { hostId, hostLabel, hostType, targetId, targetLabel, targetType } = req.body
 
   Contact.findById(hostId).then(host => {
     const updatedHost = {
@@ -135,8 +133,8 @@ router.post('/setRelationship', verifyToken, (req, res, next) => {
       },
       ...host._doc
     }
-    updatedHost.node[nodeInfo.hostType].push({
-      label: nodeInfo.targetLabels[0],
+    updatedHost.node[targetType].push({
+      label: targetLabel,
       contactId: targetId
     })
     Contact.findByIdAndUpdate({_id: hostId}, updatedHost).then(() => {
@@ -149,13 +147,13 @@ router.post('/setRelationship', verifyToken, (req, res, next) => {
           },
           ...target._doc
         }
-        updatedTarget.node[nodeInfo.targetType].push({
-          label,
+        updatedTarget.node[hostType].push({
+          label: hostLabel,
           contactId: hostId
         })
         Contact.findByIdAndUpdate({_id: targetId}, updatedTarget).then(() => {
           res.json({
-            message: 'all set: ' + updatedHost.name + ' is ' + label + ' of ' + updatedTarget.name
+            message: 'all set: ' + updatedHost.name + ' is ' + hostLabel + ' of ' + updatedTarget.name + ', is ' + targetLabel + ' of ' + updatedHost.name
           })
         }).catch(error => {
           res.status(422).json({error: 'target not updated: ' + error})

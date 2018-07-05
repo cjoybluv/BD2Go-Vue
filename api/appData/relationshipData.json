@@ -1,0 +1,93 @@
+{
+	"key": "relationshipData",
+	"data": [
+        {
+            "hostLabels": [
+                "child",
+                "son",
+                "daughter"
+            ],
+            "hostType": "child",
+            "targetLabels": [
+                "parent",
+                "father",
+                "mother",
+                "dad",
+                "mom"
+            ],
+            "targetType": "parent"
+        },
+        {
+            "hostLabels": [
+                "parent",
+                "father",
+                "mother",
+                "dad",
+                "mom"
+            ],
+            "hostType": "parent",
+            "targetLabels": [
+                "child",
+                "son",
+                "daughter"
+            ],
+            "targetType": "child"
+        },
+        {
+            "hostLabels": [
+                "brother",
+                "sister",
+                "sibling"
+            ],
+            "hostType": "sibling",
+            "targetLabels": [
+                "sibling",
+                "sister",
+                "brother"
+            ],
+            "targetType": "sibling"
+        },
+        {
+            "hostLabels": [
+                "supervisor",
+                "manager",
+                "boss"
+            ],
+            "hostType": "parent",
+            "targetLabels": [
+                "employee",
+                "direct report",
+                "staff"
+            ],
+            "targetType": "child"
+        },
+        {
+            "hostLabels": [
+                "employee",
+                "direct report",
+                "staff"
+            ],
+            "hostType": "child",
+            "targetLabels": [
+                "supervisor",
+                "manager",
+                "boss"
+            ],
+            "targetType": "parent"
+        },
+        {
+            "hostLabels": [
+                "co-worker",
+                "teammate",
+                "associate"
+            ],
+            "hostType": "sibling",
+            "targetLabels": [
+                "co-worker",
+                "teammate",
+                "associate"
+            ],
+            "targetType": "sibling"
+        }
+    ]
+}
