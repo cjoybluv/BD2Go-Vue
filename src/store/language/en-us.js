@@ -19,7 +19,7 @@ export default {
     add: 'Add',
     submit: 'Submit'
   },
-  contactItemDisplay: {
+  itemDisplay: {
     title: 'When & What'
   },
   header: {

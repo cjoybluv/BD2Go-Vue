@@ -7,8 +7,6 @@ import mutations from './mutations'
 
 // mock data
 import appData from './mockData/appData'
-import contactItems from './mockData/contactItems'
-import locations from './mockData/locations'
 
 // externalized strings
 import language from './language/en-us'
@@ -17,13 +15,13 @@ const state = {
   loading: false,
   appData,
   contentControls: {
-    selectedItemId: 1, // contactItem.id of selected Item
+    selectedItemId: 1, // item._id of selected Item
     selectedContactId: null // contact._id of selected Contact
   },
   language: language,
   contacts: [],
-  contactItems,
-  locations,
+  items: [],
+  locations: [],
   user: {
     _id: '',
     email: '',

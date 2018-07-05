@@ -1,5 +1,5 @@
 <template>
-  <div id="contact-item-display">
+  <div id="item-display">
     <h2>{{ language.title }}</h2>
     <ul>
       <li v-for="item in sortedItems"
@@ -21,18 +21,18 @@
 import { mapActions, mapGetters } from 'Vuex'
 
 export default {
-  name: 'ContactItemDisplay',
+  name: 'ItemDisplay',
   computed: {
     sortedItems () {
-      return this.contactItems.slice().sort((a, b) => {
+      return this.items.slice().sort((a, b) => {
         return a.dateTime >= b.dateTime
       })
     },
     language () {
-      return this.$store.state.language.contactItemDisplay
+      return this.$store.state.language.itemDisplay
     },
     ...mapGetters([
-      'contactItems'
+      'items'
     ])
   },
   methods: {

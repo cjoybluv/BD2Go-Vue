@@ -1,30 +1,30 @@
 import getters from '../getters'
 
 describe('getters', () => {
-  test('contactItems returns state.contactItems', () => {
+  test('items returns state.items', () => {
     const state = {
-      contactItems: [
+      items: [
         {id: 1},
         {id: 2}
       ]
     }
-    const result = getters.contactItems(state)
+    const result = getters.items(state)
     expect(result.length).toEqual(2)
     result.forEach((contact, i) => {
-      expect(contact).toEqual(state.contactItems[i])
+      expect(contact).toEqual(state.items[i])
     })
   })
 
-  test('selectedContactItem returns Item for selectedItemId', () => {
+  test('selectedItem returns Item for selectedItemId', () => {
     const state = {
-      contactItems: [
+      items: [
         {id: 1},
         {id: 2}
       ],
       contentControls: { selectedItemId: 2 }
     }
-    const result = getters.selectedContactItem(state)
-    expect(result).toBe(state.contactItems[1])
+    const result = getters.selectedItem(state)
+    expect(result).toBe(state.items[1])
   })
 
   test('selectedContact returns Contact for selectedContactId', () => {

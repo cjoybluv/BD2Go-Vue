@@ -4,6 +4,8 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const SIGNUP_REQUEST = 'SIGNUP_REQUEST'
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCESS'
 
+export const SIGN_OUT = 'SIGN_OUT'
+
 export const USER_REQUEST = 'USER_REQUEST'
 export const USER_SUCCESS = 'USER_SUCCESS'
 
@@ -14,6 +16,9 @@ export const SET_ME = 'SET_ME'
 
 export const CONTACTS_REQUEST = 'CONTACTS_REQUEST'
 export const CONTACTS_SUCCESS = 'CONTACTS_SUCCESS'
+
+export const LOCATIONS_SUCCESS = 'LOCATIONS_SUCCESS'
+export const ITEMS_SUCCESS = 'ITEMS_SUCCESS'
 
 export const SELECT_ITEM = 'SELECT_ITEM'
 export const SELECT_CONTACT = 'SELECT_CONTACT'
