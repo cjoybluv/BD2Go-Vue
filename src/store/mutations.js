@@ -3,6 +3,7 @@ import {
   LOGIN_SUCCESS,
   SIGNUP_REQUEST,
   SIGNUP_SUCCESS,
+  SIGN_OUT,
   USER_REQUEST,
   USER_SUCCESS,
   CONTACT_REQUEST,
@@ -10,6 +11,8 @@ import {
   SET_ME,
   CONTACTS_REQUEST,
   CONTACTS_SUCCESS,
+  LOCATIONS_SUCCESS,
+  ITEMS_SUCCESS,
   SELECT_ITEM,
   SELECT_CONTACT,
   ADD_CONTACT_REQUEST,
@@ -28,7 +31,6 @@ export default {
     state.isAuthenticated = false
   },
   [LOGIN_SUCCESS]: (state, authData) => {
-    console.log('login_success', authData)
     state.user = authData.user
     state.token = authData.token
     state.isAuthenticated = true
@@ -40,6 +42,17 @@ export default {
   },
   [SIGNUP_SUCCESS]: (state, data) => {
     state.user = data.user
+  },
+  [SIGN_OUT]: (state) => {
+    state.contacts = []
+    state.contactItems = []
+    state.locations = []
+    state.user = null
+    state.me = null
+    state.token = null
+    state.isAuthenticated = false
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
   },
   [USER_REQUEST]: (state) => {
     state.user = null
@@ -63,6 +76,12 @@ export default {
   [CONTACTS_SUCCESS]: (state, contacts) => {
     state.contacts = contacts
     state.loading = false
+  },
+  [LOCATIONS_SUCCESS]: (state, locations) => {
+    state.locations = locations
+  },
+  [ITEMS_SUCCESS]: (state, items) => {
+    state.items = items
   },
   [SELECT_ITEM]: (state, itemId) => {
     state.contentControls.selectedItemId = itemId

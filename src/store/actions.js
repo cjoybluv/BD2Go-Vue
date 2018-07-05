@@ -21,6 +21,7 @@ import {
   SET_ME,
   CONTACTS_REQUEST,
   CONTACTS_SUCCESS,
+  LOCATIONS_SUCCESS,
   SELECT_ITEM,
   SELECT_CONTACT,
   ADD_CONTACT_REQUEST,
@@ -28,8 +29,12 @@ import {
   UPDATE_CONTACT_REQUEST,
   UPDATE_CONTACT_SUCCESS,
   UPDATE_USER_REQUEST,
-  UPDATE_USER_SUCCESS
+  UPDATE_USER_SUCCESS,
+  ITEMS_SUCCESS
 } from './mutation-types'
+
+import locations from './mockData/locations'
+import items from './mockData/items'
 
 export default {
   fetchUser: ({ commit, dispatch }, payload) => {
@@ -41,6 +46,8 @@ export default {
           dispatch('fetchMe', user.body.meContactId)
         }
         dispatch('fetchContacts', user.body._id)
+        dispatch('fetchLocations', locations)
+        dispatch('fetchItems', items)
       }).catch(err => {
         reject(err)
       })
@@ -119,6 +126,12 @@ export default {
         reject(err)
       })
     })
+  },
+  fetchLocations: ({ commit }, payload) => {
+    commit(LOCATIONS_SUCCESS, payload)
+  },
+  fetchItems: ({ commit }, payload) => {
+    commit(ITEMS_SUCCESS, payload)
   },
   updateUser: ({ commit }, payload) => {
     console.log('updateUser', payload)

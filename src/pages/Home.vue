@@ -2,7 +2,7 @@
   <section id="home">
     <section id="main">
       <panel>
-          <contact-item-display></contact-item-display>
+          <item-display></item-display>
       </panel>
       <panel>
           <contact-display></contact-display>
@@ -13,7 +13,7 @@
     </section>
     <section id="viewer">
       <viewer>
-        <contact-item v-if="selectedContactItem"></contact-item>
+        <item v-if="selectedItem"></item>
         <contact v-if="selectedContact"></contact>
       </viewer>
     </section>
@@ -24,27 +24,27 @@
 import { mapGetters } from 'Vuex'
 
 import panel from '../components/Panel.vue'
-import contactItemDisplay from '../components/ContactItemDisplay.vue'
+import itemDisplay from '../components/ItemDisplay.vue'
 import contactDisplay from '../components/ContactDisplay.vue'
 import locationDisplay from '../components/LocationDisplay.vue'
 import viewer from '../components/Viewer.vue'
-import contactItem from '../components/ContactItem.vue'
+import item from '../components/Item.vue'
 import contact from '../components/Contact.vue'
 
 export default {
   name: 'Home',
   components: {
     'panel': panel,
-    'contact-item-display': contactItemDisplay,
+    'item-display': itemDisplay,
     'contact-display': contactDisplay,
     'location-display': locationDisplay,
     'viewer': viewer,
-    'contact-item': contactItem,
+    'item': item,
     'contact': contact
   },
   computed: {
     ...mapGetters([
-      'selectedContactItem',
+      'selectedItem',
       'selectedContact'
     ])
   }
