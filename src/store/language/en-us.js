@@ -14,8 +14,9 @@ export default {
     phoneLabelPlaceholder: 'Enter label (mobile/work...)',
     phoneNumberPlaceholder: 'Enter a phone#',
     addRelationshipLabel: 'Add new Relationship',
-    relationshipLabelPlaceholder: 'Enter Label (friend/co-worker...)',
-    relationshipContactPlaceholder: 'Enter Contact Name',
+    hostLabelPlaceholder: 'Host Label',
+    targetContactPlaceholder: 'Target Contact',
+    targetLabelPlaceholder: 'Target Label',
     add: 'Add',
     submit: 'Submit'
   },

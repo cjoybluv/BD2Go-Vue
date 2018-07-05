@@ -31,8 +31,9 @@ const ContactSchema = new Schema({
   ],
   relationships: [
     {
-      relatedContactId: Schema.Types.Mixed,
-      relationshipLabel: String
+      hostLabel: String,
+      targetContactId: Schema.Types.ObjectId,
+      targetLabel: String
     }
   ],
   social: [

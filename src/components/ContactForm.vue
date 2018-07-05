@@ -24,9 +24,10 @@
 
       <b-form-group :label="language.addRelationshipLabel">
         <b-input-group>
-          <b-form-input v-model="relationshipForm.relationshipLabel" slot="prepend" :placeholder="language.relationshipLabelPlaceholder" size="sm"/>
-          <b-form-input v-model="relationshipForm.relationshipContact" :placeholder="language.relationshipContactPlaceholder" size="sm"/>
-          <b-btn @click="addRelationship" slot="append" variant="info">{{language.add}}</b-btn>
+          <b-form-input v-model="relationshipForm.hostLabel" :placeholder="language.hostLabelPlaceholder" size="sm"/>
+          <b-form-input v-model="relationshipForm.targetContact" :placeholder="language.targetContactPlaceholder" size="sm"/>
+          <b-form-input v-model="relationshipForm.targetLabel" :placeholder="language.targetLabelPlaceholder" size="sm"/>
+          <b-btn @click="addRelationship" variant="info">{{language.add}}</b-btn>
         </b-input-group>
         <b-table striped hover :items="formContact.relationships"></b-table>
       </b-form-group>
@@ -46,6 +47,9 @@ export default {
     },
     language () {
       return this.$store.state.language.contactForm
+    },
+    me () {
+      return this.$store.state.me
     }
   },
   data () {
@@ -62,8 +66,9 @@ export default {
         phoneNumber: ''
       },
       relationshipForm: {
-        relationshipLabel: '',
-        relationshipContact: ''
+        hostLabel: '',
+        targetContact: '',
+        targetLabel: ''
       }
     }
   },
@@ -86,25 +91,27 @@ export default {
       this.phoneForm.phoneNumber = ''
     },
     addRelationship () {
-      if (!this.relationshipForm.relationshipLabel || !this.relationshipForm.relationshipContact) return
+      if (!this.relationshipForm.hostLabel || !this.relationshipForm.targetContact) return
       const relationship = { ...this.relationshipForm }
       let relatedContact
-      if (relationship.relationshipContact === '@me') {
-        relatedContact = { _id: '@me' }
+      if (relationship.targetContact === '@me') {
+        relatedContact = this.me
       } else {
         relatedContact = this.contacts.find(contact => {
-          return contact.name.includes(relationship.relationshipContact)
+          return contact.name.includes(relationship.targetContact)
         })
       }
       if (relatedContact) {
         this.formContact.relationships.push(
           {
-            relationshipLabel: relationship.relationshipLabel,
-            relatedContactId: relatedContact._id
+            hostLabel: relationship.hostLabel,
+            targetContactId: relatedContact._id,
+            targetLabel: relationship.targetLabel
           }
         )
-        this.relationshipForm.relationshipLabel = ''
-        this.relationshipForm.relationshipContact = ''
+        this.relationshipForm.hostLabel = ''
+        this.relationshipForm.targetContact = ''
+        this.relationshipForm.targetLabel = ''
       }
     },
     clearForm () {
@@ -119,8 +126,9 @@ export default {
         phoneNumber: ''
       }
       this.relationshipForm = {
-        relationshipLabel: '',
-        relationshipContact: ''
+        hostLabel: '',
+        targetContact: null,
+        targetLabel: ''
       }
     },
     submitForm () {

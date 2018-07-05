@@ -12,13 +12,6 @@ const JWT_SECRET_KEY = 'getConnected'
 
 const saltRounds = 10
 
-// let relationshipData
-// AppData.findOne({key: 'relationshipData'}).then(appRec => {
-//   relationshipData = appRec.data
-// }).catch(error => {
-//   console.log('ERROR: UNABLE TO GET AppData.relationshipData: ' + error)
-// })
-
 router.post('/auth/signup', function (req, res, next) {
   const password = req.body.password
   bcrypt.hash(password, saltRounds, function (err, hash) {
@@ -151,6 +144,11 @@ router.post('/setRelationship', verifyToken, (req, res, next) => {
           label: hostLabel,
           contactId: hostId
         })
+        updatedTarget.relationships.push({
+          hostLabel: targetLabel,
+          targetContactId: hostId,
+          targetLabel: hostLabel
+        })
         Contact.findByIdAndUpdate({_id: targetId}, updatedTarget).then(() => {
           res.json({
             message: 'all set: ' + updatedHost.name + ' is ' + hostLabel + ' of ' + updatedTarget.name + ', is ' + targetLabel + ' of ' + updatedHost.name
@@ -166,6 +164,14 @@ router.post('/setRelationship', verifyToken, (req, res, next) => {
     })
   }).catch(error => {
     res.status(422).json({error: 'hostId not found: ' + error})
+  })
+})
+
+router.get('/appData/:key', verifyToken, (req, res, next) => {
+  AppData.findOne({key: req.params.key}).then(appRec => {
+    res.json(appRec)
+  }).catch(error => {
+    console.log('ERROR: UNABLE TO GET AppData.' + req.params.key + ': ' + error)
   })
 })
 
@@ -187,9 +193,5 @@ function verifyToken (req, res, next) {
     res.sendStatus('403')
   }
 }
-
-// function getNodeInfo (label) {
-//   return relationshipData[relationshipData.findIndex(rec => rec.hostLabels.indexOf(label) !== -1)]
-// }
 
 module.exports = router

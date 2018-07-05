@@ -36,7 +36,6 @@ export default {
   },
   methods: {
     signOut () {
-      console.log('signOut')
       this.$store.commit('SIGN_OUT')
       this.$router.push('/login')
     }
