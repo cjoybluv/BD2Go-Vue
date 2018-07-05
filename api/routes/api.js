@@ -12,12 +12,12 @@ const JWT_SECRET_KEY = 'getConnected'
 
 const saltRounds = 10
 
-let relationshipData
-AppData.findOne({key: 'relationshipData'}).then(appRec => {
-  relationshipData = appRec.data
-}).catch(error => {
-  console.log('ERROR: UNABLE TO GET AppData.relationshipData: ' + error)
-})
+// let relationshipData
+// AppData.findOne({key: 'relationshipData'}).then(appRec => {
+//   relationshipData = appRec.data
+// }).catch(error => {
+//   console.log('ERROR: UNABLE TO GET AppData.relationshipData: ' + error)
+// })
 
 router.post('/auth/signup', function (req, res, next) {
   const password = req.body.password
@@ -188,8 +188,8 @@ function verifyToken (req, res, next) {
   }
 }
 
-function getNodeInfo (label) {
-  return relationshipData[relationshipData.findIndex(rec => rec.hostLabels.indexOf(label) !== -1)]
-}
+// function getNodeInfo (label) {
+//   return relationshipData[relationshipData.findIndex(rec => rec.hostLabels.indexOf(label) !== -1)]
+// }
 
 module.exports = router
