@@ -6,16 +6,16 @@ import getters from './getters'
 import mutations from './mutations'
 
 // mock data
-import appData from './mockData/appData'
+// import appData from './mockData/appData'
 
 // externalized strings
 import language from './language/en-us'
 
 const state = {
   loading: false,
-  appData,
+  appData: {},
   contentControls: {
-    selectedItemId: 1, // item._id of selected Item
+    selectedItemId: null, // item._id of selected Item
     selectedContactId: null // contact._id of selected Contact
   },
   language: language,

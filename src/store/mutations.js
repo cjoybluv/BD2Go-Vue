@@ -21,10 +21,20 @@ import {
   UPDATE_CONTACT_SUCCESS,
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
-  SET_IS_AUTHENTICATED
+  SET_IS_AUTHENTICATED,
+  APP_DATA_REQUEST,
+  APP_DATA_SUCCESS
 } from './mutation-types'
 
 export default {
+  [APP_DATA_REQUEST]: (state, key) => {
+    state.appData[key] = null
+    state.loading = true
+  },
+  [APP_DATA_SUCCESS]: (state, appData) => {
+    state.loading = false
+    state.appData[appData.key] = appData.data
+  },
   [LOGIN_REQUEST]: (state) => {
     state.user = null
     state.token = null

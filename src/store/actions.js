@@ -6,7 +6,9 @@ import {
   getContact,
   postContact,
   putContact,
-  putUser
+  putUser,
+  getAppData,
+  postSetRelationship
 } from '../api/api'
 
 import {
@@ -30,7 +32,9 @@ import {
   UPDATE_CONTACT_SUCCESS,
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
-  ITEMS_SUCCESS
+  ITEMS_SUCCESS,
+  APP_DATA_REQUEST,
+  APP_DATA_SUCCESS
 } from './mutation-types'
 
 import locations from './mockData/locations'
@@ -48,6 +52,7 @@ export default {
         dispatch('fetchContacts', user.body._id)
         dispatch('fetchLocations', locations)
         dispatch('fetchItems', items)
+        dispatch('fetchAppData', 'relationshipData')
       }).catch(err => {
         reject(err)
       })
@@ -82,7 +87,6 @@ export default {
     })
   },
   fetchMe: ({ commit }, payload) => { // payload = Contact._id to get = currentUser.meContactId
-    console.log('actions-fetchMe', payload)
     commit(CONTACT_REQUEST, payload)
     return new Promise((resolve, reject) => {
       getContact(payload).then(function (data) {
@@ -116,14 +120,36 @@ export default {
       })
     })
   },
-  updateContact: ({ commit }, payload) => {
+  updateContact: ({ commit, state }, payload) => {
+    console.log('updateContact', state)
     commit(UPDATE_CONTACT_REQUEST, payload)
     return new Promise((resolve, reject) => {
-      putContact(payload).then(function (data) {
-        commit(UPDATE_CONTACT_SUCCESS, data.body)
-        resolve(data)
-      }).catch(err => {
-        reject(err)
+      getContact(payload._id).then(data => {
+        const origContact = data.body
+        putContact(payload).then(data => {
+          const updatedContact = data.body
+          commit(UPDATE_CONTACT_SUCCESS, updatedContact)
+          const relationshipData = state.appData.relationshipData
+          updatedContact.relationships.forEach(relationship => {
+            if (origContact.relationships.findIndex(origRel => origRel.targetContactId === relationship.targetContactId) === -1) {
+              const nodeInfo = getNodeInfo(relationshipData, relationship.hostLabel)
+              const payload = {
+                hostId: state.me._id,
+                hostLabel: relationship.hostLabel,
+                hostType: nodeInfo.hostType,
+                targetId: relationship.targetContactId,
+                targetLabel: relationship.targetLabel,
+                targetType: nodeInfo.targetType
+              }
+              postSetRelationship(payload).then(message => {
+                console.log(message)
+              })
+            }
+          })
+          resolve(data)
+        }).catch(err => {
+          reject(err)
+        })
       })
     })
   },
@@ -134,7 +160,6 @@ export default {
     commit(ITEMS_SUCCESS, payload)
   },
   updateUser: ({ commit }, payload) => {
-    console.log('updateUser', payload)
     commit(UPDATE_USER_REQUEST, payload)
     return new Promise((resolve, reject) => {
       putUser(payload).then(function (data) {
@@ -150,5 +175,20 @@ export default {
   },
   viewContact: ({ commit }, payload) => {
     commit(SELECT_CONTACT, payload)
+  },
+  fetchAppData: ({ commit }, payload) => {
+    commit(APP_DATA_REQUEST, payload)
+    return new Promise((resolve, reject) => {
+      getAppData(payload).then(data => {
+        commit(APP_DATA_SUCCESS, data.body)
+        resolve(data)
+      }).catch(err => {
+        reject(err)
+      })
+    })
   }
+}
+
+function getNodeInfo (relationshipData, label) {
+  return relationshipData[relationshipData.findIndex(rec => rec.hostLabels.indexOf(label) !== -1)]
 }
