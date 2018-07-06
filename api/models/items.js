@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+// const moment = require('moment')
+
 const Schema = mongoose.Schema
 
 const NodeSchema = new Schema({
@@ -25,12 +27,16 @@ const ItemSchema = new Schema({
   statusHistory: [
     {
       newStatus: String,
-      dateSet: Date
+      dateSet: {
+        type: Date
+      }
     }
   ],
   dates: [
     {
-      date: Date,
+      date: {
+        type: Date
+      },
       dateLabel: String
     }
   ],

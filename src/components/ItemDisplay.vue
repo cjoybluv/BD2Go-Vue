@@ -8,10 +8,9 @@
         <h4>
           <span class="soft-text">{{ item.type | allCaps }}</span>
           &nbsp;
-          <span>{{ item.dateTime | moment("MM-DD-YYYY HH:mm") }}</span>
+          <span>{{ item.displayDate | moment("MM-DD-YYYY HH:mm") }}</span>
         </h4>
-        <h5>{{ item.contactName }}</h5>
-        <p>{{ item.subject }}</p>
+        <h5>{{ item.subject }}</h5>
       </li>
     </ul>
   </div>
@@ -24,8 +23,8 @@ export default {
   name: 'ItemDisplay',
   computed: {
     sortedItems () {
-      return this.items.slice().sort((a, b) => {
-        return a.dateTime >= b.dateTime
+      return this.displayItems.slice().sort((a, b) => {
+        return a.displayDate >= b.displayDate
       })
     },
     language () {
@@ -35,7 +34,7 @@ export default {
       return this.$store.state.user && this.$store.state.user._id
     },
     ...mapGetters([
-      'items'
+      'displayItems'
     ])
   },
   methods: {
