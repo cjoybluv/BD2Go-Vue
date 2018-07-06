@@ -16,7 +16,7 @@ const saltRounds = 10
 router.post('/auth/signup', (req, res, next) => {
   const password = req.body.password
   bcrypt.hash(password, saltRounds, function (error, hash) {
-    if (err) res.status(500).json({error})
+    if (error) res.status(500).json({error})
     const newUser = {
       username: req.body.username,
       email: req.body.email,
