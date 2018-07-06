@@ -72,6 +72,116 @@ export function putContact (payload) {
   })
 }
 
+export function deleteContact (payload) {
+  return new Promise((resolve, reject) => {
+    Vue.http.delete(PATHNAME + '/contacts/' + payload._id).then(function (data) {
+      resolve(data)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
+export function getItems (payload) {
+  return new Promise((resolve, reject) => {
+    Vue.http.get(PATHNAME + '/items?ownerId=' + payload).then(function (data) {
+      resolve(data)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
+export function getItem (payload) {
+  return new Promise((resolve, reject) => {
+    Vue.http.get(PATHNAME + '/items/' + payload).then(function (data) {
+      resolve(data)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
+export function postItem (payload) {
+  return new Promise((resolve, reject) => {
+    Vue.http.post(PATHNAME + '/items', payload).then(function (data) {
+      resolve(data)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
+export function putItem (payload) {
+  return new Promise((resolve, reject) => {
+    Vue.http.put(PATHNAME + '/items/' + payload._id, payload).then(function (data) {
+      resolve(data)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
+export function deleteItem (payload) {
+  return new Promise((resolve, reject) => {
+    Vue.http.delete(PATHNAME + '/items/' + payload._id).then(function (data) {
+      resolve(data)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
+export function getLocations (payload) {
+  return new Promise((resolve, reject) => {
+    Vue.http.get(PATHNAME + '/locations?ownerId=' + payload).then(function (data) {
+      resolve(data)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
+export function getLocation (payload) {
+  return new Promise((resolve, reject) => {
+    Vue.http.get(PATHNAME + '/locations/' + payload).then(function (data) {
+      resolve(data)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
+export function postLocation (payload) {
+  return new Promise((resolve, reject) => {
+    Vue.http.post(PATHNAME + '/locations', payload).then(function (data) {
+      resolve(data)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
+export function putLocation (payload) {
+  return new Promise((resolve, reject) => {
+    Vue.http.put(PATHNAME + '/locations/' + payload._id, payload).then(function (data) {
+      resolve(data)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
+export function deleteLocation (payload) {
+  return new Promise((resolve, reject) => {
+    Vue.http.delete(PATHNAME + '/locations/' + payload._id).then(function (data) {
+      resolve(data)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
 export function putUser (payload) {
   return new Promise((resolve, reject) => {
     Vue.http.put(PATHNAME + '/users/' + payload._id, payload).then(function (data) {

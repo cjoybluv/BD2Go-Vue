@@ -11,8 +11,10 @@ import {
   SET_ME,
   CONTACTS_REQUEST,
   CONTACTS_SUCCESS,
-  LOCATIONS_SUCCESS,
+  ITEMS_REQUEST,
   ITEMS_SUCCESS,
+  LOCATIONS_REQUEST,
+  LOCATIONS_SUCCESS,
   SELECT_ITEM,
   SELECT_CONTACT,
   ADD_CONTACT_REQUEST,
@@ -87,11 +89,19 @@ export default {
     state.contacts = contacts
     state.loading = false
   },
-  [LOCATIONS_SUCCESS]: (state, locations) => {
-    state.locations = locations
+  [ITEMS_REQUEST]: (state, ownerId) => {
+    state.items = []
+    state.loading = true
   },
   [ITEMS_SUCCESS]: (state, items) => {
     state.items = items
+  },
+  [LOCATIONS_REQUEST]: (state, ownerId) => {
+    state.locations = []
+    state.loading = false
+  },
+  [LOCATIONS_SUCCESS]: (state, locations) => {
+    state.locations = locations
   },
   [SELECT_ITEM]: (state, itemId) => {
     state.contentControls.selectedItemId = itemId
