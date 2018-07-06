@@ -144,8 +144,10 @@ export default {
                 targetLabel: relationship.targetLabel,
                 targetType: nodeInfo.targetType
               }
-              postSetRelationship(payload).then(message => {
-                console.log(message)
+              postSetRelationship(payload).then(result => {
+                console.log(result.body.message)
+                commit(UPDATE_CONTACT_SUCCESS, result.body.updatedHost)
+                commit(UPDATE_CONTACT_SUCCESS, result.body.updatedTarget)
               })
             }
           })

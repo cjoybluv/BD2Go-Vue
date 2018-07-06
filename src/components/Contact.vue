@@ -1,18 +1,20 @@
 <template>
   <div class="viewer-content">
     <div class="tools float-right">
-      <font-awesome-icon icon="pencil-alt" @click="updateContact" class="pointer"/>
+      <font-awesome-icon icon="pencil-alt" @click="openContactForm" class="pointer"/>
     </div>
     <h4>{{ selectedContact.name }}</h4>
     <h5>{{ selectedContact.email }}</h5>
     <h5>{{ language.phones }} </h5>
     <b-table
       :items="selectedContact.phones"
-      :thead-class="'hidden'"
       :fields="phoneTableFields">
     </b-table>
     <b-table :items="selectedContact.locations"></b-table>
-    <b-table :items="selectedContact.relationships"></b-table>
+    <b-table
+      :items="selectedContact.relationships"
+      :fields="relationshipTableFields">
+    </b-table>
     <b-table :items="selectedContact.social"></b-table>
     <b-modal
       id="editContactForm"
@@ -60,11 +62,16 @@ export default {
           key: 'phoneNumber',
           label: 'Number'
         }
+      ],
+      relationshipTableFields: [
+        { key: 'targetContactId', label: 'Contact' },
+        { key: 'targetLabel', label: 'is' },
+        { key: 'hostLabel', label: 'to this' }
       ]
     }
   },
   methods: {
-    updateContact () {
+    openContactForm () {
       this.$store.commit(EDIT_CONTACT_REQUEST, this.selectedContact)
       this.$refs.editContactForm.show()
     },

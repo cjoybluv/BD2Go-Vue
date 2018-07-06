@@ -19,7 +19,11 @@
           <b-form-input v-model="phoneForm.phoneNumber" :placeholder="language.phoneNumberPlaceholder" size="sm"/>
           <b-btn @click="addPhone" slot="append" variant="info">{{language.add}}</b-btn>
         </b-input-group>
-        <b-table striped hover :items="editContact.phones"></b-table>
+        <b-table
+          striped hover
+          :items="editContact.phones"
+          :fields="phoneTableFields">
+        </b-table>
       </b-form-group>
 
       <b-form-group :label="language.addRelationshipLabel">
@@ -29,7 +33,11 @@
           <b-form-input v-model="relationshipForm.targetLabel" :placeholder="language.targetLabelPlaceholder" size="sm"/>
           <b-btn @click="addRelationship" variant="info">{{language.add}}</b-btn>
         </b-input-group>
-        <b-table striped hover :items="editContact.relationships"></b-table>
+        <b-table
+          striped hover
+          :items="editContact.relationships"
+          :fields="relationshipTableFields">
+        </b-table>
       </b-form-group>
 
       <b-btn class="float-right" variant="primary" @click="submitForm">{{language.submit}}</b-btn>
@@ -72,7 +80,22 @@ export default {
         hostLabel: '',
         targetContact: '',
         targetLabel: ''
-      }
+      },
+      phoneTableFields: [
+        {
+          key: 'phoneLabel',
+          label: 'Label'
+        },
+        {
+          key: 'phoneNumber',
+          label: 'Number'
+        }
+      ],
+      relationshipTableFields: [
+        { key: 'targetContactId', label: 'Contact' },
+        { key: 'targetLabel', label: 'is' },
+        { key: 'hostLabel', label: 'to this' }
+      ]
     }
   },
   props: {

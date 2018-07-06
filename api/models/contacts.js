@@ -7,8 +7,14 @@ const PhoneSchema = new Schema({
 })
 
 const NodeSchema = new Schema({
-  contactId: Schema.Types.ObjectId,
-  nodeLabel: String
+  contactId: {
+    type: Schema.Types.ObjectId,
+    required: [true, 'contact.node.*.contactId required']
+  },
+  nodeLabel: {
+    type: String,
+    lowercase: true
+  }
 })
 
 const ContactSchema = new Schema({
