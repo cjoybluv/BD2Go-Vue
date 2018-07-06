@@ -48,6 +48,8 @@ router.beforeEach((to, from, next) => {
       const authData = {token, user}
       store.commit(LOGIN_SUCCESS, authData)
       store.dispatch('fetchContacts', user._id)
+      store.dispatch('fetchItems', user._id)
+      store.dispatch('fetchLocations', user._id)
       if (user.meContactId) store.dispatch('fetchMe', user.meContactId)
     }
     if (!store.state.isAuthenticated) {
