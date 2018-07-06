@@ -7,6 +7,7 @@ const router = express.Router()
 const User = require('../models/users')
 const Contact = require('../models/contacts')
 const Item = require('../models/items')
+const Location = require('../models/locations')
 const AppData = require('../models/appData')
 
 const JWT_SECRET_KEY = 'getConnected'
@@ -105,8 +106,10 @@ router.put('/contacts/:id', verifyToken, (req, res, next) => {
       res.sendStatus(403)
     } else {
       Contact.findByIdAndUpdate({_id: req.params.id}, req.body).then(() => {
-        Contact.findOne({_id: req.params.id}).then(contact => {
+        Contact.findById(req.params.id).then(contact => {
           res.json(contact)
+        }).catch(error => {
+          res.json({error})
         })
       }).catch(error => {
         res.json({error})
@@ -176,9 +179,11 @@ router.put('/items/:id', verifyToken, (req, res, next) => {
     if (err) {
       res.sendStatus(403)
     } else {
-      Item.findByIdAndUpdate({_id: req.params.id}, req.body).then(function () {
-        Item.findOne({_id: req.params.id}).then(item => {
+      Item.findByIdAndUpdate({_id: req.params.id}, req.body).then(() => {
+        Item.findById(req.params.id).then(item => {
           res.json(item)
+        }).catch(error => {
+          res.json({error})
         })
       }).catch(error => {
         res.json({error})
@@ -194,6 +199,80 @@ router.delete('/items/:id', verifyToken, (req, res, next) => {
     } else {
       Item.findByIdAndDelete(req.params.id).then(item => {
         res.json(item)
+      }).catch(error => {
+        res.json({error})
+      })
+    }
+  })
+})
+
+router.get('/locations', verifyToken, (req, res, next) => {
+  jwt.verify(req.token, JWT_SECRET_KEY, (err, _authData) => {
+    if (err) {
+      res.sendStatus(403)
+    } else {
+      Location.find({ownerId: req.query.ownerId}).then(locations => {
+        res.json(locations)
+      }).catch(error => {
+        res.json({error})
+      })
+    }
+  })
+})
+
+router.get('/locations/:id', verifyToken, (req, res, next) => {
+  jwt.verify(req.token, JWT_SECRET_KEY, (err, _authData) => {
+    if (err) {
+      res.sendStatus(403)
+    } else {
+      Location.findById(req.params.id).then(location => {
+        res.json(location)
+      }).catch(error => {
+        res.json({error})
+      })
+    }
+  })
+})
+
+router.post('/locations', verifyToken, (req, res, next) => {
+  jwt.verify(req.token, JWT_SECRET_KEY, (err, _authData) => {
+    if (err) {
+      res.sendStatus(403)
+    } else {
+      Location.create(req.body).then(location => {
+        res.json(location)
+      }).catch(error => {
+        res.json({error})
+      })
+    }
+  })
+})
+
+router.put('/locations/:id', verifyToken, (req, res, next) => {
+  jwt.verify(req.token, JWT_SECRET_KEY, (err, _authData) => {
+    if (err) {
+      res.sendStatus(403)
+    } else {
+      Location.findByIdAndUpdate({_id: req.params.id}, req.body).then(() => {
+        Location.findById(req.params.id).then(location => {
+          res.json(location)
+        }).catch(error => {
+          res.json({error})
+        })
+      }).catch(error => {
+        res.json({error})
+      })
+    }
+  })
+})
+
+router.delete('/locations/:id', verifyToken, (req, res, next) => {
+  jwt.verify(req.token, JWT_SECRET_KEY, (err, _authData) => {
+    if (err) {
+      res.sendStatus(403)
+    } else {
+      Location.findByIdAndDelete(req.params.id).then(location => {
+        res.json(location)
       }).catch(error => {
         res.json({error})
       })
