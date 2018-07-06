@@ -1,6 +1,12 @@
 export default {
-  items: state => {
-    return state.items
+  displayItems: state => {
+    const result = state.items.map(item => {
+      return {
+        displayDate: item.dates.length && item.dates[0].date,
+        ...item
+      }
+    })
+    return result
   },
   selectedItem: state => {
     return state.items.find(item => item._id === state.contentControls.selectedItemId)
