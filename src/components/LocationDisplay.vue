@@ -22,6 +22,9 @@ export default {
     },
     language () {
       return this.$store.state.language.locationDisplay
+    },
+    ownerId () {
+      return this.$store.state.user && this.$store.state.user._id
     }
   }
 }

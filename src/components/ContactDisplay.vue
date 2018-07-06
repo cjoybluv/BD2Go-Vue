@@ -60,7 +60,6 @@ export default {
       this.$refs.addContactForm.hide()
     },
     ...mapActions([
-      'getContacts',
       'viewContact',
       'addContact'
     ])

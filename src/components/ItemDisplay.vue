@@ -31,6 +31,9 @@ export default {
     language () {
       return this.$store.state.language.itemDisplay
     },
+    ownerId () {
+      return this.$store.state.user && this.$store.state.user._id
+    },
     ...mapGetters([
       'items'
     ])
