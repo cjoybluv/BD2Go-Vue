@@ -57,7 +57,7 @@ export default {
   },
   [SIGN_OUT]: (state) => {
     state.contacts = []
-    state.contactItems = []
+    state.items = []
     state.locations = []
     state.user = null
     state.me = null
