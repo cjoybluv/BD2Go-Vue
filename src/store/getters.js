@@ -3,7 +3,7 @@ export default {
     return state.items
   },
   selectedItem: state => {
-    return state.items.find(item => item.id === state.contentControls.selectedItemId)
+    return state.items.find(item => item._id === state.contentControls.selectedItemId)
   },
   selectedContact: state => {
     return state.contacts.find(contact => contact._id === state.contentControls.selectedContactId)

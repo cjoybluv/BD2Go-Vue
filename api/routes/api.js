@@ -63,7 +63,6 @@ router.get('/contacts', verifyToken, (req, res, next) => {
     if (err) {
       res.sendStatus(403)
     } else {
-      // Contact.find({ownerId: req.query.ownerId}).then(contacts => {
       Contact.find({ownerId: req.query.ownerId}).then(contacts => {
         console.log('get /contacts', contacts)
         res.json(contacts)

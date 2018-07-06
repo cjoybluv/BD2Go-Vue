@@ -18,8 +18,8 @@ describe('getters', () => {
   test('selectedItem returns Item for selectedItemId', () => {
     const state = {
       items: [
-        {id: 1},
-        {id: 2}
+        {_id: 1},
+        {_id: 2}
       ],
       contentControls: { selectedItemId: 2 }
     }
