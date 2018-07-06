@@ -7,12 +7,12 @@ const PhoneSchema = new Schema({
 })
 
 const NodeSchema = new Schema({
-  label: String,
-  contactId: Schema.Types.ObjectId
+  contactId: Schema.Types.ObjectId,
+  nodeLabel: String
 })
 
 const ContactSchema = new Schema({
-  ownerId: String,
+  ownerId: Schema.Types.ObjectId,
   name: {
     type: String,
     required: [true, 'name field is required']
