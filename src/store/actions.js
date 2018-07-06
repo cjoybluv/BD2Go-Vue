@@ -6,6 +6,8 @@ import {
   getContact,
   postContact,
   putContact,
+  getItems,
+  getLocations,
   putUser,
   getAppData,
   postSetRelationship
@@ -23,6 +25,9 @@ import {
   SET_ME,
   CONTACTS_REQUEST,
   CONTACTS_SUCCESS,
+  ITEMS_REQUEST,
+  ITEMS_SUCCESS,
+  LOCATIONS_REQUEST,
   LOCATIONS_SUCCESS,
   SELECT_ITEM,
   SELECT_CONTACT,
@@ -32,13 +37,12 @@ import {
   UPDATE_CONTACT_SUCCESS,
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
-  ITEMS_SUCCESS,
   APP_DATA_REQUEST,
   APP_DATA_SUCCESS
 } from './mutation-types'
 
-import locations from './mockData/locations'
-import items from './mockData/items'
+// import locations from './mockData/locations'
+// import items from './mockData/items'
 
 export default {
   fetchUser: ({ commit, dispatch }, payload) => {
@@ -50,8 +54,8 @@ export default {
           dispatch('fetchMe', user.body.meContactId)
         }
         dispatch('fetchContacts', user.body._id)
-        dispatch('fetchLocations', locations)
-        dispatch('fetchItems', items)
+        dispatch('fetchLocations', user.body._id)
+        dispatch('fetchItems', user.body._id)
         dispatch('fetchAppData', 'relationshipData')
       }).catch(err => {
         reject(err)
@@ -152,11 +156,27 @@ export default {
       })
     })
   },
-  fetchLocations: ({ commit }, payload) => {
-    commit(LOCATIONS_SUCCESS, payload)
-  },
   fetchItems: ({ commit }, payload) => {
-    commit(ITEMS_SUCCESS, payload)
+    commit(ITEMS_REQUEST, payload)
+    return new Promise((resolve, reject) => {
+      getItems(payload).then(function (data) {
+        commit(ITEMS_SUCCESS, data.body)
+        resolve(data)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  },
+  fetchLocations: ({ commit }, payload) => {
+    commit(LOCATIONS_REQUEST, payload)
+    return new Promise((resolve, reject) => {
+      getLocations(payload).then(function (data) {
+        commit(LOCATIONS_SUCCESS, data.body)
+        resolve(data)
+      }).catch(err => {
+        reject(err)
+      })
+    })
   },
   updateUser: ({ commit }, payload) => {
     commit(UPDATE_USER_REQUEST, payload)

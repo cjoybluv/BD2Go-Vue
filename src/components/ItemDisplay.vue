@@ -4,7 +4,7 @@
     <ul>
       <li v-for="item in sortedItems"
         :key="JSON.stringify(item)"
-        @click="viewItem(item.id)">
+        @click="viewItem(item._id)">
         <h4>
           <span class="soft-text">{{ item.type | allCaps }}</span>
           &nbsp;

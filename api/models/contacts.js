@@ -12,7 +12,10 @@ const NodeSchema = new Schema({
 })
 
 const ContactSchema = new Schema({
-  ownerId: Schema.Types.ObjectId,
+  ownerId: {
+    type: Schema.Types.ObjectId,
+    required: [true, 'contact.ownerId required']
+  },
   name: {
     type: String,
     required: [true, 'name field is required']
