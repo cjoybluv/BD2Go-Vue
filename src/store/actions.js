@@ -137,7 +137,7 @@ export default {
             if (origContact.relationships.findIndex(origRel => origRel.targetContactId === relationship.targetContactId) === -1) {
               const nodeInfo = getNodeInfo(relationshipData, relationship.hostLabel)
               const payload = {
-                hostId: state.me._id,
+                hostId: updatedContact._id,
                 hostLabel: relationship.hostLabel,
                 hostType: nodeInfo.hostType,
                 targetId: relationship.targetContactId,

@@ -1,16 +1,16 @@
 <template>
-  <b-form>
+  <b-form v-if="selectedContact">
       <b-form-group
         :label="language.nameLabel">
         <b-form-input
-          v-model="formContact.name"
+          v-model="selectedContact.name"
           :placeholder="language.namePlaceholder"
           :autofocus="true"
           required/>
       </b-form-group>
       <b-form-group
         :label="language.emailLabel">
-        <b-form-input v-model="formContact.email" :placeholder="language.emailPlaceholder"/>
+        <b-form-input v-model="selectedContact.email" :placeholder="language.emailPlaceholder"/>
       </b-form-group>
 
       <b-form-group :label="language.addPhoneLabel">
@@ -19,7 +19,7 @@
           <b-form-input v-model="phoneForm.phoneNumber" :placeholder="language.phoneNumberPlaceholder" size="sm"/>
           <b-btn @click="addPhone" slot="append" variant="info">{{language.add}}</b-btn>
         </b-input-group>
-        <b-table striped hover :items="formContact.phones"></b-table>
+        <b-table striped hover :items="selectedContact.phones"></b-table>
       </b-form-group>
 
       <b-form-group :label="language.addRelationshipLabel">
@@ -29,7 +29,7 @@
           <b-form-input v-model="relationshipForm.targetLabel" :placeholder="language.targetLabelPlaceholder" size="sm"/>
           <b-btn @click="addRelationship" variant="info">{{language.add}}</b-btn>
         </b-input-group>
-        <b-table striped hover :items="formContact.relationships"></b-table>
+        <b-table striped hover :items="selectedContact.relationships"></b-table>
       </b-form-group>
 
       <b-btn class="float-right" variant="primary" @click="submitForm">{{language.submit}}</b-btn>
@@ -37,6 +37,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'Vuex'
+
 export default {
   computed: {
     contacts () {
@@ -50,7 +52,10 @@ export default {
     },
     me () {
       return this.$store.state.me
-    }
+    },
+    ...mapGetters([
+      'selectedContact'
+    ])
   },
   data () {
     return {
@@ -73,10 +78,6 @@ export default {
     }
   },
   props: {
-    contact: {
-      type: Object,
-      required: true
-    },
     onSubmit: {
       type: Function,
       required: true
@@ -86,7 +87,7 @@ export default {
     addPhone () {
       if (!this.phoneForm.phoneLabel || !this.phoneForm.phoneNumber) return
       const phone = { ...this.phoneForm }
-      this.formContact.phones.push(phone)
+      this.selectedContact.phones.push(phone)
       this.phoneForm.phoneLabel = ''
       this.phoneForm.phoneNumber = ''
     },
@@ -102,7 +103,7 @@ export default {
         })
       }
       if (relatedContact) {
-        this.formContact.relationships.push(
+        this.selectedContact.relationships.push(
           {
             hostLabel: relationship.hostLabel,
             targetContactId: relatedContact._id,
@@ -115,12 +116,6 @@ export default {
       }
     },
     clearForm () {
-      this.formContact = {
-        ownerId: '',
-        name: '',
-        email: '',
-        phones: []
-      }
       this.phoneForm = {
         phoneLabel: '',
         phoneNumber: ''
@@ -132,9 +127,9 @@ export default {
       }
     },
     submitForm () {
-      if (!this.formContact.name) return
-      this.formContact.ownerId = this.user._id
-      this.onSubmit(this.formContact)
+      if (!this.selectedContact.name) return
+      this.selectedContact.ownerId = this.user._id
+      this.onSubmit(this.selectedContact)
       this.clearForm()
     }
   }
