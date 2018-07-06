@@ -1,16 +1,16 @@
 <template>
-  <b-form v-if="selectedContact">
+  <b-form v-if="editContact">
       <b-form-group
         :label="language.nameLabel">
         <b-form-input
-          v-model="selectedContact.name"
+          v-model="editContact.name"
           :placeholder="language.namePlaceholder"
           :autofocus="true"
           required/>
       </b-form-group>
       <b-form-group
         :label="language.emailLabel">
-        <b-form-input v-model="selectedContact.email" :placeholder="language.emailPlaceholder"/>
+        <b-form-input v-model="editContact.email" :placeholder="language.emailPlaceholder"/>
       </b-form-group>
 
       <b-form-group :label="language.addPhoneLabel">
@@ -19,7 +19,7 @@
           <b-form-input v-model="phoneForm.phoneNumber" :placeholder="language.phoneNumberPlaceholder" size="sm"/>
           <b-btn @click="addPhone" slot="append" variant="info">{{language.add}}</b-btn>
         </b-input-group>
-        <b-table striped hover :items="selectedContact.phones"></b-table>
+        <b-table striped hover :items="editContact.phones"></b-table>
       </b-form-group>
 
       <b-form-group :label="language.addRelationshipLabel">
@@ -29,7 +29,7 @@
           <b-form-input v-model="relationshipForm.targetLabel" :placeholder="language.targetLabelPlaceholder" size="sm"/>
           <b-btn @click="addRelationship" variant="info">{{language.add}}</b-btn>
         </b-input-group>
-        <b-table striped hover :items="selectedContact.relationships"></b-table>
+        <b-table striped hover :items="editContact.relationships"></b-table>
       </b-form-group>
 
       <b-btn class="float-right" variant="primary" @click="submitForm">{{language.submit}}</b-btn>
@@ -37,8 +37,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'Vuex'
-
 export default {
   computed: {
     contacts () {
@@ -53,9 +51,9 @@ export default {
     me () {
       return this.$store.state.me
     },
-    ...mapGetters([
-      'selectedContact'
-    ])
+    editContact () {
+      return this.$store.state.contentControls.editContact
+    }
   },
   data () {
     return {
@@ -87,7 +85,7 @@ export default {
     addPhone () {
       if (!this.phoneForm.phoneLabel || !this.phoneForm.phoneNumber) return
       const phone = { ...this.phoneForm }
-      this.selectedContact.phones.push(phone)
+      this.editContact.phones.push(phone)
       this.phoneForm.phoneLabel = ''
       this.phoneForm.phoneNumber = ''
     },
@@ -103,7 +101,7 @@ export default {
         })
       }
       if (relatedContact) {
-        this.selectedContact.relationships.push(
+        this.editContact.relationships.push(
           {
             hostLabel: relationship.hostLabel,
             targetContactId: relatedContact._id,
@@ -127,9 +125,9 @@ export default {
       }
     },
     submitForm () {
-      if (!this.selectedContact.name) return
-      this.selectedContact.ownerId = this.user._id
-      this.onSubmit(this.selectedContact)
+      if (!this.editContact.name) return
+      this.editContact.ownerId = this.user._id
+      this.onSubmit(this.editContact)
       this.clearForm()
     }
   }

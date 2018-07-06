@@ -1,7 +1,7 @@
 <template>
   <div class="viewer-content">
     <div class="tools float-right">
-      <font-awesome-icon icon="pencil-alt" v-b-modal.editContactForm class="pointer"/>
+      <font-awesome-icon icon="pencil-alt" @click="updateContact" class="pointer"/>
     </div>
     <h4>{{ selectedContact.name }}</h4>
     <h5>{{ selectedContact.email }}</h5>
@@ -28,6 +28,10 @@
 <script>
 import { mapActions, mapGetters } from 'Vuex'
 import contactForm from './ContactForm.vue'
+import {
+  EDIT_CONTACT_REQUEST,
+  EDIT_CONTACT_COMPLETE
+} from '../store/mutation-types'
 
 export default {
   name: 'contact',
@@ -60,7 +64,12 @@ export default {
     }
   },
   methods: {
+    updateContact () {
+      this.$store.commit(EDIT_CONTACT_REQUEST, this.selectedContact)
+      this.$refs.editContactForm.show()
+    },
     contactUpdated (contact) {
+      this.$store.commit(EDIT_CONTACT_COMPLETE)
       this.updateContact(contact)
       this.$refs.editContactForm.hide()
     },

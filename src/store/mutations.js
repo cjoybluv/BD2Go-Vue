@@ -25,7 +25,9 @@ import {
   UPDATE_USER_SUCCESS,
   SET_IS_AUTHENTICATED,
   APP_DATA_REQUEST,
-  APP_DATA_SUCCESS
+  APP_DATA_SUCCESS,
+  EDIT_CONTACT_REQUEST,
+  EDIT_CONTACT_COMPLETE
 } from './mutation-types'
 
 export default {
@@ -137,5 +139,11 @@ export default {
   },
   [SET_IS_AUTHENTICATED]: (state, value) => {
     state.isAuthenticated = value
+  },
+  [EDIT_CONTACT_REQUEST]: (state, contact) => {
+    state.contentControls.editContact = contact
+  },
+  [EDIT_CONTACT_COMPLETE]: (state) => {
+    state.contentControls.editContact = null
   }
 }

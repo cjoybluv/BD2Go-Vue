@@ -15,7 +15,8 @@ const state = {
   appData: {},
   contentControls: {
     selectedItemId: null, // item._id of selected Item
-    selectedContactId: null // contact._id of selected Contact
+    selectedContactId: null, // contact._id of selected Contact
+    editContact: null // copy of selecledContact while editing
   },
   language: language,
   contacts: [],
