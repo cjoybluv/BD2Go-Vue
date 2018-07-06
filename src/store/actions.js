@@ -50,13 +50,13 @@ export default {
     return new Promise((resolve, reject) => {
       getUser(payload).then(user => {
         commit(USER_SUCCESS, user.body)
-        if (user.body.meContactId) {
-          dispatch('fetchMe', user.body.meContactId)
-        }
-        dispatch('fetchContacts', user.body._id)
-        dispatch('fetchLocations', user.body._id)
-        dispatch('fetchItems', user.body._id)
-        dispatch('fetchAppData', 'relationshipData')
+        // if (user.body.meContactId) {
+        //   dispatch('fetchMe', user.body.meContactId)
+        // }
+        // dispatch('fetchContacts', user.body._id)
+        // dispatch('fetchLocations', user.body._id)
+        // dispatch('fetchItems', user.body._id)
+        // dispatch('fetchAppData', 'relationshipData')
       }).catch(err => {
         reject(err)
       })
@@ -137,7 +137,7 @@ export default {
             if (origContact.relationships.findIndex(origRel => origRel.targetContactId === relationship.targetContactId) === -1) {
               const nodeInfo = getNodeInfo(relationshipData, relationship.hostLabel)
               const payload = {
-                hostId: state.me._id,
+                hostId: updatedContact._id,
                 hostLabel: relationship.hostLabel,
                 hostType: nodeInfo.hostType,
                 targetId: relationship.targetContactId,

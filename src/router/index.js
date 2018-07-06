@@ -50,6 +50,7 @@ router.beforeEach((to, from, next) => {
       store.dispatch('fetchContacts', user._id)
       store.dispatch('fetchItems', user._id)
       store.dispatch('fetchLocations', user._id)
+      store.dispatch('fetchAppData', 'relationshipData')
       if (user.meContactId) store.dispatch('fetchMe', user.meContactId)
     }
     if (!store.state.isAuthenticated) {

@@ -20,7 +20,7 @@
       hide-footer
       ref="editContactForm"
       title="Edit Contact">
-      <contact-form :contact="selectedContact" :onSubmit="contactUpdated" />
+      <contact-form :onSubmit="contactUpdated" />
     </b-modal>
   </div>
 </template>
@@ -37,6 +37,9 @@ export default {
   computed: {
     language () {
       return this.$store.state.language.contact
+    },
+    contacts () {
+      return this.$store.state.contacts
     },
     ...mapGetters([
       'selectedContact'

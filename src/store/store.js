@@ -6,7 +6,6 @@ import getters from './getters'
 import mutations from './mutations'
 
 // mock data
-// import appData from './mockData/appData'
 
 // externalized strings
 import language from './language/en-us'
