@@ -1,36 +1,46 @@
 import {
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS,
-  SIGNUP_REQUEST,
-  SIGNUP_SUCCESS,
-  SIGN_OUT,
-  USER_REQUEST,
-  USER_SUCCESS,
+  ADD_CONTACT_REQUEST,
+  ADD_CONTACT_SUCCESS,
+  APP_DATA_REQUEST,
+  APP_DATA_SUCCESS,
   CONTACT_REQUEST,
   CONTACT_SUCCESS,
-  SET_ME,
   CONTACTS_REQUEST,
   CONTACTS_SUCCESS,
+  EDIT_CONTACT_COMPLETE,
+  EDIT_CONTACT_REQUEST,
   ITEMS_REQUEST,
   ITEMS_SUCCESS,
   LOCATIONS_REQUEST,
   LOCATIONS_SUCCESS,
-  SELECT_ITEM,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  NEW_CONTACT_REQUEST,
   SELECT_CONTACT,
-  ADD_CONTACT_REQUEST,
-  ADD_CONTACT_SUCCESS,
+  SELECT_ITEM,
+  SET_IS_AUTHENTICATED,
+  SET_ME,
+  SIGN_OUT,
+  SIGNUP_REQUEST,
+  SIGNUP_SUCCESS,
   UPDATE_CONTACT_REQUEST,
   UPDATE_CONTACT_SUCCESS,
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
-  SET_IS_AUTHENTICATED,
-  APP_DATA_REQUEST,
-  APP_DATA_SUCCESS,
-  EDIT_CONTACT_REQUEST,
-  EDIT_CONTACT_COMPLETE
+  USER_REQUEST,
+  USER_SUCCESS
 } from './mutation-types'
 
 export default {
+  [ADD_CONTACT_REQUEST]: (state, contact) => {
+    state.loading = true
+  },
+  [ADD_CONTACT_SUCCESS]: (state, contact) => {
+    state.loading = false
+    state.contentControls.selectedContactId = contact._id
+    state.contentControls.selectedItemId = null
+    state.contacts.push(contact)
+  },
   [APP_DATA_REQUEST]: (state, key) => {
     state.appData[key] = null
     state.loading = true
@@ -39,49 +49,11 @@ export default {
     state.loading = false
     state.appData[appData.key] = appData.data
   },
-  [LOGIN_REQUEST]: (state) => {
-    state.user = null
-    state.token = null
-    state.isAuthenticated = false
-  },
-  [LOGIN_SUCCESS]: (state, authData) => {
-    state.user = authData.user
-    state.token = authData.token
-    state.isAuthenticated = true
-    localStorage.setItem('token', authData.token)
-    localStorage.setItem('user', JSON.stringify(authData.user))
-  },
-  [SIGNUP_REQUEST]: (state) => {
-    state.user = null
-  },
-  [SIGNUP_SUCCESS]: (state, data) => {
-    state.user = data.user
-  },
-  [SIGN_OUT]: (state) => {
-    state.contacts = []
-    state.items = []
-    state.locations = []
-    state.user = null
-    state.me = null
-    state.token = null
-    state.isAuthenticated = false
-    localStorage.removeItem('token')
-    localStorage.removeItem('user')
-  },
-  [USER_REQUEST]: (state) => {
-    state.user = null
-  },
-  [USER_SUCCESS]: (state, user) => {
-    state.user = user
-  },
   [CONTACT_REQUEST]: (state, contactId) => {
     state.loading = true
   },
   [CONTACT_SUCCESS]: (state, contact) => {
     state.loading = false
-  },
-  [SET_ME]: (state, contact) => {
-    state.me = contact
   },
   [CONTACTS_REQUEST]: (state, ownerId) => {
     state.contacts = []
@@ -90,6 +62,12 @@ export default {
   [CONTACTS_SUCCESS]: (state, contacts) => {
     state.contacts = contacts
     state.loading = false
+  },
+  [EDIT_CONTACT_COMPLETE]: (state) => {
+    state.contentControls.editContact = null
+  },
+  [EDIT_CONTACT_REQUEST]: (state, contact) => {
+    state.contentControls.editContact = contact
   },
   [ITEMS_REQUEST]: (state, ownerId) => {
     state.items = []
@@ -105,22 +83,51 @@ export default {
   [LOCATIONS_SUCCESS]: (state, locations) => {
     state.locations = locations
   },
-  [SELECT_ITEM]: (state, itemId) => {
-    state.contentControls.selectedItemId = itemId
-    state.contentControls.selectedContactId = null
+  [LOGIN_REQUEST]: (state) => {
+    state.user = null
+    state.token = null
+    state.isAuthenticated = false
+  },
+  [LOGIN_SUCCESS]: (state, authData) => {
+    state.user = authData.user
+    state.token = authData.token
+    state.isAuthenticated = true
+    localStorage.setItem('token', authData.token)
+    localStorage.setItem('user', JSON.stringify(authData.user))
+  },
+  [NEW_CONTACT_REQUEST]: (state) => {
+    state.contentControls.editContact = {}
   },
   [SELECT_CONTACT]: (state, contactId) => {
     state.contentControls.selectedContactId = contactId
     state.contentControls.selectedItemId = null
   },
-  [ADD_CONTACT_REQUEST]: (state, contact) => {
-    state.loading = true
+  [SELECT_ITEM]: (state, itemId) => {
+    state.contentControls.selectedItemId = itemId
+    state.contentControls.selectedContactId = null
   },
-  [ADD_CONTACT_SUCCESS]: (state, contact) => {
-    state.loading = false
-    state.contentControls.selectedContactId = contact._id
-    state.contentControls.selectedItemId = null
-    state.contacts.push(contact)
+  [SET_IS_AUTHENTICATED]: (state, value) => {
+    state.isAuthenticated = value
+  },
+  [SET_ME]: (state, contact) => {
+    state.me = contact
+  },
+  [SIGN_OUT]: (state) => {
+    state.contacts = []
+    state.items = []
+    state.locations = []
+    state.user = null
+    state.me = null
+    state.token = null
+    state.isAuthenticated = false
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+  },
+  [SIGNUP_REQUEST]: (state) => {
+    state.user = null
+  },
+  [SIGNUP_SUCCESS]: (state, data) => {
+    state.user = data.user
   },
   [UPDATE_CONTACT_REQUEST]: (state, contact) => {
     state.loading = true
@@ -137,13 +144,10 @@ export default {
     state.loading = false
     state.user = updatedUser
   },
-  [SET_IS_AUTHENTICATED]: (state, value) => {
-    state.isAuthenticated = value
+  [USER_REQUEST]: (state) => {
+    state.user = null
   },
-  [EDIT_CONTACT_REQUEST]: (state, contact) => {
-    state.contentControls.editContact = contact
-  },
-  [EDIT_CONTACT_COMPLETE]: (state) => {
-    state.contentControls.editContact = null
+  [USER_SUCCESS]: (state, user) => {
+    state.user = user
   }
 }

@@ -5,7 +5,7 @@ import Login from '@/pages/Login'
 import Signup from '@/pages/Signup'
 import Profile from '@/pages/Profile'
 
-import {store} from '../store/store.js'
+import { store } from '../store/store.js'
 import { LOGIN_SUCCESS } from '../store/mutation-types.js'
 
 Vue.use(Router)

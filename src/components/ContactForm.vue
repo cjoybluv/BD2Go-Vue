@@ -20,6 +20,7 @@
           <b-btn @click="addPhone" slot="append" variant="info">{{language.add}}</b-btn>
         </b-input-group>
         <b-table
+          v-if="editContact.phones"
           striped hover
           :items="editContact.phones"
           :fields="phoneTableFields">
@@ -34,6 +35,7 @@
           <b-btn @click="addRelationship" variant="info">{{language.add}}</b-btn>
         </b-input-group>
         <b-table
+          v-if="editContact.relationships"
           striped hover
           :items="editContact.relationships"
           :fields="relationshipTableFields">
