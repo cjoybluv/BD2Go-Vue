@@ -2,7 +2,7 @@
   <div id="contact-display">
     <div class="header">
       <h2>{{ language.title }}</h2>
-      <font-awesome-icon icon="plus" v-b-modal.addContactForm class="pointer"/>
+      <font-awesome-icon icon="plus" @click="openContactForm" class="pointer"/>
     </div>
     <ul>
       <li
@@ -26,7 +26,9 @@
 <script>
 import { mapActions } from 'Vuex'
 import contactForm from './ContactForm.vue'
-
+import {
+  NEW_CONTACT_REQUEST
+} from '../store/mutation-types'
 export default {
   name: 'ContactDislay',
   components: {
@@ -58,6 +60,10 @@ export default {
     contactAdded (contact) {
       this.addContact(contact)
       this.$refs.addContactForm.hide()
+    },
+    openContactForm () {
+      this.$store.commit(NEW_CONTACT_REQUEST)
+      this.$refs.addContactForm.show()
     },
     ...mapActions([
       'viewContact',
