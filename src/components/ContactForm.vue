@@ -1,58 +1,63 @@
 <template>
   <b-form v-if="editContact">
-      <b-form-group
-        :label="language.nameLabel">
+    <b-form-group :label="language.nameLabel">
+      <b-input-group>
         <b-form-input
           v-model="editContact.name"
           :placeholder="language.namePlaceholder"
           :autofocus="true"
           required/>
-      </b-form-group>
-      <b-form-group
-        :label="language.emailLabel">
-        <b-form-input v-model="editContact.email" :placeholder="language.emailPlaceholder"/>
-      </b-form-group>
+        <b-dropdown slot="append" text="Pronoun">
+          <b-dropdown-item>Male</b-dropdown-item>
+          <b-dropdown-item>Female</b-dropdown-item>
+        </b-dropdown>
+      </b-input-group>
+    </b-form-group>
+    <b-form-group
+      :label="language.emailLabel">
+      <b-form-input v-model="editContact.email" :placeholder="language.emailPlaceholder"/>
+    </b-form-group>
 
-      <b-form-group :label="language.addPhoneLabel">
-        <b-input-group>
-          <b-form-input v-model="phoneForm.phoneNumber" :placeholder="language.phoneNumberPlaceholder" size="sm"/>
-          <b-form-input v-model="phoneForm.phoneLabel" :placeholder="language.phoneLabelPlaceholder" size="sm"/>
-          <b-btn @click="addPhone" slot="append" variant="info">{{language.add}}</b-btn>
-        </b-input-group>
-        <b-table
-          v-if="editContact.phones"
-          striped hover
-          :items="editContact.phones"
-          :fields="phoneTableFields">
-        </b-table>
-      </b-form-group>
+    <b-form-group :label="language.addPhoneLabel">
+      <b-input-group>
+        <b-form-input v-model="phoneForm.phoneNumber" :placeholder="language.phoneNumberPlaceholder" size="sm"/>
+        <b-form-input v-model="phoneForm.phoneLabel" :placeholder="language.phoneLabelPlaceholder" size="sm"/>
+        <b-btn @click="addPhone" slot="append" variant="info">{{language.add}}</b-btn>
+      </b-input-group>
+      <b-table
+        v-if="editContact.phones"
+        striped hover
+        :items="editContact.phones"
+        :fields="phoneTableFields">
+      </b-table>
+    </b-form-group>
 
-      <b-form-group id="addRelationship-subForm" :label="language.addRelationshipLabel">
-        <b-input-group>
-          <b-form-input
-            class="contact-name"
-            v-model="relationshipForm.targetContact"
-            :placeholder="language.targetContactPlaceholder"
-            size="sm"/>
-          <b-form-input
-            v-model="relationshipForm.targetLabel"
-            :placeholder="language.targetLabelPlaceholder"
-            size="sm"/>
-          <b-form-input
-            v-model="relationshipForm.hostLabel"
-            :placeholder="language.hostLabelPlaceholder"
-            size="sm"/>
-          <b-btn @click="addRelationship" variant="info">{{language.add}}</b-btn>
-        </b-input-group>
-        <b-table
-          v-if="editContact.relationships"
-          striped hover
-          :items="editContact.relationships"
-          :fields="relationshipTableFields">
-        </b-table>
-      </b-form-group>
+    <b-form-group id="addRelationship-subForm" :label="language.addRelationshipLabel">
+      <b-input-group>
+        <b-form-input
+          class="contact-name"
+          v-model="relationshipForm.targetContact"
+          :placeholder="language.targetContactPlaceholder"
+          size="sm"/>
+        <b-form-input
+          v-model="relationshipForm.targetLabel"
+          :placeholder="language.targetLabelPlaceholder"
+          size="sm"/>
+        <b-form-input
+          v-model="relationshipForm.hostLabel"
+          :placeholder="language.hostLabelPlaceholder"
+          size="sm"/>
+        <b-btn @click="addRelationship" variant="info">{{language.add}}</b-btn>
+      </b-input-group>
+      <b-table
+        v-if="editContact.relationships"
+        striped hover
+        :items="editContact.relationships"
+        :fields="relationshipTableFields">
+      </b-table>
+    </b-form-group>
 
-      <b-btn class="float-right" variant="primary" @click="submitForm">{{language.submit}}</b-btn>
+    <b-btn class="float-right" variant="primary" @click="submitForm">{{language.submit}}</b-btn>
   </b-form>
 </template>
 
