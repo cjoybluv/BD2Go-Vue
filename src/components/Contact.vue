@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     openContactForm () {
-      this.$store.commit(EDIT_CONTACT_REQUEST, this.selectedContact)
+      this.$store.commit(EDIT_CONTACT_REQUEST, {...this.selectedContact})
       this.$refs.editContactForm.show()
     },
     contactUpdated (contact) {
