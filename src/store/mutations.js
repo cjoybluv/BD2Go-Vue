@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import {
   ADD_CONTACT_REQUEST,
   ADD_CONTACT_SUCCESS,
@@ -135,7 +136,7 @@ export default {
   [UPDATE_CONTACT_SUCCESS]: (state, updatedContact) => {
     state.loading = false
     const contactIdx = state.contacts.findIndex(contact => contact._id === updatedContact._id)
-    state.contacts[contactIdx] = updatedContact
+    Vue.set(state.contacts, contactIdx, updatedContact)
   },
   [UPDATE_USER_REQUEST]: (state, user) => {
     state.loading = true
