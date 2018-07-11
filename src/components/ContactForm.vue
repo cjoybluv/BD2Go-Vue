@@ -15,8 +15,8 @@
 
       <b-form-group :label="language.addPhoneLabel">
         <b-input-group>
-          <b-form-input v-model="phoneForm.phoneLabel" slot="prepend" :placeholder="language.phoneLabelPlaceholder" size="sm"/>
           <b-form-input v-model="phoneForm.phoneNumber" :placeholder="language.phoneNumberPlaceholder" size="sm"/>
+          <b-form-input v-model="phoneForm.phoneLabel" :placeholder="language.phoneLabelPlaceholder" size="sm"/>
           <b-btn @click="addPhone" slot="append" variant="info">{{language.add}}</b-btn>
         </b-input-group>
         <b-table
@@ -27,11 +27,21 @@
         </b-table>
       </b-form-group>
 
-      <b-form-group :label="language.addRelationshipLabel">
+      <b-form-group id="addRelationship-subForm" :label="language.addRelationshipLabel">
         <b-input-group>
-          <b-form-input v-model="relationshipForm.hostLabel" :placeholder="language.hostLabelPlaceholder" size="sm"/>
-          <b-form-input v-model="relationshipForm.targetContact" :placeholder="language.targetContactPlaceholder" size="sm"/>
-          <b-form-input v-model="relationshipForm.targetLabel" :placeholder="language.targetLabelPlaceholder" size="sm"/>
+          <b-form-input
+            class="contact-name"
+            v-model="relationshipForm.targetContact"
+            :placeholder="language.targetContactPlaceholder"
+            size="sm"/>
+          <b-form-input
+            v-model="relationshipForm.targetLabel"
+            :placeholder="language.targetLabelPlaceholder"
+            size="sm"/>
+          <b-form-input
+            v-model="relationshipForm.hostLabel"
+            :placeholder="language.hostLabelPlaceholder"
+            size="sm"/>
           <b-btn @click="addRelationship" variant="info">{{language.add}}</b-btn>
         </b-input-group>
         <b-table
@@ -169,5 +179,8 @@ legend {
 input {
   height: 38px;
   align-self: flex-end;
+}
+#addRelationship-subForm .contact-name {
+  width: 40%;
 }
 </style>
