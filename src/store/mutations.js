@@ -68,7 +68,7 @@ export default {
     state.contentControls.editContact = null
   },
   [EDIT_CONTACT_REQUEST]: (state, contact) => {
-    state.contentControls.editContact = contact
+    state.contentControls.editContact = { pronoun: 'null', ...contact }
   },
   [ITEMS_REQUEST]: (state, ownerId) => {
     state.items = []
@@ -96,8 +96,8 @@ export default {
     localStorage.setItem('token', authData.token)
     localStorage.setItem('user', JSON.stringify(authData.user))
   },
-  [NEW_CONTACT_REQUEST]: (state) => {
-    state.contentControls.editContact = {}
+  [NEW_CONTACT_REQUEST]: (state, contact) => {
+    state.contentControls.editContact = { ...contact }
   },
   [SELECT_CONTACT]: (state, contactId) => {
     state.contentControls.selectedContactId = contactId

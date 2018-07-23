@@ -18,7 +18,7 @@
       hide-footer
       ref="addContactForm"
       title="Create New Contact">
-      <contact-form :contact="contact" :onSubmit="contactAdded" />
+      <contact-form :onSubmit="contactAdded" />
     </b-modal>
   </div>
 </template>
@@ -50,6 +50,7 @@ export default {
       contact: {
         ownerId: '',
         name: '',
+        pronoun: 'null',
         email: '',
         phones: [],
         relationships: []
@@ -62,7 +63,7 @@ export default {
       this.$refs.addContactForm.hide()
     },
     openContactForm () {
-      this.$store.commit(NEW_CONTACT_REQUEST)
+      this.$store.commit(NEW_CONTACT_REQUEST, this.contact)
       this.$refs.addContactForm.show()
     },
     ...mapActions([

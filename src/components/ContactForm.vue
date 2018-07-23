@@ -1,5 +1,5 @@
 <template>
-  <b-form v-if="editContact">
+  <b-form v-if="editContact" id="contact-form">
     <b-form-group :label="language.nameLabel">
       <b-input-group>
         <b-form-input
@@ -7,10 +7,18 @@
           :placeholder="language.namePlaceholder"
           :autofocus="true"
           required/>
-        <b-dropdown slot="append" text="Pronoun">
-          <b-dropdown-item>Male</b-dropdown-item>
-          <b-dropdown-item>Female</b-dropdown-item>
-        </b-dropdown>
+        <!-- <select v-model="editContact.pronoun" text="Pronoun">
+            <option value="">Select Pronoun</option>
+            <option v-for="pronoun in pronouns" :key="pronoun">{{ pronoun }}</option>
+        </select> -->
+        <!-- <b-dropdown v-model="editContact.pronoun" slot="append" text="Pronoun" @change="handlePronoun">
+          <b-dropdown-item v-for="pronoun in pronouns" :key="pronoun" value="pronoun">{{ pronoun }}</b-dropdown-item>
+        </b-dropdown> -->
+        <b-form-select v-model="editContact.pronoun" :options="pronouns">
+          <template slot="first">
+            <option value="null">Select pronoun</option>
+          </template>
+        </b-form-select>
       </b-input-group>
     </b-form-group>
     <b-form-group
@@ -82,13 +90,6 @@ export default {
   },
   data () {
     return {
-      formContact: {
-        name: '',
-        email: '',
-        phones: [],
-        relationships: [],
-        ...this.contact
-      },
       phoneForm: {
         phoneLabel: '',
         phoneNumber: ''
@@ -98,6 +99,11 @@ export default {
         targetContact: '',
         targetLabel: ''
       },
+      pronouns: [
+        { value: 'm', text: 'Male' },
+        { value: 'f', text: 'Female' },
+        { value: 'o', text: 'Other' }
+      ],
       phoneTableFields: [
         {
           key: 'phoneLabel',
@@ -167,6 +173,7 @@ export default {
     submitForm () {
       if (!this.editContact.name) return
       this.editContact.ownerId = this.user._id
+      console.log('submitForm', this.editContact)
       this.onSubmit(this.editContact)
       this.clearForm()
     }
@@ -187,5 +194,8 @@ input {
 }
 #addRelationship-subForm .contact-name {
   width: 40%;
+}
+#contact-form select {
+  max-width: 20%;
 }
 </style>

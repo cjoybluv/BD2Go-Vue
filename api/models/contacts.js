@@ -26,6 +26,9 @@ const ContactSchema = new Schema({
     type: String,
     required: [true, 'name field is required']
   },
+  pronoun: {
+    type: String
+  },
   email: {
     type: String
   },
