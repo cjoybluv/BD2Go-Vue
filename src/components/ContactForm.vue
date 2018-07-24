@@ -40,6 +40,25 @@
       </b-table>
     </b-form-group>
 
+    <b-form-group :label="language.addLocationLabel">
+      <b-input-group>
+        <b-form-input v-model="locationForm.locationName" :placeholder="language.locationNamePlaceholder" size="sm"/>
+        <b-form-input v-model="locationForm.locationLabel" :placeholder="language.locationLabelPlaceholder" size="sm"/>
+        <b-btn @click="locationAdded" slot="append" variant="info">{{language.add}}</b-btn>
+      </b-input-group>
+      <b-collapse class="mt-2" v-model="editLocation" id="collapse4">
+        <b-card>
+          <address-form :onSubmit="locationSubmitted"/>
+        </b-card>
+      </b-collapse>
+      <b-table
+        v-if="editContact.phones.length"
+        striped hover
+        :items="editContact.phones"
+        :fields="phoneTableFields">
+      </b-table>
+    </b-form-group>
+
     <b-form-group id="addRelationship-subForm" :label="language.addRelationshipLabel">
       <b-input-group>
         <b-form-input
@@ -70,7 +89,14 @@
 </template>
 
 <script>
+import { mapActions } from 'Vuex'
+import addressForm from './AddressForm.vue'
+import { NEW_LOCATION_REQUEST } from '../store/mutation-types'
+
 export default {
+  components: {
+    'address-form': addressForm
+  },
   computed: {
     contacts () {
       return this.$store.state.contacts
@@ -90,9 +116,22 @@ export default {
   },
   data () {
     return {
+      editLocation: false,
       phoneForm: {
         phoneLabel: '',
         phoneNumber: ''
+      },
+      location: {
+        name: '',
+        label: '',
+        street: '',
+        city: '',
+        st: '',
+        zip: ''
+      },
+      locationForm: {
+        locationName: '',
+        locationLabel: ''
       },
       relationshipForm: {
         hostLabel: '',
@@ -170,13 +209,32 @@ export default {
         targetLabel: ''
       }
     },
+    locationAdded () {
+      console.log('addLocation', this.locationForm)
+      if (!this.locationForm.locationName) return
+
+      const location = {
+        ...this.location,
+        name: this.locationForm.locationName
+      }
+      this.editLocation = true
+      this.$store.commit(NEW_LOCATION_REQUEST, location)
+    },
+    locationSubmitted (location) {
+      console.log('locationSubmmitted', location)
+      this.addLocation(location)
+    },
     submitForm () {
       if (!this.editContact.name) return
       this.editContact.ownerId = this.user._id
       console.log('submitForm', this.editContact)
       this.onSubmit(this.editContact)
       this.clearForm()
-    }
+      this.editLocation = false
+    },
+    ...mapActions([
+      'addLocation'
+    ])
   }
 }
 </script>

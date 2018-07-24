@@ -11,8 +11,11 @@ export default {
     emailLabel: 'Email',
     emailPlaceholder: 'Enter Email',
     addPhoneLabel: 'Add new Phone Number',
-    phoneLabelPlaceholder: 'Enter label (mobile/work...)',
+    phoneLabelPlaceholder: 'Label (mobile/work...)',
     phoneNumberPlaceholder: 'Enter a phone#',
+    addLocationLabel: 'Add new Location',
+    locationNamePlaceholder: 'Enter Location Name',
+    locationLabelPlaceholder: 'Label',
     addRelationshipLabel: 'Add new Relationship',
     hostLabelPlaceholder: 'Host Label',
     targetContactPlaceholder: 'Target Contact',
@@ -35,6 +38,15 @@ export default {
   },
   locationDisplay: {
     title: 'Where'
+  },
+  locationForm: {
+    nameLabel: 'Name',
+    namePlaceholder: 'Enter Name',
+    streetPlaceholder: 'Enter Street',
+    cityPlaceholder: 'Enter City',
+    stPlaceholder: 'Enter St',
+    zipPlaceholder: 'Enter Zip',
+    submit: 'Submit'
   },
   profile: {
     title: 'Please update your Profile',
