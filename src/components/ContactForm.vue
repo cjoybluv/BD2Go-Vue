@@ -206,7 +206,6 @@ export default {
       this.$store.commit(NEW_LOCATION_REQUEST, { ...this.location })
     },
     locationSubmitted (location) {
-      
       const locationLabel = location.label
       delete location.label
       location.ownerId = this.user._id
@@ -217,7 +216,6 @@ export default {
           locationLabel
         })
         this.editLocation = false
-        
       })
     },
     submitForm () {
