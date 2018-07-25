@@ -30,12 +30,6 @@ export default {
     appTitle: 'BD 2 Go!',
     us: 'Flying High Creative'
   },
-  login: {
-    title: 'Please Login',
-    email: 'Email:',
-    password: 'Password:',
-    login: 'Login'
-  },
   locationDisplay: {
     title: 'Where'
   },
@@ -46,7 +40,15 @@ export default {
     cityPlaceholder: 'Enter City',
     stPlaceholder: 'Enter St',
     zipPlaceholder: 'Enter Zip',
-    submit: 'Submit'
+    labelLabel: 'Label',
+    labelPlaceholder: 'Label (office/home...)',
+    add: 'Add'
+  },
+  login: {
+    title: 'Please Login',
+    email: 'Email:',
+    password: 'Password:',
+    login: 'Login'
   },
   profile: {
     title: 'Please update your Profile',

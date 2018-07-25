@@ -35,10 +35,8 @@ const ContactSchema = new Schema({
   phones: [PhoneSchema],
   locations: [
     {
-      street: String,
-      city: String,
-      st: String,
-      zip: String
+      locationId: Schema.Types.ObjectId,
+      locationLabel: String
     }
   ],
   relationships: [

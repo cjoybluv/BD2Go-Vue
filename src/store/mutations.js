@@ -52,9 +52,6 @@ export default {
   },
   [ADD_LOCATION_SUCCESS]: (state, location) => {
     state.loading = false
-    state.contentControls.selectedContactId = null
-    state.contentControls.selectedItemId = null
-    state.contentControls.selectedLocationId = location._id
     state.locations.push(location)
   },
   [APP_DATA_REQUEST]: (state, key) => {

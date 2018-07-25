@@ -1,11 +1,14 @@
 <template>
-  <b-form v-if="editLocation" id="contact-form">
-
+  <div v-if="editLocation">
+    <b-form-input
+      v-model="editLocation.name"
+      :placeholder="language.namePlaceholder"
+      required/>
+    <b-form-input
+      v-model="editLocation.street"
+      :placeholder="language.streetPlaceholder"
+      required/>
     <b-input-group>
-      <b-form-input
-        v-model="editLocation.street"
-        :placeholder="language.streetPlaceholder"
-        required/>
       <b-form-input
         v-model="editLocation.city"
         :placeholder="language.cityPlaceholder"
@@ -18,10 +21,15 @@
         v-model="editLocation.zip"
         :placeholder="language.zipPlaceholder"
         required/>
-    </b-input-group>
+     </b-input-group>
+    <b-form-input
+      v-if="includeLabel"
+      v-model="editLocation.label"
+      :placeholder="language.labelPlaceholder"
+      required/>
 
-    <b-btn class="float-right" variant="primary" @click="submitForm">{{language.submit}}</b-btn>
-  </b-form>
+    <b-btn class="float-right" variant="primary" @click="submitForm">{{language.add}}</b-btn>
+  </div>
 </template>
 
 <script>
@@ -46,21 +54,18 @@ export default {
     }
   },
   props: {
+    includeLabel: Boolean,
     onSubmit: {
       type: Function,
       required: true
     }
   },
   methods: {
-    clearForm () {
-      console.log('clearForm')
-    },
     submitForm () {
       if (!this.editLocation.street) return
-      this.editLocation.ownerId = this.user._id
+
       console.log('submitForm', this.editLocation)
       this.onSubmit(this.editLocation)
-      this.clearForm()
     }
   }
 }

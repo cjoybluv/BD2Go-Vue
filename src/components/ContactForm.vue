@@ -7,13 +7,6 @@
           :placeholder="language.namePlaceholder"
           :autofocus="true"
           required/>
-        <!-- <select v-model="editContact.pronoun" text="Pronoun">
-            <option value="">Select Pronoun</option>
-            <option v-for="pronoun in pronouns" :key="pronoun">{{ pronoun }}</option>
-        </select> -->
-        <!-- <b-dropdown v-model="editContact.pronoun" slot="append" text="Pronoun" @change="handlePronoun">
-          <b-dropdown-item v-for="pronoun in pronouns" :key="pronoun" value="pronoun">{{ pronoun }}</b-dropdown-item>
-        </b-dropdown> -->
         <b-form-select v-model="editContact.pronoun" :options="pronouns">
           <template slot="first">
             <option value="null">Select pronoun</option>
@@ -40,22 +33,21 @@
       </b-table>
     </b-form-group>
 
-    <b-form-group :label="language.addLocationLabel">
-      <b-input-group>
-        <b-form-input v-model="locationForm.locationName" :placeholder="language.locationNamePlaceholder" size="sm"/>
-        <b-form-input v-model="locationForm.locationLabel" :placeholder="language.locationLabelPlaceholder" size="sm"/>
-        <b-btn @click="locationAdded" slot="append" variant="info">{{language.add}}</b-btn>
-      </b-input-group>
+    <b-form-group>
+      <h5>
+        {{ language.addLocationLabel }}
+        <font-awesome-icon icon="plus" @click="locationAdded" class="icon-right"/>
+      </h5>
+
       <b-collapse class="mt-2" v-model="editLocation" id="collapse4">
         <b-card>
-          <address-form :onSubmit="locationSubmitted"/>
+          <location-form :onSubmit="locationSubmitted" includeLabel />
         </b-card>
       </b-collapse>
       <b-table
-        v-if="editContact.phones.length"
+        v-if="editContact.locations.length"
         striped hover
-        :items="editContact.phones"
-        :fields="phoneTableFields">
+        :items="editContact.locations">
       </b-table>
     </b-form-group>
 
@@ -90,12 +82,12 @@
 
 <script>
 import { mapActions } from 'Vuex'
-import addressForm from './AddressForm.vue'
+import locationForm from './LocationForm.vue'
 import { NEW_LOCATION_REQUEST } from '../store/mutation-types'
 
 export default {
   components: {
-    'address-form': addressForm
+    'location-form': locationForm
   },
   computed: {
     contacts () {
@@ -210,19 +202,23 @@ export default {
       }
     },
     locationAdded () {
-      console.log('addLocation', this.locationForm)
-      if (!this.locationForm.locationName) return
-
-      const location = {
-        ...this.location,
-        name: this.locationForm.locationName
-      }
       this.editLocation = true
-      this.$store.commit(NEW_LOCATION_REQUEST, location)
+      this.$store.commit(NEW_LOCATION_REQUEST, { ...this.location })
     },
     locationSubmitted (location) {
-      console.log('locationSubmmitted', location)
-      this.addLocation(location)
+      
+      const locationLabel = location.label
+      delete location.label
+      location.ownerId = this.user._id
+      this.addLocation(location).then(location => {
+        console.log('locationSubmmitted', location)
+        this.editContact.locations.push({
+          locationId: location.body._id,
+          locationLabel
+        })
+        this.editLocation = false
+        
+      })
     },
     submitForm () {
       if (!this.editContact.name) return
@@ -255,5 +251,10 @@ input {
 }
 #contact-form select {
   max-width: 20%;
+}
+.icon-right {
+  cursor: pointer;
+  float: right !important;
+  margin: 0 10px 10px 0;
 }
 </style>
