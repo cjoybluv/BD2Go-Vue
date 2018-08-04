@@ -115,6 +115,7 @@ export default {
     localStorage.setItem('user', JSON.stringify(authData.user))
   },
   [NEW_CONTACT_REQUEST]: (state, contact) => {
+    console.log('NEW_CONTACT_REQUEST', contact)
     state.contentControls.editContact = { ...contact }
   },
   [NEW_LOCATION_REQUEST]: (state, location) => {

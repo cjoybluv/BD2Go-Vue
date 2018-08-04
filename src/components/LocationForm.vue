@@ -3,6 +3,7 @@
     <b-form-input
       v-model="editLocation.name"
       :placeholder="language.namePlaceholder"
+      :autofocus="true"
       required/>
     <b-form-input
       v-model="editLocation.street"

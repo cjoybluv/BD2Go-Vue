@@ -29,6 +29,7 @@ import contactForm from './ContactForm.vue'
 import {
   NEW_CONTACT_REQUEST
 } from '../store/mutation-types'
+
 export default {
   name: 'ContactDislay',
   components: {
@@ -40,19 +41,17 @@ export default {
     },
     language () {
       return this.$store.state.language.contactDisplay
-    },
-    ownerId () {
-      return this.$store.state.user && this.$store.state.user._id
     }
   },
   data () {
     return {
       contact: {
-        ownerId: '',
+        ownerId: this.$store.state.user._id,
         name: '',
         pronoun: 'null',
         email: '',
         phones: [],
+        locations: [],
         relationships: []
       }
     }

@@ -26,7 +26,7 @@
         <b-btn @click="addPhone" slot="append" variant="info">{{language.add}}</b-btn>
       </b-input-group>
       <b-table
-        v-if="editContact.phones.length"
+        v-if="editContact.phones && editContact.phones.length"
         striped hover
         :items="editContact.phones"
         :fields="phoneTableFields">
@@ -45,7 +45,7 @@
         </b-card>
       </b-collapse>
       <b-table
-        v-if="editContact.locations.length"
+        v-if="editContact.locations && editContact.locations.length"
         striped hover
         :items="editContact.locations">
       </b-table>
@@ -69,7 +69,7 @@
         <b-btn @click="addRelationship" variant="info">{{language.add}}</b-btn>
       </b-input-group>
       <b-table
-        v-if="editContact.relationships.length"
+        v-if="editContact.relationships && editContact.relationships.length"
         striped hover
         :items="editContact.relationships"
         :fields="relationshipTableFields">
