@@ -12,6 +12,7 @@
           <template slot="button-content">
             <font-awesome-icon icon="user"  class="pointer fa-2x right" />
           </template>
+          <b-dropdown-item-button><router-link to="/checklists">Checklists</router-link></b-dropdown-item-button>
           <b-dropdown-item-button><router-link to="/profile">Profile</router-link></b-dropdown-item-button>
           <b-dropdown-item-button @click="signOut">Sign-out</b-dropdown-item-button>
         </b-dropdown>

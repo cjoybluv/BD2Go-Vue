@@ -20,6 +20,8 @@ const state = {
     editContact: null, // copy of selecledContact while editing
     editLocation: null // copy of selectedLocation while editing
   },
+  checklists: [],
+  currentChecklist: {title: 'testing', items: [{key: 1, subject: 'item 1'}, {key: 2, subject: 'item 2'}, {key: 3, subject: 'item 3'} ]},
   language: language,
   contacts: [],
   items: [],

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import {
+  ADD_CHECKLIST_ITEM,
   ADD_CONTACT_REQUEST,
   ADD_CONTACT_SUCCESS,
   ADD_LOCATION_REQUEST,
@@ -38,6 +39,9 @@ import {
 } from './mutation-types'
 
 export default {
+  [ADD_CHECKLIST_ITEM]: (state, newItem) => {
+    state.currentChecklist.items.push(newItem)
+  },
   [ADD_CONTACT_REQUEST]: (state, contact) => {
     state.loading = true
   },

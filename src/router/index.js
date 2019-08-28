@@ -4,6 +4,7 @@ import Home from '@/pages/Home'
 import Login from '@/pages/Login'
 import Signup from '@/pages/Signup'
 import Profile from '@/pages/Profile'
+import ChecklistDisplay from '@/pages/ChecklistDisplay'
 
 import { store } from '../store/store.js'
 import { LOGIN_SUCCESS } from '../store/mutation-types.js'
@@ -34,6 +35,12 @@ const router = new Router({
       path: '/profile',
       name: 'Profile',
       component: Profile,
+      meta: {requiresAuth: true}
+    },
+    {
+      path: '/checklists',
+      name: 'CheclistDisplay',
+      component: ChecklistDisplay,
       meta: {requiresAuth: true}
     }
   ],

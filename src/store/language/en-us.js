@@ -56,6 +56,12 @@ export default {
     email: 'Email',
     update: 'Update'
   },
+  checklists: {
+    title: 'Checklists!'
+  },
+  checklist: {
+
+  },
   signup: {
     title: 'Please Signup',
     username: 'Username',
