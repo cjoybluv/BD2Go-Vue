@@ -1,11 +1,12 @@
 <template>
   <div>
-    <input
+    <md-textarea
       autofocus
       placeholder="Enter new Item"
       v-model="newItem.subject"
       type="text"
-      v-on:keyup.enter="addChecklistItem">
+      v-on:keyup.enter="addChecklistItem"
+      md-autogrow></md-textarea>
     <font-awesome-icon icon="plus" @click="addChecklistItem" class="pointer"/>
   </div>
 </template>
@@ -35,7 +36,7 @@ export default {
 div {
   display: flex;
 }
-input {
+textarea {
   flex: 1;
 }
 </style>
