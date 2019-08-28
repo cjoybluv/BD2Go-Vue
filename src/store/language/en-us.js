@@ -11,8 +11,11 @@ export default {
     emailLabel: 'Email',
     emailPlaceholder: 'Enter Email',
     addPhoneLabel: 'Add new Phone Number',
-    phoneLabelPlaceholder: 'Enter label (mobile/work...)',
+    phoneLabelPlaceholder: 'Label (mobile/work...)',
     phoneNumberPlaceholder: 'Enter a phone#',
+    addLocationLabel: 'Add new Location',
+    locationNamePlaceholder: 'Enter Location Name',
+    locationLabelPlaceholder: 'Label',
     addRelationshipLabel: 'Add new Relationship',
     hostLabelPlaceholder: 'Host Label',
     targetContactPlaceholder: 'Target Contact',
@@ -27,20 +30,37 @@ export default {
     appTitle: 'BD 2 Go!',
     us: 'Flying High Creative'
   },
+  locationDisplay: {
+    title: 'Where'
+  },
+  locationForm: {
+    nameLabel: 'Name',
+    namePlaceholder: 'Enter Name',
+    streetPlaceholder: 'Enter Street',
+    cityPlaceholder: 'Enter City',
+    stPlaceholder: 'Enter St',
+    zipPlaceholder: 'Enter Zip',
+    labelLabel: 'Label',
+    labelPlaceholder: 'Label (office/home...)',
+    add: 'Add'
+  },
   login: {
     title: 'Please Login',
     email: 'Email:',
     password: 'Password:',
     login: 'Login'
   },
-  locationDisplay: {
-    title: 'Where'
-  },
   profile: {
     title: 'Please update your Profile',
     username: 'Username',
     email: 'Email',
     update: 'Update'
+  },
+  checklists: {
+    title: 'Checklists!'
+  },
+  checklist: {
+
   },
   signup: {
     title: 'Please Signup',

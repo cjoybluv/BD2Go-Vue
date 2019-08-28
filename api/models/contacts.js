@@ -26,16 +26,17 @@ const ContactSchema = new Schema({
     type: String,
     required: [true, 'name field is required']
   },
+  pronoun: {
+    type: String
+  },
   email: {
     type: String
   },
   phones: [PhoneSchema],
   locations: [
     {
-      street: String,
-      city: String,
-      st: String,
-      zip: String
+      locationId: Schema.Types.ObjectId,
+      locationLabel: String
     }
   ],
   relationships: [

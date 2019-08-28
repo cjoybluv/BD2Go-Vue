@@ -1,7 +1,10 @@
 import Vue from 'vue'
 import {
+  ADD_CHECKLIST_ITEM,
   ADD_CONTACT_REQUEST,
   ADD_CONTACT_SUCCESS,
+  ADD_LOCATION_REQUEST,
+  ADD_LOCATION_SUCCESS,
   APP_DATA_REQUEST,
   APP_DATA_SUCCESS,
   CONTACT_REQUEST,
@@ -10,6 +13,8 @@ import {
   CONTACTS_SUCCESS,
   EDIT_CONTACT_COMPLETE,
   EDIT_CONTACT_REQUEST,
+  EDIT_LOCATION_COMPLETE,
+  EDIT_LOCATION_REQUEST,
   ITEMS_REQUEST,
   ITEMS_SUCCESS,
   LOCATIONS_REQUEST,
@@ -17,6 +22,7 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   NEW_CONTACT_REQUEST,
+  NEW_LOCATION_REQUEST,
   SELECT_CONTACT,
   SELECT_ITEM,
   SET_IS_AUTHENTICATED,
@@ -33,6 +39,9 @@ import {
 } from './mutation-types'
 
 export default {
+  [ADD_CHECKLIST_ITEM]: (state, newItem) => {
+    state.currentChecklist.items.push(newItem)
+  },
   [ADD_CONTACT_REQUEST]: (state, contact) => {
     state.loading = true
   },
@@ -41,6 +50,13 @@ export default {
     state.contentControls.selectedContactId = contact._id
     state.contentControls.selectedItemId = null
     state.contacts.push(contact)
+  },
+  [ADD_LOCATION_REQUEST]: (state, location) => {
+    state.loading = true
+  },
+  [ADD_LOCATION_SUCCESS]: (state, location) => {
+    state.loading = false
+    state.locations.push(location)
   },
   [APP_DATA_REQUEST]: (state, key) => {
     state.appData[key] = null
@@ -68,7 +84,13 @@ export default {
     state.contentControls.editContact = null
   },
   [EDIT_CONTACT_REQUEST]: (state, contact) => {
-    state.contentControls.editContact = contact
+    state.contentControls.editContact = { pronoun: 'null', ...contact }
+  },
+  [EDIT_LOCATION_COMPLETE]: (state) => {
+    state.contentControls.editLocation = null
+  },
+  [EDIT_LOCATION_REQUEST]: (state, location) => {
+    state.contentControls.editLocation = { ...location }
   },
   [ITEMS_REQUEST]: (state, ownerId) => {
     state.items = []
@@ -96,8 +118,12 @@ export default {
     localStorage.setItem('token', authData.token)
     localStorage.setItem('user', JSON.stringify(authData.user))
   },
-  [NEW_CONTACT_REQUEST]: (state) => {
-    state.contentControls.editContact = {}
+  [NEW_CONTACT_REQUEST]: (state, contact) => {
+    console.log('NEW_CONTACT_REQUEST', contact)
+    state.contentControls.editContact = { ...contact }
+  },
+  [NEW_LOCATION_REQUEST]: (state, location) => {
+    state.contentControls.editLocation = { ...location }
   },
   [SELECT_CONTACT]: (state, contactId) => {
     state.contentControls.selectedContactId = contactId

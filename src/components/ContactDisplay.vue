@@ -18,7 +18,7 @@
       hide-footer
       ref="addContactForm"
       title="Create New Contact">
-      <contact-form :contact="contact" :onSubmit="contactAdded" />
+      <contact-form :onSubmit="contactAdded" />
     </b-modal>
   </div>
 </template>
@@ -29,6 +29,7 @@ import contactForm from './ContactForm.vue'
 import {
   NEW_CONTACT_REQUEST
 } from '../store/mutation-types'
+
 export default {
   name: 'ContactDislay',
   components: {
@@ -40,18 +41,17 @@ export default {
     },
     language () {
       return this.$store.state.language.contactDisplay
-    },
-    ownerId () {
-      return this.$store.state.user && this.$store.state.user._id
     }
   },
   data () {
     return {
       contact: {
-        ownerId: '',
+        ownerId: this.$store.state.user._id,
         name: '',
+        pronoun: 'null',
         email: '',
         phones: [],
+        locations: [],
         relationships: []
       }
     }
@@ -62,7 +62,7 @@ export default {
       this.$refs.addContactForm.hide()
     },
     openContactForm () {
-      this.$store.commit(NEW_CONTACT_REQUEST)
+      this.$store.commit(NEW_CONTACT_REQUEST, this.contact)
       this.$refs.addContactForm.show()
     },
     ...mapActions([

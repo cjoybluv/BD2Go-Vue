@@ -8,37 +8,40 @@ import {
   putContact,
   getItems,
   getLocations,
+  postLocation,
   putUser,
   getAppData,
   postSetRelationship
 } from '../api/api'
 
 import {
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS,
-  SIGNUP_REQUEST,
-  SIGNUP_SUCCESS,
-  USER_REQUEST,
-  USER_SUCCESS,
+  ADD_CONTACT_REQUEST,
+  ADD_CONTACT_SUCCESS,
+  ADD_LOCATION_REQUEST,
+  ADD_LOCATION_SUCCESS,
+  APP_DATA_REQUEST,
+  APP_DATA_SUCCESS,
   CONTACT_REQUEST,
   CONTACT_SUCCESS,
-  SET_ME,
   CONTACTS_REQUEST,
   CONTACTS_SUCCESS,
   ITEMS_REQUEST,
   ITEMS_SUCCESS,
   LOCATIONS_REQUEST,
   LOCATIONS_SUCCESS,
-  SELECT_ITEM,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
   SELECT_CONTACT,
-  ADD_CONTACT_REQUEST,
-  ADD_CONTACT_SUCCESS,
+  SELECT_ITEM,
+  SET_ME,
+  SIGNUP_REQUEST,
+  SIGNUP_SUCCESS,
   UPDATE_CONTACT_REQUEST,
   UPDATE_CONTACT_SUCCESS,
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
-  APP_DATA_REQUEST,
-  APP_DATA_SUCCESS
+  USER_REQUEST,
+  USER_SUCCESS
 } from './mutation-types'
 
 // import locations from './mockData/locations'
@@ -118,6 +121,17 @@ export default {
     return new Promise((resolve, reject) => {
       postContact(payload).then(function (data) {
         commit(ADD_CONTACT_SUCCESS, data.body)
+        resolve(data)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  },
+  addLocation: ({ commit }, payload) => {
+    commit(ADD_LOCATION_REQUEST, payload)
+    return new Promise((resolve, reject) => {
+      postLocation(payload).then(function (data) {
+        commit(ADD_LOCATION_SUCCESS, data.body)
         resolve(data)
       }).catch(err => {
         reject(err)
