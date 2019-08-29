@@ -70,4 +70,9 @@ panel {
 #checklists h1 {
   border-top: 1px solid black;
 }
+.md-field {
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+}
 </style>
