@@ -1,12 +1,23 @@
 <template>
   <section id="checklist">
-    <md-input
-      id="title"
-      placeholder="Enter Title"
-      md-inline
-      v-model="checklist.title"
-      @change="updateTitle"></md-input>
-    <checklist-input></checklist-input>
+    <md-field>
+      <md-input
+        id="title"
+        placeholder="Enter Title"
+        md-inline
+        v-model="checklist.title"
+        @change="updateTitle">
+      </md-input>
+      <span @click="saveChecklist">
+        <md-icon class="pointer">save</md-icon>
+      </span>
+      <span>
+        <md-icon class="pointer">more_vert</md-icon>
+      </span>
+    </md-field>
+
+    <checklist-input v-if="checklist.title"></checklist-input>
+
     <ul>
       <li
         v-for="item in checklist.items"
@@ -18,6 +29,7 @@
 </template>
 
 <script>
+import { mapActions } from 'Vuex'
 import ChecklistInput from './ChecklistInput'
 import ChecklistItem from './ChecklistItem.vue'
 
@@ -35,7 +47,18 @@ export default {
   methods: {
     updateTitle () {
       this.$store.commit('UPDATE_CHECKLIST_TITLE', this.checklist.title)
-    }
+    },
+    saveChecklist () {
+      if (!this.checklist._id) {
+        this.checklist.ownerId = this.$store.state.user._id
+        this.addChecklist(this.checklist)
+      } else {
+        this.updateChecklist(this.checklist)
+      }
+    },
+    ...mapActions([
+      'addChecklist'
+    ])
   }
 }
 </script>

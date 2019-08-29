@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import {
   ADD_CHECKLIST_ITEM,
+  ADD_CHECKLIST_REQUEST,
+  ADD_CHECKLIST_SUCCESS,
   ADD_CONTACT_REQUEST,
   ADD_CONTACT_SUCCESS,
   ADD_LOCATION_REQUEST,
@@ -23,7 +25,7 @@ import {
   LOGIN_SUCCESS,
   NEW_CONTACT_REQUEST,
   NEW_LOCATION_REQUEST,
-  UPDATE_CHECKLIST_TITLE,
+
   SELECT_CONTACT,
   SELECT_ITEM,
   SET_IS_AUTHENTICATED,
@@ -31,6 +33,9 @@ import {
   SIGN_OUT,
   SIGNUP_REQUEST,
   SIGNUP_SUCCESS,
+  UPDATE_CHECKLIST_TITLE,
+  UPDATE_CHECKLIST_REQUEST,
+  UPDATE_CHECKLIST_SUCCESS,
   UPDATE_CONTACT_REQUEST,
   UPDATE_CONTACT_SUCCESS,
   UPDATE_USER_REQUEST,
@@ -42,6 +47,13 @@ import {
 export default {
   [ADD_CHECKLIST_ITEM]: (state, newItem) => {
     state.currentChecklist.items.push(newItem)
+  },
+  [ADD_CHECKLIST_REQUEST]: (state, checklist) => {
+    state.loading = true
+  },
+  [ADD_CHECKLIST_SUCCESS]: (state, checklist) => {
+    state.loading = false
+    state.checklists.push(checklist)
   },
   [ADD_CONTACT_REQUEST]: (state, contact) => {
     state.loading = true
@@ -126,9 +138,6 @@ export default {
   [NEW_LOCATION_REQUEST]: (state, location) => {
     state.contentControls.editLocation = { ...location }
   },
-  [UPDATE_CHECKLIST_TITLE]: (state, title) => {
-    state.currentChecklist.title = title
-  },
   [SELECT_CONTACT]: (state, contactId) => {
     state.contentControls.selectedContactId = contactId
     state.contentControls.selectedItemId = null
@@ -159,6 +168,17 @@ export default {
   },
   [SIGNUP_SUCCESS]: (state, data) => {
     state.user = data.user
+  },
+  [UPDATE_CHECKLIST_TITLE]: (state, title) => {
+    state.currentChecklist.title = title
+  },
+  [UPDATE_CHECKLIST_REQUEST]: (state, checklist) => {
+    state.loading = true
+  },
+  [UPDATE_CHECKLIST_SUCCESS]: (state, updatedChecklist) => {
+    state.loading = false
+    const checklistIdx = state.checklists.findIndex(checklist => checklist._id === updatedChecklist._id)
+    Vue.set(state.checklists, checklistIdx, updatedChecklist)
   },
   [UPDATE_CONTACT_REQUEST]: (state, contact) => {
     state.loading = true
