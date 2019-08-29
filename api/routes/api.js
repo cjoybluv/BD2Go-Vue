@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt')
 const router = express.Router()
 
 const User = require('../models/users')
+const Checklist = require('../models/checklists')
 const Contact = require('../models/contacts')
 const Item = require('../models/items')
 const Location = require('../models/locations')
@@ -55,6 +56,80 @@ router.post('/auth/login', (req, res, next) => {
     })
   }).catch(error => {
     res.json({error})
+  })
+})
+
+router.get('/checklists', verifyToken, (req, res, next) => {
+  jwt.verify(req.token, JWT_SECRET_KEY, (err, _authData) => {
+    if (err) {
+      res.sendStatus(403)
+    } else {
+      Checklist.find({ownerId: req.query.ownerId}).then(checklists => {
+        res.json(checklists)
+      }).catch(error => {
+        res.json({error})
+      })
+    }
+  })
+})
+
+router.get('/checklists/:id', verifyToken, (req, res, next) => {
+  jwt.verify(req.token, JWT_SECRET_KEY, (err, _authData) => {
+    if (err) {
+      res.sendStatus(403)
+    } else {
+      Checklist.findById(req.params.id).then(checklist => {
+        res.json(checklist)
+      }).catch(error => {
+        res.json({error})
+      })
+    }
+  })
+})
+
+router.post('/checklists', verifyToken, (req, res, next) => {
+  jwt.verify(req.token, JWT_SECRET_KEY, (err, _authData) => {
+    if (err) {
+      res.sendStatus(403)
+    } else {
+      Checklist.create(req.body).then(checklist => {
+        res.json(checklist)
+      }).catch(error => {
+        res.json({error})
+      })
+    }
+  })
+})
+
+router.put('/checklists/:id', verifyToken, (req, res, next) => {
+  jwt.verify(req.token, JWT_SECRET_KEY, (err, _authData) => {
+    if (err) {
+      res.sendStatus(403)
+    } else {
+      Checklist.findByIdAndUpdate({_id: req.params.id}, req.body).then(() => {
+        Checklist.findById(req.params.id).then(checklist => {
+          res.json(checklist)
+        }).catch(error => {
+          res.json({error})
+        })
+      }).catch(error => {
+        res.json({error})
+      })
+    }
+  })
+})
+
+router.delete('/checklists/:id', verifyToken, (req, res, next) => {
+  jwt.verify(req.token, JWT_SECRET_KEY, (err, _authData) => {
+    if (err) {
+      res.sendStatus(403)
+    } else {
+      Checklist.findByIdAndDelete(req.params.id).then(checklist => {
+        res.json(checklist)
+      }).catch(error => {
+        res.json({error})
+      })
+    }
   })
 })
 

@@ -2,16 +2,6 @@ import Vue from 'vue'
 
 const PATHNAME = 'http://127.0.0.1:8881/api/v1'
 
-export function getUser (payload) {
-  return new Promise((resolve, reject) => {
-    Vue.http.get(PATHNAME + '/users?email=' + payload).then(user => {
-      resolve(user)
-    }).catch(err => {
-      reject(err)
-    })
-  })
-}
-
 export function postLogin (payload) {
   return new Promise((resolve, reject) => {
     Vue.http.post(PATHNAME + '/auth/login', payload).then(authData => {
@@ -25,6 +15,56 @@ export function postLogin (payload) {
 export function postSignup (payload) {
   return new Promise((resolve, reject) => {
     Vue.http.post(PATHNAME + '/auth/signup', payload).then(function (data) {
+      resolve(data)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
+export function getChecklists (payload) {
+  return new Promise((resolve, reject) => {
+    Vue.http.get(PATHNAME + '/checklists?ownerId=' + payload).then(function (data) {
+      resolve(data)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
+export function getChecklist (payload) {
+  return new Promise((resolve, reject) => {
+    Vue.http.get(PATHNAME + '/checklists/' + payload).then(function (data) {
+      resolve(data)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
+export function postChecklist (payload) {
+  return new Promise((resolve, reject) => {
+    Vue.http.post(PATHNAME + '/checklists', payload).then(function (data) {
+      resolve(data)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
+export function putChecklist (payload) {
+  return new Promise((resolve, reject) => {
+    Vue.http.put(PATHNAME + '/checklists/' + payload._id, payload).then(function (data) {
+      resolve(data)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
+export function deleteChecklist (payload) {
+  return new Promise((resolve, reject) => {
+    Vue.http.delete(PATHNAME + '/checklists/' + payload._id).then(function (data) {
       resolve(data)
     }).catch(err => {
       reject(err)
@@ -176,6 +216,16 @@ export function deleteLocation (payload) {
   return new Promise((resolve, reject) => {
     Vue.http.delete(PATHNAME + '/locations/' + payload._id).then(function (data) {
       resolve(data)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
+export function getUser (payload) {
+  return new Promise((resolve, reject) => {
+    Vue.http.get(PATHNAME + '/users?email=' + payload).then(user => {
+      resolve(user)
     }).catch(err => {
       reject(err)
     })
