@@ -54,6 +54,7 @@ router.beforeEach((to, from, next) => {
     if (token && user) {
       const authData = {token, user}
       store.commit(LOGIN_SUCCESS, authData)
+      store.dispatch('fetchChecklists', user._id)
       store.dispatch('fetchContacts', user._id)
       store.dispatch('fetchItems', user._id)
       store.dispatch('fetchLocations', user._id)

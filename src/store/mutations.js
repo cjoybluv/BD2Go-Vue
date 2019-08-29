@@ -9,6 +9,8 @@ import {
   ADD_LOCATION_SUCCESS,
   APP_DATA_REQUEST,
   APP_DATA_SUCCESS,
+  CHECKLISTS_REQUEST,
+  CHECKLISTS_SUCCESS,
   CONTACT_REQUEST,
   CONTACT_SUCCESS,
   CONTACTS_REQUEST,
@@ -78,6 +80,14 @@ export default {
   [APP_DATA_SUCCESS]: (state, appData) => {
     state.loading = false
     state.appData[appData.key] = appData.data
+  },
+  [CHECKLISTS_REQUEST]: (state, ownerId) => {
+    state.checklists = []
+    state.loading = true
+  },
+  [CHECKLISTS_SUCCESS]: (state, checklists) => {
+    state.checklists = checklists
+    state.loading = false
   },
   [CONTACT_REQUEST]: (state, contactId) => {
     state.loading = true
