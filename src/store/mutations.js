@@ -23,6 +23,7 @@ import {
   LOGIN_SUCCESS,
   NEW_CONTACT_REQUEST,
   NEW_LOCATION_REQUEST,
+  UPDATE_CHECKLIST_TITLE,
   SELECT_CONTACT,
   SELECT_ITEM,
   SET_IS_AUTHENTICATED,
@@ -124,6 +125,9 @@ export default {
   },
   [NEW_LOCATION_REQUEST]: (state, location) => {
     state.contentControls.editLocation = { ...location }
+  },
+  [UPDATE_CHECKLIST_TITLE]: (state, title) => {
+    state.currentChecklist.title = title
   },
   [SELECT_CONTACT]: (state, contactId) => {
     state.contentControls.selectedContactId = contactId

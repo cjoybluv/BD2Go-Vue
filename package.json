@@ -29,10 +29,12 @@
     "mongoose": "^5.1.4",
     "request": "^2.87.0",
     "vue": "^2.5.2",
+    "vue-material": "^1.0.0-beta-11",
     "vue-moment": "^4.0.0-0",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.0.1",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "webpack-bundle-analyzer": "^3.4.1"
   },
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.18",
@@ -93,7 +95,6 @@
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.5.2",
     "webpack": "^3.6.0",
-    "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.9.1",
     "webpack-merge": "^4.1.0",
     "@storybook/vue": "^5.0.9",

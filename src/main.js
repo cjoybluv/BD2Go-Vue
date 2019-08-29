@@ -3,9 +3,13 @@
 import Vue from 'vue'
 import VueResource from 'vue-resource'
 import moment from 'vue-moment'
+
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+import VueMaterial from 'vue-material'
+import 'vue-material/dist/vue-material.min.css'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faPlus, faPencilAlt, faUser } from '@fortawesome/free-solid-svg-icons'
@@ -27,6 +31,7 @@ Vue.config.productionTip = false
 Vue.use(VueResource)
 Vue.use(moment)
 Vue.use(BootstrapVue)
+Vue.use(VueMaterial)
 
 Vue.http.interceptors.push((request) => {
   if (!request.url.endsWith('login')) {
