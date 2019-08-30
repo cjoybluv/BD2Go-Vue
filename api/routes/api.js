@@ -64,7 +64,7 @@ router.get('/checklists', verifyToken, (req, res, next) => {
     if (err) {
       res.sendStatus(403)
     } else {
-      Checklist.find({ownerId: req.query.ownerId}).then(checklists => {
+      Checklist.find({ownerId: req.query.ownerId}).sort('title').then(checklists => {
         res.json(checklists)
       }).catch(error => {
         res.json({error})
