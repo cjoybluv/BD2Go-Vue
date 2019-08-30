@@ -57,7 +57,8 @@ export default {
       }
     },
     ...mapActions([
-      'addChecklist'
+      'addChecklist',
+      'updateChecklist'
     ])
   }
 }

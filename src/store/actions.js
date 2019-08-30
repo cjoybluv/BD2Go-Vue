@@ -163,13 +163,6 @@ export default {
     return new Promise((resolve, reject) => {
       getUser(payload).then(user => {
         commit(USER_SUCCESS, user.body)
-        // if (user.body.meContactId) {
-        //   dispatch('fetchMe', user.body.meContactId)
-        // }
-        // dispatch('fetchContacts', user.body._id)
-        // dispatch('fetchLocations', user.body._id)
-        // dispatch('fetchItems', user.body._id)
-        // dispatch('fetchAppData', 'relationshipData')
       }).catch(err => {
         reject(err)
       })
