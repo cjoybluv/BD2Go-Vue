@@ -53,10 +53,6 @@ export default {
         console.log('saveChecklist', this.checklist)
         this.checklist.ownerId = this.$store.state.user._id
         this.addChecklist(this.checklist)
-        // this.checklist = {
-        //   title: '',
-        //   items: []
-        // }
       } else {
         this.updateChecklist(this.checklist)
       }
