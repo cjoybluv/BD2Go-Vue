@@ -15,6 +15,7 @@ import {
   CONTACT_SUCCESS,
   CONTACTS_REQUEST,
   CONTACTS_SUCCESS,
+  EDIT_CHECKLIST,
   EDIT_CONTACT_COMPLETE,
   EDIT_CONTACT_REQUEST,
   EDIT_LOCATION_COMPLETE,
@@ -107,6 +108,9 @@ export default {
     state.contacts = contacts
     state.loading = false
   },
+  [EDIT_CHECKLIST]: (state, checklist) => {
+    state.currentChecklist = checklist
+  },
   [EDIT_CONTACT_COMPLETE]: (state) => {
     state.contentControls.editContact = null
   },
@@ -193,6 +197,10 @@ export default {
     state.loading = false
     const checklistIdx = state.checklists.findIndex(checklist => checklist._id === updatedChecklist._id)
     Vue.set(state.checklists, checklistIdx, updatedChecklist)
+    state.currentChecklist = {
+      title: '',
+      items: []
+    }
   },
   [UPDATE_CONTACT_REQUEST]: (state, contact) => {
     state.loading = true
