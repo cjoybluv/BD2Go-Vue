@@ -5,7 +5,10 @@
     <section id="main">
       <panel>
           <ul>
-            <li v-for="checklist in checklists" :key="checklist._id">
+            <li
+              v-for="checklist in checklists"
+              :key="checklist._id"
+              @click="editChecklist(checklist)">
               {{ checklist.title }}
             </li>
           </ul>
@@ -57,7 +60,10 @@ export default {
     }
   },
   methods: {
-
+    editChecklist (checklist) {
+      console.log('editChecklist', checklist)
+      this.$store.commit('EDIT_CHECKLIST', checklist)
+    }
   },
   mounted () {
     this.user = this.currentUser
@@ -76,6 +82,9 @@ panel {
 }
 #checklists h1 {
   border-top: 1px solid black;
+}
+#checklists li {
+  cursor: pointer;
 }
 .md-field {
   min-height: 0;
