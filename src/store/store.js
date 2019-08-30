@@ -21,7 +21,10 @@ const state = {
     editLocation: null // copy of selectedLocation while editing
   },
   checklists: [],
-  currentChecklist: {},
+  currentChecklist: {
+    title: '',
+    items: []
+  },
   language: language,
   contacts: [],
   items: [],

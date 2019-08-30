@@ -50,6 +50,7 @@ export default {
     },
     saveChecklist () {
       if (!this.checklist._id) {
+        console.log('saveChecklist', this.checklist)
         this.checklist.ownerId = this.$store.state.user._id
         this.addChecklist(this.checklist)
       } else {
