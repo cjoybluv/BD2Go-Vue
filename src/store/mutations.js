@@ -57,15 +57,13 @@ export default {
   [ADD_CHECKLIST_SUCCESS]: (state, checklist) => {
     state.loading = false
     state.checklists.push(checklist)
-    let checklists = JSON.parse(JSON.stringify(state.checklists)) // conv Observable to Array
-    checklists.sort(function (a, b) {
+    state.checklists.sort(function (a, b) {
       if (a.title >= b.title) {
         return 0
       } else {
         return -1
       }
     })
-    state.checklists = checklists
     state.currentChecklist = {
       title: '',
       items: []
