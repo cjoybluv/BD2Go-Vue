@@ -2,6 +2,7 @@ import {
   getUser,
   postLogin,
   postSignup,
+  getChecklists,
   postChecklist,
   putChecklist,
   getContacts,
@@ -25,6 +26,8 @@ import {
   ADD_LOCATION_SUCCESS,
   APP_DATA_REQUEST,
   APP_DATA_SUCCESS,
+  CHECKLISTS_REQUEST,
+  CHECKLISTS_SUCCESS,
   CONTACT_REQUEST,
   CONTACT_SUCCESS,
   CONTACTS_REQUEST,
@@ -93,6 +96,17 @@ export default {
     return new Promise((resolve, reject) => {
       getAppData(payload).then(data => {
         commit(APP_DATA_SUCCESS, data.body)
+        resolve(data)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  },
+  fetchChecklists: ({ commit }, payload) => {
+    commit(CHECKLISTS_REQUEST, payload)
+    return new Promise((resolve, reject) => {
+      getChecklists(payload).then(function (data) {
+        commit(CHECKLISTS_SUCCESS, data.body)
         resolve(data)
       }).catch(err => {
         reject(err)

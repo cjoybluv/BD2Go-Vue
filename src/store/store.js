@@ -22,7 +22,6 @@ const state = {
   },
   checklists: [],
   currentChecklist: {
-    _id: '',
     title: '',
     items: []
   },

@@ -32,7 +32,16 @@ export default {
   },
   methods: {
     addChecklistItem () {
-      this.$store.commit('ADD_CHECKLIST_ITEM', this.newItem)
+      let subject = this.newItem.subject
+      let cleanSubject
+      if (subject.charAt(subject.length - 1) === String.fromCharCode(10)) {
+        cleanSubject = subject.substring(0, subject.length - 1)
+      } else {
+        cleanSubject = subject
+      }
+      let cleanItem = {...this.newItem, subject: cleanSubject}
+      this.$store.commit('ADD_CHECKLIST_ITEM', cleanItem)
+
       this.newItem = {}
       this.newItem.key = this.$store.state.currentChecklist.items.length + 1
     }

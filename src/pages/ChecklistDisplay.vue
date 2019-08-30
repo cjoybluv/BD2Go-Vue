@@ -4,7 +4,11 @@
 
     <section id="main">
       <panel>
-          folder display of checklists
+          <ul>
+            <li v-for="checklist in checklists" :key="checklist._id">
+              {{ checklist.title }}
+            </li>
+          </ul>
       </panel>
       <panel>
           <checklist></checklist>
@@ -41,6 +45,9 @@ export default {
   computed: {
     language () {
       return this.$store.state.language.checklists
+    },
+    checklists () {
+      return this.$store.state.checklists
     },
     currentUser () {
       return this.$store.state.user
