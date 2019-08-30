@@ -27,7 +27,6 @@ import {
   LOGIN_SUCCESS,
   NEW_CONTACT_REQUEST,
   NEW_LOCATION_REQUEST,
-
   SELECT_CONTACT,
   SELECT_ITEM,
   SET_IS_AUTHENTICATED,
@@ -48,7 +47,7 @@ import {
 
 export default {
   [ADD_CHECKLIST_ITEM]: (state, newItem) => {
-    state.currentChecklist.items.push(newItem)
+    state.currentChecklist.items ? state.currentChecklist.items.push(newItem) : state.currentChecklist.items = [newItem]
   },
   [ADD_CHECKLIST_REQUEST]: (state, checklist) => {
     state.loading = true

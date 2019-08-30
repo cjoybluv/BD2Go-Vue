@@ -5,9 +5,9 @@
       placeholder="Enter new Item"
       v-model="newItem.subject"
       type="text"
-      v-on:keyup.enter="addChecklistItem"
+      v-on:keyup.enter="submitItem"
       md-autogrow></md-textarea>
-      <span @click="addChecklistItem">
+      <span @click="submitItem">
         <md-icon class="pointer">add</md-icon>
       </span>
       <span>
@@ -30,9 +30,10 @@ export default {
       }
     }
   },
+  props: ['addChecklistItem'],
   methods: {
-    addChecklistItem () {
-      this.$store.commit('ADD_CHECKLIST_ITEM', this.newItem)
+    submitItem () {
+      this.addChecklistItem(this.newItem)
       this.newItem = {}
       this.newItem.key = this.$store.state.currentChecklist.items.length + 1
     }

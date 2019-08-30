@@ -16,15 +16,19 @@
       </span>
     </md-field>
 
-    <checklist-input v-if="checklist.title"></checklist-input>
+    <checklist-input
+      v-if="checklist.title"
+      :addChecklistItem="addChecklistItem"></checklist-input>
 
     <ul>
       <li
         v-for="item in checklist.items"
         :key="item.key">
+        {{ item.subject }}
         <checklist-item :item="item"></checklist-item>
       </li>
     </ul>
+    <pre> {{ JSON.stringify(checklist) }}</pre>
   </section>
 </template>
 
@@ -45,6 +49,18 @@ export default {
     }
   },
   methods: {
+    addChecklistItem (newItem) {
+      let subject = newItem.subject
+      let cleanSubject
+      if (subject.charAt(subject.length - 1) === String.fromCharCode(10)) {
+        cleanSubject = subject.substring(0, subject.length - 1)
+      } else {
+        cleanSubject = subject
+      }
+      let cleanItem = {...newItem, subject: cleanSubject}
+      this.$store.commit('ADD_CHECKLIST_ITEM', cleanItem)
+      this.checklist = this.$store.state.currentChecklist
+    },
     updateTitle () {
       this.$store.commit('UPDATE_CHECKLIST_TITLE', this.checklist.title)
     },
