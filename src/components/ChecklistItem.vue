@@ -2,7 +2,8 @@
   <div id="item">
     <div id="checkbox">
       <input
-        type="checkbox">
+        type="checkbox"
+        v-model="item.completed">
     </div>
     <div id="subject">
       <span> {{ item.subject }} </span>

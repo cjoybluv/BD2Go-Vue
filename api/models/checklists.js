@@ -22,7 +22,8 @@ const ChecklistSchema = new Schema({
       subject: {
         type: String,
         required: [true, 'item.subject is required']
-      }
+      },
+      completed: Boolean
     }
   ]
 })
