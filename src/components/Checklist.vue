@@ -1,9 +1,9 @@
 <template>
   <section id="checklist">
-    <md-field>
+    <md-field id="titleLine">
       <md-input
         id="title"
-        placeholder="Enter Title"
+        placeholder="Enter New Checklist Title"
         md-inline
         v-model="checklist.title"
         @change="updateTitle">
@@ -12,7 +12,11 @@
         <md-icon class="pointer">save</md-icon>
       </span>
       <span>
-        <md-icon class="pointer">more_vert</md-icon>
+        <b-dropdown size="large" right variant="link" no-caret>
+          <template slot="button-content"><md-icon class="pointer">more_vert</md-icon></template>
+          <b-dropdown-item href="#">Set a Date</b-dropdown-item>
+          <b-dropdown-item href="#">Add an Attachment</b-dropdown-item>
+        </b-dropdown>
       </span>
     </md-field>
 
@@ -77,6 +81,11 @@ export default {
 #checklist {
   display: flex;
   flex-direction: column;
+}
+#titleLine {
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
 }
 #title {
   font-size: 1.25em;
