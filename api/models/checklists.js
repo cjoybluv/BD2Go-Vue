@@ -11,6 +11,8 @@ const ChecklistSchema = new Schema({
     type: String,
     required: [true, 'Checklist.title is required']
   },
+  masterChecklist: Boolean,
+  sourceMasterId: Schema.Types.ObjectId,
   items: [
     {
       key: {

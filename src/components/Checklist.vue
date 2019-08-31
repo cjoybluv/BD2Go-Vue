@@ -16,7 +16,16 @@
       </span>
     </md-field>
 
-    <checklist-input v-if="checklist.title"></checklist-input>
+    <md-field v-if="checklist.title && !checklist.sourceMasterId">
+      <input
+        id="masterChecklist"
+        type="checkbox"
+        v-if="checklist.title"
+        v-model="checklist.masterChecklist">
+        Master Checklist
+    </md-field>
+
+    <checklist-input v-if="checklist.title && !checklist.sourceMasterId"></checklist-input>
 
     <ul>
       <li
@@ -72,6 +81,9 @@ export default {
 #title {
   font-size: 1.25em;
   background-color: #eee;
+}
+#masterChecklist {
+  margin: 0 10px;
 }
 ul {
   padding-left: 5px;
