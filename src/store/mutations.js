@@ -116,7 +116,19 @@ export default {
     state.loading = false
   },
   [EDIT_CHECKLIST]: (state, checklist) => {
-    state.currentChecklist = checklist
+    if (checklist.masterChecklist) {
+      let today = new Date()
+      let titleDateTime = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + ' ' + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds()
+      state.currentChecklist = {
+        ...checklist,
+        masterChecklist: false,
+        sourceMasterId: checklist._id,
+        title: titleDateTime + ' / ' + checklist.title
+      }
+      delete state.currentChecklist._id
+    } else {
+      state.currentChecklist = checklist
+    }
   },
   [EDIT_CONTACT_COMPLETE]: (state) => {
     state.contentControls.editContact = null
