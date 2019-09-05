@@ -29,4 +29,7 @@ body {
 .pointer {
   cursor: pointer;
 }
+.notAllowed {
+  cursor: not-allowed;
+}
 </style>

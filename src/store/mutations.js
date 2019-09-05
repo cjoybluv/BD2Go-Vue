@@ -11,6 +11,7 @@ import {
   APP_DATA_SUCCESS,
   CHECKLISTS_REQUEST,
   CHECKLISTS_SUCCESS,
+  CLEAR_CURRENT_CHECKLIST,
   CONTACT_REQUEST,
   CONTACT_SUCCESS,
   CONTACTS_REQUEST,
@@ -28,7 +29,7 @@ import {
   LOGIN_SUCCESS,
   NEW_CONTACT_REQUEST,
   NEW_LOCATION_REQUEST,
-  RESET_CHECKLIST_SORT,
+  RESET_CHECKLIST_MOVE,
   SELECT_CONTACT,
   SELECT_ITEM,
   SET_IS_AUTHENTICATED,
@@ -68,6 +69,7 @@ export default {
       title: '',
       items: []
     }
+    state.pageControls.checklistDisplay.moveEnabled = false
   },
   [ADD_CONTACT_REQUEST]: (state, contact) => {
     state.loading = true
@@ -100,6 +102,9 @@ export default {
   [CHECKLISTS_SUCCESS]: (state, checklists) => {
     state.checklists = checklists
     state.loading = false
+  },
+  [CLEAR_CURRENT_CHECKLIST]: (state) => {
+    state.currentChecklist = ''
   },
   [CONTACT_REQUEST]: (state, contactId) => {
     state.loading = true
@@ -175,7 +180,7 @@ export default {
   [NEW_LOCATION_REQUEST]: (state, location) => {
     state.contentControls.editLocation = { ...location }
   },
-  [RESET_CHECKLIST_SORT]: (state) => {
+  [RESET_CHECKLIST_MOVE]: (state) => {
     state.pageControls.checklistDisplay.moveEnabled = !state.pageControls.checklistDisplay.moveEnabled
   },
   [SELECT_CONTACT]: (state, contactId) => {
@@ -223,6 +228,7 @@ export default {
       title: '',
       items: []
     }
+    state.pageControls.checklistDisplay.moveEnabled = false
   },
   [UPDATE_CONTACT_REQUEST]: (state, contact) => {
     state.loading = true
