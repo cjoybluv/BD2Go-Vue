@@ -2,21 +2,21 @@
   <section id="checklist">
     <md-field id="titleLine">
       <md-input
-        id="title"
+        id="checklistTitle"
         placeholder="Enter New Checklist Title"
         md-inline
         v-model="checklist.title"
         @change="updateTitle">
       </md-input>
-      <span @click="saveChecklist">
-        <md-icon class="pointer">save</md-icon>
+      <span @click="saveChecklist" :class="{pointer: checklist.title, notAllowed: !checklist.title}">
+        <md-icon>save</md-icon>
       </span>
       <span>
-        <b-dropdown size="large" right variant="link" no-caret>
-          <template slot="button-content"><md-icon class="pointer">more_vert</md-icon></template>
-          <b-dropdown-item v-if="!moveEnabled" @click="sortItems">Sort Items</b-dropdown-item>
-          <b-dropdown-item v-if="moveEnabled" @click="sortItems">Stop Sorting</b-dropdown-item>
-          <b-dropdown-item href="#">Set a Date</b-dropdown-item>
+        <b-dropdown size="large" right variant="link" no-caret :disabled="!checklist.title">
+          <template slot="button-content"><md-icon :class="{pointer: checklist.title, notAllowed: !checklist.title}">more_vert</md-icon></template>
+          <b-dropdown-item v-if="!moveEnabled" @click="moveItems">Move Items</b-dropdown-item>
+          <b-dropdown-item v-if="moveEnabled" @click="moveItems">Stop Moving Items</b-dropdown-item>
+          <b-dropdown-item @click="clearCurrentChecklist">Clear Current Checklist</b-dropdown-item>
           <b-dropdown-item href="#">Add an Attachment</b-dropdown-item>
         </b-dropdown>
       </span>
@@ -85,15 +85,20 @@ export default {
       this.$store.commit('UPDATE_CHECKLIST_TITLE', this.checklist.title)
     },
     saveChecklist () {
-      if (!this.checklist._id) {
-        this.checklist.ownerId = this.$store.state.user._id
-        this.addChecklist(this.checklist)
-      } else {
-        this.updateChecklist(this.checklist)
+      if (this.checklist.title) {
+        if (!this.checklist._id) {
+          this.checklist.ownerId = this.$store.state.user._id
+          this.addChecklist(this.checklist)
+        } else {
+          this.updateChecklist(this.checklist)
+        }
       }
     },
-    sortItems () {
-      this.$store.commit('RESET_CHECKLIST_SORT')
+    moveItems () {
+      this.$store.commit('RESET_CHECKLIST_MOVE')
+    },
+    clearCurrentChecklist () {
+      this.$store.commit('CLEAR_CURRENT_CHECKLIST')
     },
     ...mapActions([
       'addChecklist',
@@ -113,8 +118,9 @@ export default {
   align-items: center;
   padding-left: 10px;
 }
-#title {
+#checklistTitle {
   font-size: 1.25em;
+  font-weight: bold;
   background-color: #eee;
 }
 #masterChecklist {
