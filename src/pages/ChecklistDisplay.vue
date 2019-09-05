@@ -3,15 +3,31 @@
     <h1>{{ language.title }}</h1>
 
     <section id="main">
-      <panel id="listDisplay">
-          <ul>
-            <li
-              v-for="checklist in checklists"
-              :key="checklist._id"
-              @click="editChecklist(checklist)">
-              {{ checklist.title }}
-            </li>
-          </ul>
+      <panel>
+          <!-- <folder-display :displayArray="folderArray" :itemClickHandler="openFolderItem"></folder-display> -->
+          <md-list>
+            <md-list-item
+              v-for="rootItem in folderArray"
+              :key="rootItem.key"
+              :md-expand.sync="rootItem.folder">
+              <span class="md-list-item-text"
+                @click="openFolderItem(rootItem)">
+                {{ rootItem.title }}
+              </span>
+
+              <md-list slot="md-expand">
+                <md-list-item
+                  v-for="item in rootItem.items"
+                  :key="item._id">
+                  <span class="md-list-item-text"
+                    @click="openFolderItem(item)">
+                    {{ item.title }}
+                  </span>
+                </md-list-item>
+              </md-list>
+            </md-list-item>
+          </md-list>
+
       </panel>
       <panel>
           <checklist></checklist>
@@ -27,7 +43,7 @@
 
 <script>
 import checklist from '../components/Checklist'
-import panel from '../components/Panel.vue'
+import panel from '../components/Panel'
 
 export default {
   name: 'ChecklistDisplay',
@@ -42,7 +58,56 @@ export default {
         username: '',
         email: ''
       },
-      submitted: false
+      submitted: false,
+      folderArray: [
+        {
+          key: '1',
+          title: 'KAYAK',
+          folder: true,
+          items: [
+            {
+              _id: '5d672266f130b48a9e862103',
+              title: 'Load the Car'
+            },
+            {
+              _id: '5d67402f946a6abba5d24f93',
+              title: 'Unload the Car',
+              items: [
+                {
+                  key: 1,
+                  subject: 'Master of what'
+                }
+              ]
+            },
+            {
+              _id: '5d698b5d40d938e28738fe64',
+              title: 'Launch'
+            }
+          ]
+        },
+        {
+          key: '2',
+          title: 'SKI',
+          folder: true,
+          items: []
+        },
+        {
+          key: '3',
+          title: 'Dave',
+          folder: false,
+          _rec: {
+            _id: '5d69a37240d938e28738fe84',
+            title: 'Dave',
+            items: [
+              {
+                key: 1,
+                subject: 'Master of nothing'
+              }
+            ]
+          },
+          items: []
+        }
+      ]
     }
   },
   computed: {
@@ -60,13 +125,13 @@ export default {
     }
   },
   methods: {
-    editChecklist (checklist) {
-      this.$store.commit('EDIT_CHECKLIST', checklist)
+    openFolderItem (item) {
+      if (item._rec) {
+        this.$store.commit('EDIT_CHECKLIST', item._rec)
+      } else {
+        this.$store.commit('EDIT_CHECKLIST', item)
+      }
     }
-  },
-  mounted () {
-    this.user = this.currentUser
-    this.$refs.username.focus()
   }
 }
 </script>
@@ -81,12 +146,6 @@ panel {
 }
 #checklists h1 {
   border-top: 1px solid black;
-}
-#listDisplay li {
-  cursor: pointer;
-}
-#listDisplay li:hover {
-  font-size: 1.25em;
 }
 .md-field {
   min-height: 0;
