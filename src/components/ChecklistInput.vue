@@ -24,7 +24,6 @@
 </template>
 
 <script>
-console.log('checklistinput')
 export default {
   name: 'ChecklistInput',
   data () {

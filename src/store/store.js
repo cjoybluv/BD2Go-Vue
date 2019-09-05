@@ -29,6 +29,11 @@ const state = {
   contacts: [],
   items: [],
   locations: [],
+  pageControls: {
+    checklistDisplay: {
+      moveEnabled: false
+    }
+  },
   user: {
     _id: '',
     email: '',

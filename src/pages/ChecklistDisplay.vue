@@ -3,7 +3,7 @@
     <h1>{{ language.title }}</h1>
 
     <section id="main">
-      <panel>
+      <panel id="listDisplay">
           <ul>
             <li
               v-for="checklist in checklists"
@@ -61,7 +61,6 @@ export default {
   },
   methods: {
     editChecklist (checklist) {
-      console.log('editChecklist', checklist)
       this.$store.commit('EDIT_CHECKLIST', checklist)
     }
   },
@@ -83,8 +82,11 @@ panel {
 #checklists h1 {
   border-top: 1px solid black;
 }
-#checklists li {
+#listDisplay li {
   cursor: pointer;
+}
+#listDisplay li:hover {
+  font-size: 1.25em;
 }
 .md-field {
   min-height: 0;
