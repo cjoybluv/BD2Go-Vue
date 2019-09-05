@@ -14,6 +14,8 @@
       <span>
         <b-dropdown size="large" right variant="link" no-caret>
           <template slot="button-content"><md-icon class="pointer">more_vert</md-icon></template>
+          <b-dropdown-item v-if="!moveEnabled" @click="sortItems">Sort Items</b-dropdown-item>
+          <b-dropdown-item v-if="moveEnabled" @click="sortItems">Stop Sorting</b-dropdown-item>
           <b-dropdown-item href="#">Set a Date</b-dropdown-item>
           <b-dropdown-item href="#">Add an Attachment</b-dropdown-item>
         </b-dropdown>
@@ -32,17 +34,29 @@
     <checklist-input v-if="checklist.title && !checklist.sourceMasterId"></checklist-input>
 
     <ul>
-      <li
-        v-for="item in checklist.items"
-        :key="item.key">
-        <checklist-item :item="item"></checklist-item>
-      </li>
+      <draggable
+        :list="checklist.items"
+        :disabled="!moveEnabled"
+        ghost-class="ghost"
+        @start="dragging = true"
+        @end="dragging = false"
+      >
+        <li
+          v-for="item in checklist.items"
+          :key="item.key"
+          :class="{moveEnabled: moveEnabled}">
+          <checklist-item
+            :item="item">
+          </checklist-item>
+        </li>
+      </draggable>
     </ul>
   </section>
 </template>
 
 <script>
 import { mapActions } from 'Vuex'
+import draggable from 'vuedraggable'
 import ChecklistInput from './ChecklistInput'
 import ChecklistItem from './ChecklistItem.vue'
 
@@ -50,11 +64,20 @@ export default {
   name: 'Checklist',
   components: {
     ChecklistInput,
-    ChecklistItem
+    ChecklistItem,
+    draggable
   },
   computed: {
     checklist () {
       return this.$store.state.currentChecklist
+    },
+    moveEnabled () {
+      return this.$store.state.pageControls.checklistDisplay.moveEnabled
+    }
+  },
+  data () {
+    return {
+      dragging: false
     }
   },
   methods: {
@@ -68,6 +91,9 @@ export default {
       } else {
         this.updateChecklist(this.checklist)
       }
+    },
+    sortItems () {
+      this.$store.commit('RESET_CHECKLIST_SORT')
     },
     ...mapActions([
       'addChecklist',
@@ -99,5 +125,12 @@ ul {
 }
 li {
   list-style: none;
+}
+.ghost {
+  opacity: 0.5;
+  background: #c8ebfb;
+}
+.moveEnabled {
+  cursor: move;
 }
 </style>

@@ -28,7 +28,7 @@ import {
   LOGIN_SUCCESS,
   NEW_CONTACT_REQUEST,
   NEW_LOCATION_REQUEST,
-
+  RESET_CHECKLIST_SORT,
   SELECT_CONTACT,
   SELECT_ITEM,
   SET_IS_AUTHENTICATED,
@@ -174,6 +174,9 @@ export default {
   },
   [NEW_LOCATION_REQUEST]: (state, location) => {
     state.contentControls.editLocation = { ...location }
+  },
+  [RESET_CHECKLIST_SORT]: (state) => {
+    state.pageControls.checklistDisplay.moveEnabled = !state.pageControls.checklistDisplay.moveEnabled
   },
   [SELECT_CONTACT]: (state, contactId) => {
     state.contentControls.selectedContactId = contactId
