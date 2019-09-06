@@ -476,6 +476,24 @@ router.post('/appData', verifyToken, (req, res, next) => {
   })
 })
 
+router.put('/appData/:id', verifyToken, (req, res, next) => {
+  jwt.verify(req.token, JWT_SECRET_KEY, (err, _authData) => {
+    if (err) {
+      res.sendStatus(403)
+    } else {
+      AppData.findByIdAndUpdate({_id: req.params.id}, req.body).then(() => {
+        AppData.findById(req.params.id).then(data => {
+          res.json(data)
+        }).catch(error => {
+          res.json({error})
+        })
+      }).catch(error => {
+        res.json({error})
+      })
+    }
+  })
+})
+
 function verifyToken (req, res, next) {
   const bearerHeader = req.headers['authorization']
   if (typeof bearerHeader !== 'undefined') {

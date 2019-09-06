@@ -26,9 +26,15 @@
       <input
         id="masterChecklist"
         type="checkbox"
-        v-if="checklist.title"
         v-model="checklist.masterChecklist">
         Master Checklist
+    </md-field>
+
+    <md-field v-if="checklist.title">
+      <md-input
+        placeholder="Enter Foldername (optional)"
+        v-model="checklist.folder">
+      </md-input>
     </md-field>
 
     <checklist-input v-if="checklist.title && !checklist.sourceMasterId"></checklist-input>

@@ -4,7 +4,17 @@
 
     <section id="main">
       <panel>
-          <!-- <folder-display :displayArray="folderArray" :itemClickHandler="openFolderItem"></folder-display> -->
+          <md-field>
+            <md-input
+              placeholder="Create New Folder Name"
+              md-inline
+              v-model="newFolderName"
+              v-on:keyup.enter="createFolder">
+            </md-input>
+            <span @click="createFolder" :class="{pointer: newFolderName, notAllowed: !newFolderName}">
+              <md-icon>add</md-icon>
+            </span>
+          </md-field>
           <md-list>
             <md-list-item
               v-for="rootItem in folderArray"
@@ -42,6 +52,7 @@
 </template>
 
 <script>
+import { mapActions } from 'Vuex'
 import checklist from '../components/Checklist'
 import panel from '../components/Panel'
 
@@ -58,56 +69,8 @@ export default {
         username: '',
         email: ''
       },
-      submitted: false,
-      folderArray: [
-        {
-          key: '1',
-          title: 'KAYAK',
-          folder: true,
-          items: [
-            {
-              _id: '5d672266f130b48a9e862103',
-              title: 'Load the Car'
-            },
-            {
-              _id: '5d67402f946a6abba5d24f93',
-              title: 'Unload the Car',
-              items: [
-                {
-                  key: 1,
-                  subject: 'Master of what'
-                }
-              ]
-            },
-            {
-              _id: '5d698b5d40d938e28738fe64',
-              title: 'Launch'
-            }
-          ]
-        },
-        {
-          key: '2',
-          title: 'SKI',
-          folder: true,
-          items: []
-        },
-        {
-          key: '3',
-          title: 'Dave',
-          folder: false,
-          _rec: {
-            _id: '5d69a37240d938e28738fe84',
-            title: 'Dave',
-            items: [
-              {
-                key: 1,
-                subject: 'Master of nothing'
-              }
-            ]
-          },
-          items: []
-        }
-      ]
+      newFolderName: '',
+      submitted: false
     }
   },
   computed: {
@@ -117,21 +80,41 @@ export default {
     checklists () {
       return this.$store.state.checklists
     },
+    checklistFolders () {
+      return this.$store.state.appData.checklistFolders
+    },
     currentUser () {
       return this.$store.state.user
+    },
+    folderArray () {
+      return this.$store.state.contentControls.checklistFolderArray
     },
     me () {
       return this.$store.state.me
     }
   },
   methods: {
+    createFolder () {
+      if (this.newFolderName) {
+        this.createChecklistFolder(this.newFolderName)
+      }
+    },
     openFolderItem (item) {
       if (item._rec) {
         this.$store.commit('EDIT_CHECKLIST', item._rec)
       } else {
-        this.$store.commit('EDIT_CHECKLIST', item)
+        if (!item.folder) {
+          this.$store.commit('EDIT_CHECKLIST', item)
+        }
       }
-    }
+    },
+    ...mapActions([
+      'createChecklistFolder'
+    ])
+  },
+  mounted () {
+    this.user = this.currentUser
+    this.constructFolderDisplayArray()
   }
 }
 </script>
@@ -151,5 +134,8 @@ panel {
   min-height: 0;
   margin: 0;
   padding: 0;
+}
+.md-list-item-text {
+  cursor: pointer;
 }
 </style>
