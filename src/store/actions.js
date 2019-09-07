@@ -221,12 +221,13 @@ export default {
     })
   },
 
-  updateChecklist: ({ commit }, payload) => {
+  updateChecklist: ({ state, commit }, payload) => {
     commit(UPDATE_CHECKLIST_REQUEST, payload)
     return new Promise((resolve, reject) => {
       putChecklist(payload).then(function (data) {
         commit(UPDATE_CHECKLIST_SUCCESS, data.body)
         resolve(data)
+        commit(CREATE_CHECKLIST_FOLDER_ARRAY, state.checklists)
       }).catch(err => {
         reject(err)
       })

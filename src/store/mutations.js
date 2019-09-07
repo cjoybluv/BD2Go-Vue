@@ -100,7 +100,10 @@ export default {
     state.loading = false
   },
   [CLEAR_CURRENT_CHECKLIST]: (state) => {
-    state.currentChecklist = ''
+    state.currentChecklist = {
+      title: '',
+      items: []
+    }
   },
   [CONTACT_REQUEST]: (state, contactId) => {
     state.loading = true
@@ -157,6 +160,12 @@ export default {
         return 0
       } else {
         return -1
+      }
+    }).sort((a, b) => {
+      if (a.folder > b.folder) {
+        return -1
+      } else {
+        return 0
       }
     })
   },

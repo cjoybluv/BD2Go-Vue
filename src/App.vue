@@ -32,4 +32,7 @@ body {
 .notAllowed {
   cursor: not-allowed;
 }
+.self-center {
+  align-self: center;
+}
 </style>

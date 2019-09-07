@@ -11,8 +11,11 @@
               v-model="newFolderName"
               v-on:keyup.enter="createFolder">
             </md-input>
-            <span @click="createFolder" :class="{pointer: newFolderName, notAllowed: !newFolderName}">
-              <md-icon>add</md-icon>
+            <span
+              @click="createFolder"
+              :class="{pointer: newFolderName, notAllowed: !newFolderName}"
+              class="self-center">
+              <font-awesome-icon icon="plus" />
             </span>
           </md-field>
           <md-list>
@@ -114,7 +117,6 @@ export default {
   },
   mounted () {
     this.user = this.currentUser
-    this.constructFolderDisplayArray()
   }
 }
 </script>
@@ -124,8 +126,9 @@ export default {
   display: flex;
   flex-wrap: wrap;
 }
-panel {
+.panel {
   min-width: 400px;
+  padding: 5px;
 }
 #checklists h1 {
   border-top: 1px solid black;
@@ -135,7 +138,17 @@ panel {
   margin: 0;
   padding: 0;
 }
+.md-list-item-content {
+  min-height: 0;
+  padding: 4px;
+}
 .md-list-item-text {
   cursor: pointer;
+}
+.md-list-item-expand {
+  margin-left: 5px;
+}
+.md-list-item-default {
+  margin-left: 15px;
 }
 </style>
