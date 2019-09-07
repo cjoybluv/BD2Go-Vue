@@ -3,15 +3,43 @@
     <h1>{{ language.title }}</h1>
 
     <section id="main">
-      <panel id="listDisplay">
-          <ul>
-            <li
-              v-for="checklist in checklists"
-              :key="checklist._id"
-              @click="editChecklist(checklist)">
-              {{ checklist.title }}
-            </li>
-          </ul>
+      <panel>
+          <div id="createFolderLine">
+            <b-form-input
+              placeholder="Create New Folder Name"
+              v-model="newFolderName"
+              v-on:keyup.enter="createFolder">
+            </b-form-input>
+            <span
+              @click="createFolder"
+              :class="{pointer: newFolderName, notAllowed: !newFolderName}"
+              class="self-center">
+              <font-awesome-icon icon="plus" />
+            </span>
+          </div>
+          <md-list>
+            <md-list-item
+              v-for="rootItem in folderArray"
+              :key="rootItem.key"
+              :md-expand.sync="rootItem.folder">
+              <span class="md-list-item-text"
+                @click="openFolderItem(rootItem)">
+                {{ rootItem.title }}
+              </span>
+
+              <md-list slot="md-expand">
+                <md-list-item
+                  v-for="item in rootItem.items"
+                  :key="item._id"
+                  @click="openFolderItem(item)">
+                  <span class="md-list-item-text md-list-item-default">
+                    {{ item.title }}
+                  </span>
+                </md-list-item>
+              </md-list>
+            </md-list-item>
+          </md-list>
+
       </panel>
       <panel>
           <checklist></checklist>
@@ -26,8 +54,9 @@
 </template>
 
 <script>
+import { mapActions } from 'Vuex'
 import checklist from '../components/Checklist'
-import panel from '../components/Panel.vue'
+import panel from '../components/Panel'
 
 export default {
   name: 'ChecklistDisplay',
@@ -42,6 +71,7 @@ export default {
         username: '',
         email: ''
       },
+      newFolderName: '',
       submitted: false
     }
   },
@@ -52,21 +82,40 @@ export default {
     checklists () {
       return this.$store.state.checklists
     },
+    checklistFolders () {
+      return this.$store.state.appData.checklistFolders
+    },
     currentUser () {
       return this.$store.state.user
+    },
+    folderArray () {
+      return this.$store.state.contentControls.checklistFolderArray
     },
     me () {
       return this.$store.state.me
     }
   },
   methods: {
-    editChecklist (checklist) {
-      this.$store.commit('EDIT_CHECKLIST', checklist)
-    }
+    createFolder () {
+      if (this.newFolderName) {
+        this.createChecklistFolder(this.newFolderName)
+      }
+    },
+    openFolderItem (item) {
+      if (!item.folder) {
+        if (!item._rec) {
+          this.$store.commit('EDIT_CHECKLIST', item)
+        } else {
+          this.$store.commit('EDIT_CHECKLIST', item._rec)
+        }
+      }
+    },
+    ...mapActions([
+      'createChecklistFolder'
+    ])
   },
   mounted () {
     this.user = this.currentUser
-    this.$refs.username.focus()
   }
 }
 </script>
@@ -76,21 +125,32 @@ export default {
   display: flex;
   flex-wrap: wrap;
 }
-panel {
+.panel {
   min-width: 400px;
+  padding: 5px;
 }
 #checklists h1 {
   border-top: 1px solid black;
 }
-#listDisplay li {
-  cursor: pointer;
-}
-#listDisplay li:hover {
-  font-size: 1.25em;
+#createFolderLine {
+  display: flex;
 }
 .md-field {
   min-height: 0;
   margin: 0;
   padding: 0;
+}
+.md-list-item-content {
+  min-height: 0;
+  padding: 4px;
+}
+.md-list-item-text {
+  cursor: pointer;
+}
+.md-list-item-expand {
+  margin-left: 5px;
+}
+.md-list-item-default {
+  margin-left: 15px;
 }
 </style>

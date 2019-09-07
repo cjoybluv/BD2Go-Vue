@@ -16,6 +16,9 @@ import {
   CONTACT_SUCCESS,
   CONTACTS_REQUEST,
   CONTACTS_SUCCESS,
+  CREATE_CHECKLIST_FOLDER_ARRAY,
+  CREATE_CHECKLIST_FOLDER_REQUEST,
+  CREATE_CHECKLIST_FOLDER_SUCCESS,
   EDIT_CHECKLIST,
   EDIT_CONTACT_COMPLETE,
   EDIT_CONTACT_REQUEST,
@@ -58,13 +61,6 @@ export default {
   [ADD_CHECKLIST_SUCCESS]: (state, checklist) => {
     state.loading = false
     state.checklists.push(checklist)
-    state.checklists.sort(function (a, b) {
-      if (a.title >= b.title) {
-        return 0
-      } else {
-        return -1
-      }
-    })
     state.currentChecklist = {
       title: '',
       items: []
@@ -104,7 +100,10 @@ export default {
     state.loading = false
   },
   [CLEAR_CURRENT_CHECKLIST]: (state) => {
-    state.currentChecklist = ''
+    state.currentChecklist = {
+      title: '',
+      items: []
+    }
   },
   [CONTACT_REQUEST]: (state, contactId) => {
     state.loading = true
@@ -119,6 +118,63 @@ export default {
   [CONTACTS_SUCCESS]: (state, contacts) => {
     state.contacts = contacts
     state.loading = false
+  },
+  [CREATE_CHECKLIST_FOLDER_ARRAY]: (state, checklists) => {
+    let key = 0
+    let folderArray = []
+    let folders = state.appData.checklistFolders
+    folders.forEach((folder) => {
+      folderArray.push({
+        key: key++,
+        folder: true,
+        title: folder,
+        items: []
+      })
+    })
+    checklists.forEach((checklist) => {
+      if (checklist.folderName) {
+        let idx = folderArray.findIndex((folder) => {
+          return folder.title === checklist.folderName
+        })
+        if (idx !== -1) {
+          folderArray[idx].items.push(checklist)
+        } else {
+          folderArray.push({
+            key: key++,
+            title: checklist.title,
+            folder: false,
+            _rec: checklist
+          })
+        }
+      } else {
+        folderArray.push({
+          key: key++,
+          title: checklist.title,
+          folder: false,
+          _rec: checklist
+        })
+      }
+    })
+    state.contentControls.checklistFolderArray = folderArray.sort((a, b) => {
+      if (a.title > b.title) {
+        return 0
+      } else {
+        return -1
+      }
+    }).sort((a, b) => {
+      if (a.folder > b.folder) {
+        return -1
+      } else {
+        return 0
+      }
+    })
+  },
+  [CREATE_CHECKLIST_FOLDER_REQUEST]: (state, folderName) => {
+    state.loading = true
+  },
+  [CREATE_CHECKLIST_FOLDER_SUCCESS]: (state, folderName) => {
+    state.loading = false
+    state.appData.checklistFolders.push(folderName)
   },
   [EDIT_CHECKLIST]: (state, checklist) => {
     if (checklist.masterChecklist) {

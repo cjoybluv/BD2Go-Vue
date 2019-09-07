@@ -261,3 +261,23 @@ export function getAppData (payload) {
     })
   })
 }
+
+export function postAppData (payload) {
+  return new Promise((resolve, reject) => {
+    Vue.http.post(PATHNAME + '/appData', payload).then(function (data) {
+      resolve(data)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
+export function putAppData (payload) {
+  return new Promise((resolve, reject) => {
+    Vue.http.put(PATHNAME + '/appData/' + payload._id, payload).then(function (data) {
+      resolve(data)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}

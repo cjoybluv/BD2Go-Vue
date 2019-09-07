@@ -10,9 +10,15 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
+import 'vue-material/dist/theme/default.css'
+
+// import { MdButton, MdContent, MdTabs } from './components/vue-material/components'
+// import VueMaterial from './components/vue-material/components'
+// import 'vue-material/dist/vue-material.min.css'
+// import 'vue-material/dist/theme/default.css'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faPlus, faPencilAlt, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faEllipsisV, faPencilAlt, faPlus, faSave, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import App from './App'
@@ -22,9 +28,11 @@ import { store } from './store/store'
 
 Vue.router = router
 
-library.add(faUser)
-library.add(faPlus)
+library.add(faEllipsisV)
 library.add(faPencilAlt)
+library.add(faPlus)
+library.add(faSave)
+library.add(faUser)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false

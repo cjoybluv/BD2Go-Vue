@@ -1,24 +1,23 @@
 <template>
   <div>
-    <md-field>
-      <md-textarea
+    <b-form-textarea
       placeholder="Enter new Item"
       v-model="newItem.subject"
-      type="text"
-      v-on:keyup.enter="addChecklistItem"
-      md-autogrow></md-textarea>
-      <span @click="addChecklistItem">
-        <md-icon class="pointer">add</md-icon>
-      </span>
-      <span>
-        <b-dropdown size="large" right variant="link" no-caret>
-          <template slot="button-content"><md-icon class="pointer">more_vert</md-icon></template>
-          <b-dropdown-item href="#">Set a Date</b-dropdown-item>
-          <b-dropdown-item href="#">Add an Attachment</b-dropdown-item>
-          <b-dropdown-item>Delete</b-dropdown-item>
-        </b-dropdown>
-      </span>
-    </md-field>
+      v-on:keyup.enter="addChecklistItem">
+    </b-form-textarea>
+    <span @click="addChecklistItem">
+      <font-awesome-icon icon="plus" class="pointer" />
+    </span>
+    <span>
+      <b-dropdown size="large" right variant="link" no-caret>
+        <template slot="button-content">
+          <font-awesome-icon icon="ellipsis-v" class="pointer" />
+        </template>
+        <b-dropdown-item href="#">Set a Date</b-dropdown-item>
+        <b-dropdown-item href="#">Add an Attachment</b-dropdown-item>
+        <b-dropdown-item>Delete</b-dropdown-item>
+      </b-dropdown>
+    </span>
 
   </div>
 </template>
@@ -35,7 +34,7 @@ export default {
     }
   },
   methods: {
-    addChecklistItem () {
+    addChecklistItem (e) {
       let subject = this.newItem.subject
       let cleanSubject
       if (subject.charAt(subject.length - 1) === String.fromCharCode(10)) {

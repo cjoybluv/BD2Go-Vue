@@ -18,7 +18,8 @@ const state = {
     selectedContactId: null, // contact._id of selected Contact
     selectedLocationId: null, // location._id of selected Location
     editContact: null, // copy of selecledContact while editing
-    editLocation: null // copy of selectedLocation while editing
+    editLocation: null, // copy of selectedLocation while editing
+    checklistFolderArray: []
   },
   checklists: [],
   currentChecklist: {

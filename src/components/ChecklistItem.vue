@@ -1,9 +1,9 @@
 <template>
   <div id="item">
     <div id="checkbox">
-      <input
-        type="checkbox"
+      <b-form-checkbox
         v-model="item.completed">
+      </b-form-checkbox>
     </div>
     <div id="subject"
       @mouseover="hover = true"
@@ -11,14 +11,15 @@
 
       <span v-if="!hover || moveEnabled">{{ item.subject }}</span>
 
-      <md-textarea
+      <b-form-textarea
         v-if="hover && !moveEnabled"
-        v-model="item.subject"></md-textarea>
+        v-model="item.subject">
+      </b-form-textarea>
     </div>
     <div id="more">
       <b-dropdown right variant="link" no-caret>
         <template slot="button-content">
-          <md-icon class="pointer">more_vert</md-icon>
+          <font-awesome-icon icon="ellipsis-v" class="pointer"/>
         </template>
         <b-dropdown-item>Set a Date</b-dropdown-item>
         <b-dropdown-item>Add an Attachment</b-dropdown-item>
@@ -60,8 +61,8 @@ export default {
   margin: 0 10px;
   flex: 1;
 }
-.md-textarea {
-  width: 100%;
+.custom-control-inline {
+  margin-right: 0;
 }
 .btn {
   padding: 0 !important;

@@ -25,7 +25,8 @@ const ChecklistSchema = new Schema({
       },
       completed: Boolean
     }
-  ]
+  ],
+  folderName: String
 })
 
 const Checklist = mongoose.model('Checklist', ChecklistSchema)

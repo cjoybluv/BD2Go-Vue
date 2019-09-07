@@ -1,35 +1,51 @@
 <template>
   <section id="checklist">
-    <md-field id="titleLine">
-      <md-input
+    <div id="titleLine">
+
+      <b-form-input
         id="checklistTitle"
         placeholder="Enter New Checklist Title"
-        md-inline
         v-model="checklist.title"
         @change="updateTitle">
-      </md-input>
+      </b-form-input>
       <span @click="saveChecklist" :class="{pointer: checklist.title, notAllowed: !checklist.title}">
-        <md-icon>save</md-icon>
+        <font-awesome-icon icon="save" class="pointer fa-lg"/>
       </span>
       <span>
         <b-dropdown size="large" right variant="link" no-caret :disabled="!checklist.title">
-          <template slot="button-content"><md-icon :class="{pointer: checklist.title, notAllowed: !checklist.title}">more_vert</md-icon></template>
+          <template slot="button-content">
+            <font-awesome-icon icon="ellipsis-v" :class="{pointer: checklist.title, notAllowed: !checklist.title}" />
+          </template>
           <b-dropdown-item v-if="!moveEnabled" @click="moveItems">Move Items</b-dropdown-item>
           <b-dropdown-item v-if="moveEnabled" @click="moveItems">Stop Moving Items</b-dropdown-item>
           <b-dropdown-item @click="clearCurrentChecklist">Clear Current Checklist</b-dropdown-item>
           <b-dropdown-item href="#">Add an Attachment</b-dropdown-item>
         </b-dropdown>
       </span>
-    </md-field>
+    </div>
 
-    <md-field v-if="checklist.title && !checklist.sourceMasterId">
-      <input
-        id="masterChecklist"
-        type="checkbox"
-        v-if="checklist.title"
+    <div
+      id="masterChecklist"
+      v-if="checklist.title && !checklist.sourceMasterId">
+      <b-form-checkbox
         v-model="checklist.masterChecklist">
         Master Checklist
-    </md-field>
+      </b-form-checkbox>
+    </div>
+
+    <div
+      id="folderLine"
+      v-if="checklist.title">
+      <label for="folderSelect">Folder</label>
+      <b-form-select
+        name="folderSelect"
+        v-model="checklist.folderName"
+        :options="this.$store.state.appData.checklistFolders">
+        <template slot="first">
+          <option :value="null">&lt;ROOT&gt;</option>
+        </template>
+      </b-form-select>
+    </div>
 
     <checklist-input v-if="checklist.title && !checklist.sourceMasterId"></checklist-input>
 
@@ -86,6 +102,7 @@ export default {
     },
     saveChecklist () {
       if (this.checklist.title) {
+        if (!this.checklist.folderName) this.checklist.folderName = ''
         if (!this.checklist._id) {
           this.checklist.ownerId = this.$store.state.user._id
           this.addChecklist(this.checklist)
@@ -114,17 +131,22 @@ export default {
   flex-direction: column;
 }
 #titleLine {
+  border-bottom: 1px solid darkgray;
   display: flex;
   align-items: center;
   padding-left: 10px;
 }
 #checklistTitle {
+  border: none;
   font-size: 1.25em;
   font-weight: bold;
   background-color: #eee;
 }
 #masterChecklist {
-  margin: 0 10px;
+  margin: 5px 10px;
+}
+#folderLine {
+  display: flex;
 }
 ul {
   padding-left: 5px;
@@ -138,5 +160,9 @@ li {
 }
 .moveEnabled {
   cursor: move;
+}
+.md-field label {
+  top: 0;
+  left: 10px;
 }
 </style>
