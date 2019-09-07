@@ -87,9 +87,6 @@ export default {
     checklist () {
       return this.$store.state.currentChecklist
     },
-    checklistFolders () {
-      return ['no data']
-    },
     moveEnabled () {
       return this.$store.state.pageControls.checklistDisplay.moveEnabled
     }
@@ -105,6 +102,7 @@ export default {
     },
     saveChecklist () {
       if (this.checklist.title) {
+        if (!this.checklist.folderName) this.checklist.folderName = ''
         if (!this.checklist._id) {
           this.checklist.ownerId = this.$store.state.user._id
           this.addChecklist(this.checklist)

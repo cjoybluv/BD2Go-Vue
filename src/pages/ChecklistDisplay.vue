@@ -32,7 +32,7 @@
                   v-for="item in rootItem.items"
                   :key="item._id"
                   @click="openFolderItem(item)">
-                  <span class="md-list-item-text">
+                  <span class="md-list-item-text md-list-item-default">
                     {{ item.title }}
                   </span>
                 </md-list-item>
