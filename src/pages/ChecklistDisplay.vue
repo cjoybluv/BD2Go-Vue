@@ -4,20 +4,19 @@
 
     <section id="main">
       <panel>
-          <md-field>
-            <md-input
+          <div id="createFolderLine">
+            <b-form-input
               placeholder="Create New Folder Name"
-              md-inline
               v-model="newFolderName"
               v-on:keyup.enter="createFolder">
-            </md-input>
+            </b-form-input>
             <span
               @click="createFolder"
               :class="{pointer: newFolderName, notAllowed: !newFolderName}"
               class="self-center">
               <font-awesome-icon icon="plus" />
             </span>
-          </md-field>
+          </div>
           <md-list>
             <md-list-item
               v-for="rootItem in folderArray"
@@ -31,9 +30,9 @@
               <md-list slot="md-expand">
                 <md-list-item
                   v-for="item in rootItem.items"
-                  :key="item._id">
-                  <span class="md-list-item-text"
-                    @click="openFolderItem(item)">
+                  :key="item._id"
+                  @click="openFolderItem(item)">
+                  <span class="md-list-item-text">
                     {{ item.title }}
                   </span>
                 </md-list-item>
@@ -103,11 +102,11 @@ export default {
       }
     },
     openFolderItem (item) {
-      if (item._rec) {
-        this.$store.commit('EDIT_CHECKLIST', item._rec)
-      } else {
-        if (!item.folder) {
+      if (!item.folder) {
+        if (!item._rec) {
           this.$store.commit('EDIT_CHECKLIST', item)
+        } else {
+          this.$store.commit('EDIT_CHECKLIST', item._rec)
         }
       }
     },
@@ -132,6 +131,9 @@ export default {
 }
 #checklists h1 {
   border-top: 1px solid black;
+}
+#createFolderLine {
+  display: flex;
 }
 .md-field {
   min-height: 0;

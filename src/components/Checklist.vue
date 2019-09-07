@@ -39,7 +39,7 @@
       <label for="folderSelect">Folder</label>
       <b-form-select
         name="folderSelect"
-        v-model="checklist.folder"
+        v-model="checklist.folderName"
         :options="this.$store.state.appData.checklistFolders">
         <template slot="first">
           <option :value="null">&lt;ROOT&gt;</option>

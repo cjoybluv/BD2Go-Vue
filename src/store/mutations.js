@@ -132,9 +132,9 @@ export default {
       })
     })
     checklists.forEach((checklist) => {
-      if (checklist.folder) {
+      if (checklist.folderName) {
         let idx = folderArray.findIndex((folder) => {
-          return folder.title === checklist.folder
+          return folder.title === checklist.folderName
         })
         if (idx !== -1) {
           folderArray[idx].items.push(checklist)

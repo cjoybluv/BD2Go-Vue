@@ -11,9 +11,10 @@
 
       <span v-if="!hover || moveEnabled">{{ item.subject }}</span>
 
-      <md-textarea
+      <b-form-textarea
         v-if="hover && !moveEnabled"
-        v-model="item.subject"></md-textarea>
+        v-model="item.subject">
+      </b-form-textarea>
     </div>
     <div id="more">
       <b-dropdown right variant="link" no-caret>
@@ -60,8 +61,8 @@ export default {
   margin: 0 10px;
   flex: 1;
 }
-.md-textarea {
-  width: 100%;
+.custom-control-inline {
+  margin-right: 0;
 }
 .btn {
   padding: 0 !important;
