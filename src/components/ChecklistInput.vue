@@ -5,7 +5,7 @@
       v-model="newItem.subject"
       v-on:keyup.enter="addChecklistItem">
     </b-form-textarea>
-    <span @click="addChecklistItem">
+    <span @click="addChecklistItem" class="center">
       <font-awesome-icon icon="plus" class="pointer" />
     </span>
     <span>
@@ -63,5 +63,8 @@ textarea {
   display: flex;
   align-items: center;
   padding-left: 10px;
+}
+.center {
+  align-self: center;
 }
 </style>

@@ -178,7 +178,7 @@ export default {
   },
   [EDIT_CHECKLIST]: (state, checklist) => {
     if (checklist.masterChecklist) {
-      let today = new Date()
+      let today = new Date(Date.now())
       let titleDateTime = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + ' ' + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds()
       state.currentChecklist = {
         ...checklist,
@@ -209,13 +209,15 @@ export default {
   },
   [ITEMS_SUCCESS]: (state, items) => {
     state.items = items
+    state.loading = false
   },
   [LOCATIONS_REQUEST]: (state, ownerId) => {
     state.locations = []
-    state.loading = false
+    state.loading = true
   },
   [LOCATIONS_SUCCESS]: (state, locations) => {
     state.locations = locations
+    state.loading = false
   },
   [LOGIN_REQUEST]: (state) => {
     state.user = null
@@ -230,7 +232,6 @@ export default {
     localStorage.setItem('user', JSON.stringify(authData.user))
   },
   [NEW_CONTACT_REQUEST]: (state, contact) => {
-    console.log('NEW_CONTACT_REQUEST', contact)
     state.contentControls.editContact = { ...contact }
   },
   [NEW_LOCATION_REQUEST]: (state, location) => {
@@ -270,9 +271,6 @@ export default {
   [SIGNUP_SUCCESS]: (state, data) => {
     state.user = data.user
   },
-  [UPDATE_CHECKLIST_TITLE]: (state, title) => {
-    state.currentChecklist.title = title
-  },
   [UPDATE_CHECKLIST_REQUEST]: (state, checklist) => {
     state.loading = true
   },
@@ -285,6 +283,9 @@ export default {
       items: []
     }
     state.pageControls.checklistDisplay.moveEnabled = false
+  },
+  [UPDATE_CHECKLIST_TITLE]: (state, title) => {
+    state.currentChecklist.title = title
   },
   [UPDATE_CONTACT_REQUEST]: (state, contact) => {
     state.loading = true

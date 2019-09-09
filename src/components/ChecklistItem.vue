@@ -1,6 +1,6 @@
 <template>
-  <div id="item">
-    <div id="checkbox">
+  <div id="checklistItem">
+    <div id="completed">
       <b-form-checkbox
         v-model="item.completed">
       </b-form-checkbox>
@@ -41,24 +41,19 @@ export default {
       hover: false
     }
   },
-  props: ['item'],
-  methods: {
-    moveItem () {
-      this.$store.commit('INIT_CHECKLIST_MOVE_ITEM')
-    }
-  }
+  props: ['item']
 }
 </script>
 
 <style scoped>
-#item {
+#checklistItem {
   display: flex;
   align-items: flex-start;
   border-bottom: 1px solid lightgray;
 }
 #subject {
   display: flex;
-  margin: 0 10px;
+  margin: 0 5px;
   flex: 1;
 }
 .custom-control-inline {
