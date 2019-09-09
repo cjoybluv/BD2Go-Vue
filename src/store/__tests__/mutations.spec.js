@@ -1,5 +1,8 @@
 import mutations from '../mutations'
 import {
+  ADD_CHECKLIST_ITEM,
+  ADD_CHECKLIST_REQUEST,
+  ADD_CHECKLIST_SUCCESS,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   SIGNUP_REQUEST,
@@ -11,6 +14,57 @@ import {
 } from '../mutation-types'
 
 describe('mutations', () => {
+  test('ADD_CHECKLIST_ITEM appends an item to currentChecklist', () => {
+    const state = {
+      currentChecklist: {
+        items: ['one', 'two']
+      }
+    }
+    const payload = {
+      key: 3,
+      subject: 'three'
+    }
+    mutations[ADD_CHECKLIST_ITEM](state, payload)
+    expect(state.currentChecklist).toEqual({
+      items: ['one', 'two', {key: 3, subject: 'three'}]
+    })
+  })
+  test('ADD_CHECKLIST_REQUEST set loading to true', () => {
+    const state = {
+      loading: false
+    }
+    const checklist = {}
+    mutations[ADD_CHECKLIST_REQUEST](state, checklist)
+    expect(state.loading).toEqual(true)
+  })
+  test('ADD_CHECKLIST_SUCCESS: appends checklist, clears loading, currentChecklist, moveEnabled', () => {
+    const state = {
+      checklists: [
+        {
+          title: 'Existing Checklist'
+        }
+      ],
+      loading: true,
+      currentChecklist: {
+        title: 'New Checklist'
+      },
+      pageControls: {
+        checklistDisplay: {
+          moveEnabled: true
+        }
+      }
+    }
+    const checklist = state.currentChecklist
+    mutations[ADD_CHECKLIST_SUCCESS](state, checklist)
+    expect(state.checklists.length).toBe(2)
+    expect(state.checklists[1]).toEqual(checklist)
+    expect(state.loading).toBe(false)
+    expect(state.currentChecklist).toEqual({
+      title: '',
+      items: []
+    })
+    expect(state.pageControls.checklistDisplay.moveEnabled).toBe(false)
+  })
   test('LOGIN_REQUEST sets user & token to null, isAuthenticated to false', () => {
     const state = {
       user: 'dave',
