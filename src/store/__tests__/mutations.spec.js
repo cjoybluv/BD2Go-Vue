@@ -3,6 +3,10 @@ import {
   ADD_CHECKLIST_ITEM,
   ADD_CHECKLIST_REQUEST,
   ADD_CHECKLIST_SUCCESS,
+  ADD_CONTACT_REQUEST,
+  ADD_CONTACT_SUCCESS,
+  ADD_LOCATION_REQUEST,
+  ADD_LOCATION_SUCCESS,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   SIGNUP_REQUEST,
@@ -56,6 +60,7 @@ describe('mutations', () => {
     }
     const checklist = state.currentChecklist
     mutations[ADD_CHECKLIST_SUCCESS](state, checklist)
+
     expect(state.checklists.length).toBe(2)
     expect(state.checklists[1]).toEqual(checklist)
     expect(state.loading).toBe(false)
@@ -64,6 +69,66 @@ describe('mutations', () => {
       items: []
     })
     expect(state.pageControls.checklistDisplay.moveEnabled).toBe(false)
+  })
+  test('ADD_CONTACT_REQUEST set loading to true', () => {
+    const state = {
+      loading: false
+    }
+    const contact = {}
+    mutations[ADD_CONTACT_REQUEST](state, contact)
+    expect(state.loading).toEqual(true)
+  })
+  test('ADD_CONTACT_SUCCESS, appends contact, resets selectedId, loading, selectedContactId', () => {
+    const state = {
+      contacts: [
+        {
+          name: 'Al'
+        }
+      ],
+      loading: true,
+      contentControls: {
+        selectedContactId: null,
+        selectedItemId: 29379283
+      }
+    }
+    const contact = {
+      _id: 123,
+      name: 'Bob'
+    }
+    mutations[ADD_CONTACT_SUCCESS](state, contact)
+
+    expect(state.contacts.length).toBe(2)
+    expect(state.contacts[1]).toEqual(contact)
+    expect(state.loading).toBe(false)
+    expect(state.contentControls.selectedItemId).toBe(null)
+    expect(state.contentControls.selectedContactId).toBe(123)
+  })
+  test('ADD_LOCATION_REQUEST set loading to true', () => {
+    const state = {
+      loading: false
+    }
+    const contact = {}
+    mutations[ADD_LOCATION_REQUEST](state, contact)
+    expect(state.loading).toEqual(true)
+  })
+  test('ADD_LOCATION_SUCCESS, appends location, resets loading', () => {
+    const state = {
+      locations: [
+        {
+          placename: 'Starbucks'
+        }
+      ],
+      loading: true
+    }
+    const location = {
+      _id: 123,
+      placename: 'Wendys'
+    }
+    mutations[ADD_LOCATION_SUCCESS](state, location)
+
+    expect(state.locations.length).toBe(2)
+    expect(state.locations[1]).toEqual(location)
+    expect(state.loading).toBe(false)
   })
   test('LOGIN_REQUEST sets user & token to null, isAuthenticated to false', () => {
     const state = {
