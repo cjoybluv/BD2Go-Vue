@@ -30,15 +30,26 @@ import {
   LOCATIONS_SUCCESS,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
+  NEW_CONTACT_REQUEST,
+  NEW_LOCATION_REQUEST,
+  RESET_CHECKLIST_MOVE,
+  SELECT_CONTACT,
+  SELECT_ITEM,
+  SET_IS_AUTHENTICATED,
+  SET_ME,
+  SIGN_OUT,
   SIGNUP_REQUEST,
   SIGNUP_SUCCESS,
+  UPDATE_CHECKLIST_REQUEST,
+  UPDATE_CHECKLIST_SUCCESS,
+  UPDATE_CHECKLIST_TITLE,
+  UPDATE_CONTACT_REQUEST,
+  UPDATE_CONTACT_SUCCESS,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
   USER_REQUEST,
-  USER_SUCCESS,
-  SELECT_ITEM,
-  SELECT_CONTACT
+  USER_SUCCESS
 } from '../mutation-types'
-
-const literallyJustDateNow = () => Date.now()
 
 describe('mutations', () => {
   test('ADD_CHECKLIST_ITEM appends an item to currentChecklist', () => {
@@ -460,11 +471,11 @@ describe('mutations', () => {
       isAuthenticated: true
     }
     mutations[LOGIN_REQUEST](state)
+
     expect(state.user).toBe(null)
     expect(state.token).toBe(null)
     expect(state.isAuthenticated).toBe(false)
   })
-
   test('LOGIN_SUCCESS sets user & token, isAuthenticated to true, localStorage.token', () => {
     const state = {
       user: '',
@@ -476,6 +487,7 @@ describe('mutations', () => {
       token: 'xyz'
     }
     mutations[LOGIN_SUCCESS](state, authData)
+
     expect(state.user).toBe('dave')
     expect(state.token).toBe('xyz')
     expect(state.isAuthenticated).toBe(true)
@@ -484,15 +496,133 @@ describe('mutations', () => {
     expect(localStorage.setItem).toHaveBeenLastCalledWith('user', JSON.stringify('dave'))
     expect(localStorage.__STORE__['user']).toBe(JSON.stringify('dave'))
   })
+  test('NEW_CONTACT_REQUEST, set editContact', () => {
+    const state = {
+      contentControls: {
+        editContact: null
+      }
+    }
+    const contact = {
+      _id: '1',
+      name: 'Al'
+    }
+    mutations[NEW_CONTACT_REQUEST](state, contact)
 
+    expect(state.contentControls.editContact).toEqual(contact)
+  })
+  test('NEW_LOCATION_REQUEST, set editLocation', () => {
+    const state = {
+      contentControls: {
+        editLocation: null
+      }
+    }
+    const location = {
+      _id: '1',
+      placename: 'starbucks'
+    }
+    mutations[NEW_LOCATION_REQUEST](state, location)
+
+    expect(state.contentControls.editLocation).toEqual(location)
+  })
+  test('RESET_CHECKLIST_MOVE, flip moveEnabled', () => {
+    const state = {
+      pageControls: {
+        checklistDisplay: {
+          moveEnabled: false
+        }
+      }
+    }
+    mutations[RESET_CHECKLIST_MOVE](state)
+
+    expect(state.pageControls.checklistDisplay.moveEnabled).toBe(true)
+  })
+  test('SELECT_CONTACT, set selectedContactId, clear selectedItemId', () => {
+    const state = {
+      contentControls: {
+        selectedContactId: null,
+        selectedItemId: '123'
+      }
+    }
+    const contactId = '456'
+    mutations[SELECT_CONTACT](state, contactId)
+
+    expect(state.contentControls.selectedContactId).toEqual(contactId)
+    expect(state.contentControls.selectedItemId).toBe(null)
+  })
+  test('SELECT_ITEM, set selectedItemId, clear selectedContactId', () => {
+    const state = {
+      contentControls: {
+        selectedItemId: null,
+        selectedContactId: '123'
+      }
+    }
+    const itemId = '456'
+    mutations[SELECT_ITEM](state, itemId)
+
+    expect(state.contentControls.selectedItemId).toEqual(itemId)
+    expect(state.contentControls.selectedContactId).toBe(null)
+  })
+  test('SET_IS_AUTHENTICATED', () => {
+    const state = {
+      isAuthenticated: false
+    }
+    const value = true
+    mutations[SET_IS_AUTHENTICATED](state, value)
+
+    expect(state.isAuthenticated).toBe(value)
+  })
+  test('SET_ME', () => {
+    const state = {
+      me: null
+    }
+    const contact = {
+      _id: 1,
+      name: 'Al'
+    }
+    mutations[SET_ME](state, contact)
+
+    expect(state.me).toEqual(contact)
+  })
+  test('SIGN_OUT, clear data, clear localStorage', () => {
+    const state = {
+      contacts: [
+        { _id: '1', name: 'Al' },
+        { _id: '2', name: 'Bob' }
+      ],
+      items: [
+        { _id: '1', subject: 'one' },
+        { _id: '2', subject: 'two' }
+      ],
+      locations: [
+        { _id: '1', placename: 'starbuck' },
+        { _id: '2', placename: 'lambs' }
+      ],
+      user: { _id: '123', name: 'dave' },
+      me: { _id: '123', name: 'dave' },
+      token: '2847928uaoidha9yfhqb3irbv7',
+      isAuthenticated: true
+    }
+    mutations[SIGN_OUT](state)
+
+    expect(state.contacts).toEqual([])
+    expect(state.items).toEqual([])
+    expect(state.locations).toEqual([])
+    expect(state.user).toBe(null)
+    expect(state.me).toBe(null)
+    expect(state.token).toBe(null)
+    expect(state.isAuthenticated).toBe(false)
+
+    // localStorage.removeItem('token')
+    // localStorage.removeItem('user')
+  })
   test('SIGNUP_REQUEST sets user to null', () => {
     const state = {
       user: 'dave'
     }
     mutations[SIGNUP_REQUEST](state)
+
     expect(state.user).toBe(null)
   })
-
   test('SIGNUP_SUCCESS sets user', () => {
     const state = {
       user: ''
@@ -501,9 +631,96 @@ describe('mutations', () => {
       user: 'dave'
     }
     mutations[SIGNUP_SUCCESS](state, data)
+
     expect(state.user).toBe('dave')
   })
+  test('UPDATE_CHECKLIST_REQUEST, set loading', () => {
+    const state = {
+      loading: false
+    }
+    const checklist = { title: 'To do' }
+    mutations[UPDATE_CHECKLIST_REQUEST](state, checklist)
 
+    expect(state.loading).toBe(true)
+  })
+  test('UPDATE_CHECKLIST_SUCCESS, update checklists, clear loading currentChecklist, moveEnabled', () => {
+    const state = {
+      checklists: [
+        { _id: '1', title: 'one' },
+        { _id: '3', title: 'To do' },
+        { _id: '2', title: 'two' }
+      ],
+      loading: true,
+      currentChecklist: { _id: '3', title: 'TO DO' },
+      pageControls: {
+        checklistDisplay: {
+          moveEnabled: true
+        }
+      }
+    }
+    const updatedChecklist = {...state.currentChecklist}
+    mutations[UPDATE_CHECKLIST_SUCCESS](state, updatedChecklist)
+
+    expect(state.checklists[1]).toEqual(updatedChecklist)
+    expect(state.loading).toBe(false)
+    expect(state.currentChecklist).toEqual({ title: '', items: [] })
+    expect(state.pageControls.checklistDisplay.moveEnabled).toBe(false)
+  })
+  test('UPDATE_CHECKLIST_TITLE', () => {
+    const state = {
+      currentChecklist: {
+        title: 'now'
+      }
+    }
+    const title = 'nowHere'
+    mutations[UPDATE_CHECKLIST_TITLE](state, title)
+
+    expect(state.currentChecklist.title).toBe(title)
+  })
+  test('UPDATE_CONTACT_REQUEST, set loading', () => {
+    const state = {
+      loading: false
+    }
+    const contact = { _id: 2, name: 'Bob' }
+    mutations[UPDATE_CONTACT_REQUEST](state, contact)
+
+    expect(state.loading).toBe(true)
+  })
+  test('UPDATE_CONTACT_SUCCESS, update contacts, clear loading', () => {
+    const state = {
+      contacts: [
+        { _id: '1', name: 'Al' },
+        { _id: '2', name: 'Bob' },
+        { _id: '3', name: 'Carol' }
+      ],
+      loading: true
+    }
+    const updatedContact = { _id: '2', name: 'Bob Barker' }
+    mutations[UPDATE_CONTACT_SUCCESS](state, updatedContact)
+
+    expect(state.contacts[1]).toEqual(updatedContact)
+    expect(state.loading).toBe(false)
+  })
+  test('UPDATE_USER_REQUEST, set loading', () => {
+    const state = {
+      loading: false
+    }
+    const contact = { _id: 2, name: 'Bob' }
+    mutations[UPDATE_USER_REQUEST](state, contact)
+
+    expect(state.loading).toBe(true)
+  })
+  test('UPDATE_USER_SUCCESS, update user, clear loading', () => {
+    const state = {
+      user: { _id: '1', name: 'Bob' },
+      loading: true
+    }
+    const updatedUser = { _id: '1', name: 'Bob Barker' }
+    mutations[UPDATE_USER_SUCCESS](state, updatedUser)
+
+    expect(state.user).toEqual(updatedUser)
+    expect(state.loading).toBe(false)
+  })
   test('USER_REQUEST sets user to null', () => {
     const state = {
       user: 'dave'
@@ -519,31 +736,5 @@ describe('mutations', () => {
     const user = 'dave'
     mutations[USER_SUCCESS](state, user)
     expect(state.user).toBe('dave')
-  })
-
-  test('SELECT_ITEM sets selectedItemId & clears selectedContactId', () => {
-    const state = {
-      contentControls: {
-        selectedItemId: null,
-        selectedContactId: 123
-      }
-    }
-    const itemId = 456
-    mutations[SELECT_ITEM](state, itemId)
-    expect(state.contentControls.selectedItemId).toBe(456)
-    expect(state.contentControls.selectedContactId).toBe(null)
-  })
-
-  test('SELECT_CONTACT sets selectedContactId & clears selectedItemId', () => {
-    const state = {
-      contentControls: {
-        selectedItemId: 456,
-        selectedContactId: null
-      }
-    }
-    const contactId = 123
-    mutations[SELECT_CONTACT](state, contactId)
-    expect(state.contentControls.selectedItemId).toBe(null)
-    expect(state.contentControls.selectedContactId).toBe(123)
   })
 })

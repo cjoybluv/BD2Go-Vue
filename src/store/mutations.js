@@ -232,7 +232,6 @@ export default {
     localStorage.setItem('user', JSON.stringify(authData.user))
   },
   [NEW_CONTACT_REQUEST]: (state, contact) => {
-    console.log('NEW_CONTACT_REQUEST', contact)
     state.contentControls.editContact = { ...contact }
   },
   [NEW_LOCATION_REQUEST]: (state, location) => {
@@ -272,9 +271,6 @@ export default {
   [SIGNUP_SUCCESS]: (state, data) => {
     state.user = data.user
   },
-  [UPDATE_CHECKLIST_TITLE]: (state, title) => {
-    state.currentChecklist.title = title
-  },
   [UPDATE_CHECKLIST_REQUEST]: (state, checklist) => {
     state.loading = true
   },
@@ -287,6 +283,9 @@ export default {
       items: []
     }
     state.pageControls.checklistDisplay.moveEnabled = false
+  },
+  [UPDATE_CHECKLIST_TITLE]: (state, title) => {
+    state.currentChecklist.title = title
   },
   [UPDATE_CONTACT_REQUEST]: (state, contact) => {
     state.loading = true
