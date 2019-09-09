@@ -178,7 +178,7 @@ export default {
   },
   [EDIT_CHECKLIST]: (state, checklist) => {
     if (checklist.masterChecklist) {
-      let today = new Date()
+      let today = new Date(Date.now())
       let titleDateTime = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + ' ' + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds()
       state.currentChecklist = {
         ...checklist,
@@ -209,13 +209,15 @@ export default {
   },
   [ITEMS_SUCCESS]: (state, items) => {
     state.items = items
+    state.loading = false
   },
   [LOCATIONS_REQUEST]: (state, ownerId) => {
     state.locations = []
-    state.loading = false
+    state.loading = true
   },
   [LOCATIONS_SUCCESS]: (state, locations) => {
     state.locations = locations
+    state.loading = false
   },
   [LOGIN_REQUEST]: (state) => {
     state.user = null
