@@ -102,10 +102,9 @@ export default {
       getAppData('checklistFolders').then(function (data) {
         data.body.data.push(newFolderName)
         putAppData(data.body).then(function (data) {
-          console.log('createChecklistFolder', data, newFolderName)
           commit(CREATE_CHECKLIST_FOLDER_SUCCESS, newFolderName)
-          resolve(data)
           commit(CREATE_CHECKLIST_FOLDER_ARRAY, state.checklists)
+          resolve(data)
         })
       }).catch(err => {
         reject(err)
@@ -226,8 +225,8 @@ export default {
     return new Promise((resolve, reject) => {
       putChecklist(payload).then(function (data) {
         commit(UPDATE_CHECKLIST_SUCCESS, data.body)
-        resolve(data)
         commit(CREATE_CHECKLIST_FOLDER_ARRAY, state.checklists)
+        resolve(data)
       }).catch(err => {
         reject(err)
       })
@@ -254,7 +253,6 @@ export default {
                 targetType: nodeInfo.targetType
               }
               postSetRelationship(payload).then(result => {
-                console.log(result.body.message)
                 commit(UPDATE_CONTACT_SUCCESS, result.body.updatedHost)
                 commit(UPDATE_CONTACT_SUCCESS, result.body.updatedTarget)
               })

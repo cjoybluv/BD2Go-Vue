@@ -31,4 +31,6 @@ export const deleteLocation = jest.fn(() => Promise.resolve([]))
 export const putUser = jest.fn(() => Promise.resolve([]))
 
 export const postSetRelationship = jest.fn(() => Promise.resolve([]))
+
 export const getAppData = jest.fn(() => Promise.resolve([]))
+export const putAppData = jest.fn(() => Promise.resolve([]))
