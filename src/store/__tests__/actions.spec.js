@@ -16,7 +16,9 @@ import {
   postLogin,
   postSignup,
   putAppData,
-  putChecklist
+  putChecklist,
+  putContact,
+  putUser
 } from '../../api/api'
 import {
   ADD_CHECKLIST_REQUEST,
@@ -49,6 +51,10 @@ import {
   SIGNUP_SUCCESS,
   UPDATE_CHECKLIST_REQUEST,
   UPDATE_CHECKLIST_SUCCESS,
+  UPDATE_CONTACT_REQUEST,
+  UPDATE_CONTACT_SUCCESS,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
   USER_REQUEST,
   USER_SUCCESS
 } from '../mutation-types'
@@ -412,7 +418,69 @@ describe('actions', () => {
     expect(context.commit).toHaveBeenCalledWith(UPDATE_CHECKLIST_SUCCESS, data.body)
     expect(context.commit).toHaveBeenLastCalledWith(CREATE_CHECKLIST_FOLDER_ARRAY, context.state.checklists)
   })
+  test('updateContact: commits UPDATE_CONTACT_REQUEST / SUCCESS', async () => {
+    const payload = {
+      _id: '23423',
+      name: 'Updated Contact'
+    }
+    const data = {
+      body: {
+        _id: '23423',
+        name: 'Updated Contact',
+        relationships: []
+      }
+    }
+    const err = {}
+    const updatedContact = data.body
+    getContact.mockImplementation(calledWith => {
+      return calledWith === payload._id
+        ? Promise.resolve(data)
+        : Promise.reject(err)
+    })
+    putContact.mockImplementation(calledWith => {
+      return calledWith === payload
+        ? Promise.resolve(data)
+        : Promise.reject(err)
+    })
+    // postSetRelationship logic TO BE DONE
+    const context = {
+      commit: jest.fn(),
+      state: {
+        appData: {
+          relationshipData: []
+        }
+      }
+    }
+    actions.updateContact(context, payload)
+    await flushPromises()
 
+    expect(context.commit).toHaveBeenCalledTimes(2)
+    expect(context.commit).toHaveBeenCalledWith(UPDATE_CONTACT_REQUEST, payload)
+    expect(context.commit).toHaveBeenLastCalledWith(UPDATE_CONTACT_SUCCESS, updatedContact)
+  })
+  test('updateUser: commits UPDATE_USER_REQUEST / SUCCESS', async () => {
+    const payload = {
+      name: 'updated user'
+    }
+    const data = {
+      body: {}
+    }
+    const err = {}
+    putUser.mockImplementation(calledWith => {
+      return calledWith === payload
+        ? Promise.resolve(data)
+        : Promise.reject(err)
+    })
+    const context = {
+      commit: jest.fn()
+    }
+    actions.updateUser(context, payload)
+    await flushPromises()
+
+    expect(context.commit).toHaveBeenCalledTimes(2)
+    expect(context.commit).toHaveBeenCalledWith(UPDATE_USER_REQUEST, payload)
+    expect(context.commit).toHaveBeenLastCalledWith(UPDATE_USER_SUCCESS, data.body)
+  })
   test('viewItem: commits SELECT_ITEM', () => {
     const context = {
       commit: jest.fn()
