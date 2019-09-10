@@ -2,19 +2,19 @@ export default {
   displayItems: state => {
     const result = state.items.map(item => {
       return {
-        displayDate: item.dates.length && item.dates[0].date,
+        displayDate: item.dates.length ? item.dates[0].date : null,
         ...item
       }
     })
     return result
   },
-  selectedItem: state => {
-    return state.items.find(item => item._id === state.contentControls.selectedItemId)
+  editContact: state => {
+    return state.contacts.find(contact => contact._id === state.contentControls.editContactId)
   },
   selectedContact: state => {
     return state.contacts.find(contact => contact._id === state.contentControls.selectedContactId)
   },
-  editContact: state => {
-    return state.contacts.find(contact => contact._id === state.contentControls.editContactId)
+  selectedItem: state => {
+    return state.items.find(item => item._id === state.contentControls.selectedItemId)
   }
 }
