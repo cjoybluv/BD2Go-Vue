@@ -3,11 +3,15 @@ import isEqual from 'lodash.isequal'
 
 import actions from '../actions'
 import {
+  postChecklist,
   getUser,
   postLogin,
   postSignup
 } from '../../api/api'
 import {
+  ADD_CHECKLIST_REQUEST,
+  ADD_CHECKLIST_SUCCESS,
+  CREATE_CHECKLIST_FOLDER_ARRAY,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   SELECT_CONTACT,
@@ -21,6 +25,48 @@ import {
 jest.mock('../../api/api')
 
 describe('actions', () => {
+  test('addChecklist: commit ADD_CHECKLIST_REQUEST, ADD_CHECKLIST_SUCCESS, CREATE_CHECKLIST_FOLDER_ARRAY', async () => {
+    const checklist = {
+      'title': 'newList',
+      'items': [
+        {
+          'key': 1,
+          'subject': 'item one'
+        },
+        {
+          'key': 2,
+          'subject': 'Item two'
+        }
+      ],
+      'folderName': '',
+      'ownerId': '5b20bf7b08fbcb7b3c1d07e9'
+    }
+    const payload = checklist
+    const err = { error: 'not found' }
+    postChecklist.mockImplementation(calledWith => {
+      return calledWith === payload
+        ? Promise.resolve(payload)
+        : Promise.reject(err)
+    })
+    const context = {
+      state: {
+        checklists: [
+          { _id: '1', title: 'one' },
+          { _id: '2', title: 'two' }
+        ]
+      },
+      commit: jest.fn(),
+      dispatch: jest.fn()
+    }
+    actions.addChecklist(context, payload)
+    await flushPromises()
+
+    expect(context.commit).toHaveBeenCalledTimes(3)
+    expect(context.commit).toHaveBeenCalledWith(ADD_CHECKLIST_REQUEST, checklist)
+    expect(context.commit).toHaveBeenCalledWith(ADD_CHECKLIST_SUCCESS, undefined)
+    const checklists = context.state.checklists
+    expect(context.commit).toHaveBeenLastCalledWith(CREATE_CHECKLIST_FOLDER_ARRAY, checklists)
+  })
   test('fetchUser: commits USER_REQUEST, commits USER_SUCCESS', async () => {
     const user = {
       body: {
@@ -95,7 +141,7 @@ describe('actions', () => {
     actions.signup(context, user)
     await flushPromises()
 
-    expect(context.commit).toBeCalledWith(SIGNUP_REQUEST)
+    expect(context.commit).toHaveBeenCalledWith(SIGNUP_REQUEST)
     expect(context.commit).toHaveBeenLastCalledWith(SIGNUP_SUCCESS, user)
   })
 

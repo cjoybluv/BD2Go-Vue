@@ -66,8 +66,8 @@ export default {
     return new Promise((resolve, reject) => {
       postChecklist(payload).then(function (data) {
         commit(ADD_CHECKLIST_SUCCESS, data.body)
-        resolve(data)
         commit(CREATE_CHECKLIST_FOLDER_ARRAY, state.checklists)
+        resolve(data)
       }).catch(err => {
         reject(err)
       })
