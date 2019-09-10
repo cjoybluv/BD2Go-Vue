@@ -1,6 +1,14 @@
+import { promises } from 'dns'
+
 export const getUser = jest.fn(() => Promise.resolve([]))
 export const postLogin = jest.fn(() => Promise.resolve([]))
 export const postSignup = jest.fn(() => Promise.resolve([]))
+
+export const getChecklists = jest.fn(() => promises.resolve([]))
+export const getChecklist = jest.fn(() => Promise.resolve([]))
+export const postChecklist = jest.fn(() => Promise.resolve([]))
+export const putChecklist = jest.fn(() => Promise.resolve([]))
+export const deleteChecklist = jest.fn(() => Promise.resolve([]))
 
 export const getContacts = jest.fn(() => Promise.resolve([]))
 export const getContact = jest.fn(() => Promise.resolve([]))
@@ -23,4 +31,6 @@ export const deleteLocation = jest.fn(() => Promise.resolve([]))
 export const putUser = jest.fn(() => Promise.resolve([]))
 
 export const postSetRelationship = jest.fn(() => Promise.resolve([]))
+
 export const getAppData = jest.fn(() => Promise.resolve([]))
+export const putAppData = jest.fn(() => Promise.resolve([]))
