@@ -40,25 +40,86 @@ export default {
   name: 'FolderDisplay',
   data () {
     return {
-      displayData: [
-        { key: '1',
-          itemName: 'KAYAK',
-          children: [
-            { key: '1-1', itemName: 'Load on Car', itemId: '8237459' },
-            { key: '1-2', itemName: 'Unload car', itemId: '1231423' }
-          ],
-          childrenToggle: false },
-        { key: '2',
-          itemName: 'SKI',
-          children: [
-            { key: '2-1', itemName: 'load car', itemId: '293847i' }
-          ],
-          childrenToggle: false },
-        { key: '3', itemName: 'TEST', children: [], childrenToggle: false },
-        { key: '4', itemName: 'Honey Doo', children: [], childrenToggle: false, itemId: '0945674' },
-        { key: '5', itemName: 'Freddies', children: [], childrenToggle: false, itemId: '23549238' }
-      ]
+      displayData: []
     }
+  },
+  props: ['folders', 'items'],
+  methods: {
+    createArray () {
+      let key = 0
+      let folderArray = []
+     
+      this.folders.forEach((folder) => {
+        folderArray.push({
+          key: key++,
+          itemName: folder,
+          children: [],
+          childrenToggle: false,
+          folder: true,
+          itemId: null
+        })
+      })
+      this.items.forEach((item) => {
+        if (item.folderName) {
+          let idx = folderArray.findIndex((folder) => {
+            return folder.itemName === item.folderName
+          })
+          if (idx !== -1) {
+            folderArray[idx].children.push({
+              key: key++,
+              itemName: item.name,
+              children: [],
+              childrenToggle: false,
+              folder: false,
+              itemId: item._id })
+          } else {
+            folderArray.push({
+              key: key++,
+              itemName: item.name,
+              children: [],
+              childrenToggle: false,
+              folder: false,
+              itemId: item._id
+            })
+          }
+        } else {
+          folderArray.push({
+            key: key++,
+            itemName: item.name,
+            children: [],
+            childrenToggle: false,
+            folder: false,
+            itemId: item._id
+          })
+        }
+      })
+      folderArray.sort((a, b) => {
+        if (a.itemName > b.itemName) {
+          return 0
+        } else {
+          return -1
+        }
+      }).sort((a, b) => {
+        if (a.folder > b.folder) {
+          return -1
+        } else {
+          return 0
+        }
+      })
+      folderArray.forEach(folder => {
+        return folder.children.sort((a, b) => {
+          if (a.itemName > b.itemName) {
+            return 0
+          } else {
+            return -1
+          }
+        })
+      })
+      return folderArray
+    }
+  },
+  mounted () {
+    this.displayData = this.createArray()
   }
 }
 </script>

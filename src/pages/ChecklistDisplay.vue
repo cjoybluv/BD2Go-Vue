@@ -45,7 +45,7 @@
           <checklist></checklist>
       </panel>
       <panel>
-          <folder-display />
+          <folder-display :folders="test.folders" :items="test.items" />
       </panel>
     </section>
 
@@ -74,7 +74,17 @@ export default {
         email: ''
       },
       newFolderName: '',
-      submitted: false
+      submitted: false,
+      test: {
+        folders: [ 'KAYAK', 'SKI', 'TESTING' ],
+        items: [
+          { _id: '79w8yer', name: 'Unload Car', folderName: 'KAYAK' },
+          { _id: '84753', name: 'Load Car', folderName: 'SKI' },
+          { _id: 'aidiausdf', name: 'Honey Doo', folderName: '' },
+          { _id: '23423', name: 'Load Car', folderName: 'KAYAK' },
+          { _id: '23423', name: 'Freddies', folderName: '' }
+        ]
+      }
     }
   },
   computed: {
