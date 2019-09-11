@@ -98,4 +98,30 @@ describe('FolderDisplay', () => {
     wrapper.setData({displayData})
     expect(wrapper.find('.childItem').html()).toContain('data-icon="caret-right"')
   })
+  xtest('creates a Folder Array from items & folders props', () => {
+    // const test = {
+    //   folders: [ 'KAYAK', 'SKI', 'TESTING' ],
+    //   items: [
+    //     { _id: '79w8yer', name: 'Unload Car', folderName: 'KAYAK' },
+    //     { _id: '84753', name: 'Load Car', folderName: 'SKI' },
+    //     { _id: 'aidiausdf', name: 'Honey Doo', folderName: '' },
+    //     { _id: '23423', name: 'Load Car', folderName: 'KAYAK' },
+    //     { _id: '23423', name: 'Freddies', folderName: '' }
+    //   ],
+    //   folderArray: []
+    // }
+    // const store = createStore({})
+
+    // const mountingOptions = {
+    //   localVue,
+    //   propsData: {
+    //     folders: test.folders,
+    //     items: test.items
+    //   },
+    //   store: createStore()
+    // }
+    // const wrapper = shallowMount(FolderDisplay, merge(mountingOptions, store))
+
+    // expect(wrapper)
+  })
 })

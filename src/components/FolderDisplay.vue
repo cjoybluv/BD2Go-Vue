@@ -48,7 +48,7 @@ export default {
     createArray () {
       let key = 0
       let folderArray = []
-     
+
       this.folders.forEach((folder) => {
         folderArray.push({
           key: key++,
@@ -133,6 +133,9 @@ export default {
 .rootItem {
   list-style-type: none;
 }
+.rootItem:not(.folder) {
+  margin-left: 0.4em;
+}
 .lineItem:hover {
   background: #e4e4e4;
 }
@@ -147,7 +150,7 @@ export default {
   margin-left: 5px;
 }
 .children {
-  padding-inline-start: 3em;
+  padding-inline-start: 2em;
 }
 .childItem {
   list-style-type: none;
