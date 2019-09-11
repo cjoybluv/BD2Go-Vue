@@ -21,6 +21,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import {
   faCaretDown, // MIRROR THIS IN test > unit > setup.js !!!!!!
   faCaretRight,
+  faCaretUp,
   faEllipsisV,
   faPencilAlt,
   faPlus,
@@ -38,6 +39,7 @@ Vue.router = router
 
 library.add(faCaretDown) // MIRROR THIS IN test > unit > setup.js !!!!!!
 library.add(faCaretRight)
+library.add(faCaretUp)
 library.add(faEllipsisV)
 library.add(faPencilAlt)
 library.add(faPlus)

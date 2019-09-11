@@ -5,6 +5,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import {
   faCaretDown,
   faCaretRight,
+  faCaretUp,
   faEllipsisV,
   faPencilAlt,
   faPlus,
@@ -17,6 +18,7 @@ Vue.use(BootstrapVue)
 
 library.add(faCaretDown)
 library.add(faCaretRight)
+library.add(faCaretUp)
 library.add(faEllipsisV)
 library.add(faPencilAlt)
 library.add(faPlus)

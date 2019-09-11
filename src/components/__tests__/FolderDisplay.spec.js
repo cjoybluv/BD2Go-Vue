@@ -4,7 +4,6 @@ import {
 import Vuex from 'vuex'
 import merge from 'lodash.merge'
 import FolderDisplay from '@/components/FolderDisplay'
-// import bFormCheckbox from 'bootstrap-vue/src/components/form-checkbox/form-checkbox'
 
 const localVue = createLocalVue()
 localVue.use(Vuex)
@@ -29,6 +28,25 @@ function createWrapper (overrides) {
 }
 
 describe('FolderDisplay', () => {
+  const data = [
+    { key: '1',
+      itemName: 'KAYAK',
+      children: [
+        { key: '1-1', itemName: 'Load on Car', itemId: '8237459' },
+        { key: '1-2', itemName: 'Unload car', itemId: '1231423' }
+      ],
+      childrenToggle: false },
+    { key: '2',
+      itemName: 'SKI',
+      children: [
+        { key: '2-1', itemName: 'load car', itemId: '293847i' }
+      ],
+      childrenToggle: false },
+    { key: '3', itemName: 'TEST', children: [], childrenToggle: false },
+    { key: '4', itemName: 'Honey Doo', children: [], childrenToggle: false, itemId: '0945674' },
+    { key: '5', itemName: 'Freddies', children: [], childrenToggle: false, itemId: '23549238' }
+  ]
+
   test('component id is folderDisplay', () => {
     const store = createStore({})
     const wrapper = createWrapper({ store })
@@ -41,35 +59,43 @@ describe('FolderDisplay', () => {
 
     expect(wrapper.findAll('.rootItem')).toHaveLength(5)
   })
-  test('renders a caret-down icon for rootItems', () => {
+  test('toggles caret-up/down icon for folders using childrenToggle property', () => {
+    let displayData = [...data]
     const store = createStore({})
     const wrapper = createWrapper({ store })
 
+    // initial folder closed
+    expect(wrapper.find('.rootItem').html()).toContain('data-icon="caret-up"')
+
+    // toggle 1st folder open
+    displayData[0].childrenToggle = true
+    wrapper.setData({displayData})
     expect(wrapper.find('.rootItem').html()).toContain('data-icon="caret-down"')
+
+    // toggle 1st folder closed, 2nd folder open
+    displayData[0].childrenToggle = false
+    displayData[1].childrenToggle = true
+    wrapper.setData({displayData})
+    expect(wrapper.find('.rootItem').html()).toContain('data-icon="caret-up"')
+    expect(wrapper.findAll('.rootItem').at(1).html()).toContain('data-icon="caret-down"')
   })
-  test('renders a li for each childItem of a rootItem', () => {
+  test('renders a li for each childItem of a open folder', () => {
+    let displayData = [...data]
     const store = createStore({})
     const wrapper = createWrapper({ store })
 
+    displayData[0].childrenToggle = true
+    displayData[1].childrenToggle = true
+    wrapper.setData({displayData})
     expect(wrapper.findAll('.childItem')).toHaveLength(3)
   })
   test('renders a caret-right icon for childItems', () => {
+    let displayData = [...data]
     const store = createStore({})
     const wrapper = createWrapper({ store })
 
+    displayData[1].childrenToggle = true
+    wrapper.setData({displayData})
     expect(wrapper.find('.childItem').html()).toContain('data-icon="caret-right"')
   })
 })
-
-// const displayData = [
-//   { key: '1',
-//     itemName: 'KAYAK',
-//     children: [
-//       { key: '1-1', itemName: 'Load on Car', itemId: '8237459' },
-//       { key: '1-2', itemName: 'Unload car', itemId: '1231423' }
-//     ] },
-//   { key: '2', itemName: 'SKI', children: [] },
-//   { key: '3', itemName: 'TEST', children: [] },
-//   { key: '4', itemName: 'Honey Doo', children: [], itemId: '0945674' },
-//   { key: '5', itemName: 'Freddies', children: [], itemId: '23549238' }
-// ]
