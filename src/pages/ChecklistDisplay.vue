@@ -45,7 +45,7 @@
           <checklist></checklist>
       </panel>
       <panel>
-          detail panel here
+          <folder-display />
       </panel>
     </section>
 
@@ -56,12 +56,14 @@
 <script>
 import { mapActions } from 'Vuex'
 import checklist from '../components/Checklist'
+import folderDisplay from '../components/FolderDisplay'
 import panel from '../components/Panel'
 
 export default {
   name: 'ChecklistDisplay',
   components: {
     checklist,
+    folderDisplay,
     panel
   },
   data () {

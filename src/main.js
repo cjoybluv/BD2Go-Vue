@@ -18,7 +18,15 @@ import 'vue-material/dist/theme/default.css'
 // import 'vue-material/dist/theme/default.css'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faEllipsisV, faPencilAlt, faPlus, faSave, faUser } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCaretDown, // MIRROR THIS IN test > unit > setup.js !!!!!!
+  faCaretRight,
+  faEllipsisV,
+  faPencilAlt,
+  faPlus,
+  faSave,
+  faUser
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import App from './App'
@@ -28,6 +36,8 @@ import { store } from './store/store'
 
 Vue.router = router
 
+library.add(faCaretDown) // MIRROR THIS IN test > unit > setup.js !!!!!!
+library.add(faCaretRight)
 library.add(faEllipsisV)
 library.add(faPencilAlt)
 library.add(faPlus)
