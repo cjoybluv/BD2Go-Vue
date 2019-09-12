@@ -188,7 +188,7 @@ export default {
       }
       delete state.currentChecklist._id
     } else {
-      state.currentChecklist = checklist
+      state.currentChecklist = {...checklist}
     }
   },
   [EDIT_CONTACT_COMPLETE]: (state) => {

@@ -9,12 +9,12 @@
             icon="caret-up"
             class="fa-lg"
             v-if="!rootItem.childrenToggle && !rootItem.itemId"
-            @click="rootItem.childrenToggle = !rootItem.childrenToggle" />
+            @click="toggleChildren(rootItem)" />
         <font-awesome-icon
             icon="caret-down"
             class="fa-lg"
             v-if="rootItem.childrenToggle && !rootItem.itemId"
-            @click="rootItem.childrenToggle = !rootItem.childrenToggle" />
+            @click="toggleChildren(rootItem)" />
         <font-awesome-icon
             icon="caret-right"
             v-if="rootItem.itemId" />
@@ -40,16 +40,17 @@ export default {
   name: 'FolderDisplay',
   data () {
     return {
-      displayData: []
+      displayData: this.createArray(this.folders, this.items),
+      retainToggles: []
     }
   },
   props: ['folders', 'items'],
   methods: {
-    createArray () {
+    createArray (folders, items) {
       let key = 0
       let folderArray = []
 
-      this.folders.forEach((folder) => {
+      folders.forEach((folder) => {
         folderArray.push({
           key: key++,
           itemName: folder,
@@ -59,7 +60,7 @@ export default {
           itemId: null
         })
       })
-      this.items.forEach((item) => {
+      items.forEach((item) => {
         if (item.folderName) {
           let idx = folderArray.findIndex((folder) => {
             return folder.itemName === item.folderName
@@ -115,11 +116,38 @@ export default {
           }
         })
       })
+
+      if (this.retainToggles && this.retainToggles.length) {
+        this.retainToggles.forEach(toggle => {
+          const idx = folderArray.findIndex(rootItem => {
+            return rootItem.itemName === toggle.itemName
+          })
+          folderArray[idx].childrenToggle = toggle.childrenToggle
+        })
+      }
+
       return folderArray
+    },
+    toggleChildren (rootItem) {
+      rootItem.childrenToggle = !rootItem.childrenToggle
+      console.log('toggleChildren', this.retainToggles)
+      const idx = this.retainToggles.findIndex(toggle => {
+        return toggle.itemName === rootItem.itemName
+      })
+      if (idx !== -1) {
+        this.retainToggles[idx].childrenToggle = rootItem.childrenToggle
+      } else {
+        this.retainToggles.push({ itemName: rootItem.itemName, childrenToggle: rootItem.childrenToggle })
+      }
     }
   },
-  mounted () {
-    this.displayData = this.createArray()
+  watch: {
+    folders (newVal, oldVal) {
+      this.displayData = this.createArray(this.folders, this.items)
+    },
+    items (newVal, oldVal) {
+      this.displayData = this.createArray(this.folders, this.items)
+    }
   }
 }
 </script>

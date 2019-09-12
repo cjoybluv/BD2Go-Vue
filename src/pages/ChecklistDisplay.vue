@@ -45,7 +45,10 @@
           <checklist></checklist>
       </panel>
       <panel>
-          <folder-display :folders="test.folders" :items="test.items" />
+          <folder-display
+              v-if="this.$store.state.appData.checklistFolders && folderDisplayItems"
+              :folders="this.$store.state.appData.checklistFolders"
+              :items="folderDisplayItems" />
       </panel>
     </section>
 
@@ -74,17 +77,7 @@ export default {
         email: ''
       },
       newFolderName: '',
-      submitted: false,
-      test: {
-        folders: [ 'KAYAK', 'SKI', 'TESTING' ],
-        items: [
-          { _id: '79w8yer', name: 'Unload Car', folderName: 'KAYAK' },
-          { _id: '84753', name: 'Load Car', folderName: 'SKI' },
-          { _id: 'aidiausdf', name: 'Honey Doo', folderName: '' },
-          { _id: '23423', name: 'Load Car', folderName: 'KAYAK' },
-          { _id: '23423', name: 'Freddies', folderName: '' }
-        ]
-      }
+      submitted: false
     }
   },
   computed: {
@@ -94,14 +87,16 @@ export default {
     checklists () {
       return this.$store.state.checklists
     },
-    checklistFolders () {
-      return this.$store.state.appData.checklistFolders
-    },
     currentUser () {
       return this.$store.state.user
     },
     folderArray () {
       return this.$store.state.contentControls.checklistFolderArray
+    },
+    folderDisplayItems () {
+      return this.checklists.map(checklist => {
+        return { _id: checklist._id, name: checklist.title, folderName: checklist.folderName }
+      })
     },
     me () {
       return this.$store.state.me
