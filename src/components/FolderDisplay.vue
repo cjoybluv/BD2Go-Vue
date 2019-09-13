@@ -18,7 +18,7 @@
         <font-awesome-icon
             icon="caret-right"
             v-if="rootItem.itemId" />
-        <span>{{ rootItem.itemName }}</span>
+        <span @click="openItem(rootItem)">{{ rootItem.itemName }}</span>
       </div>
       <ul class="children"
           v-if="rootItem.children.length && rootItem.childrenToggle">
@@ -27,7 +27,7 @@
             :key="child.key">
           <div class="lineItem">
             <font-awesome-icon icon="caret-right" />
-            <span>{{ child.itemName }}</span>
+            <span @click="openItem(child)">{{ child.itemName }}</span>
           </div>
         </li>
       </ul>
@@ -128,9 +128,15 @@ export default {
 
       return folderArray
     },
+    openItem (folderItem) {
+      if (!folderItem.folder) {
+        this.$store.commit('EDIT_CHECKLIST', this.$store.state.checklists.find(checklist => {
+          return checklist._id === folderItem.itemId
+        }))
+      }
+    },
     toggleChildren (rootItem) {
       rootItem.childrenToggle = !rootItem.childrenToggle
-      console.log('toggleChildren', this.retainToggles)
       const idx = this.retainToggles.findIndex(toggle => {
         return toggle.itemName === rootItem.itemName
       })
@@ -164,8 +170,15 @@ export default {
 .rootItem:not(.folder) {
   margin-left: 0.4em;
 }
+.lineItem {
+  display: flex;
+  align-items: center;
+}
 .lineItem:hover {
   background: #e4e4e4;
+}
+.lineItem span {
+  flex: 1; 
 }
 .rootItem svg {
   cursor: pointer;
