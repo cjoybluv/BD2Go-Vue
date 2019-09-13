@@ -1,6 +1,6 @@
 <template>
   <div id= "folderDisplay">
-    <div id="createFolderLine">
+    <!-- <div id="createFolderLine">
       <b-form-input
         placeholder="Create New Folder Name"
         v-model="newFolderName"
@@ -12,7 +12,7 @@
         class="self-center">
         <font-awesome-icon icon="plus" />
       </span>
-    </div>
+    </div> -->
     <ul id="folderList">
       <li class="rootItem"
           :class="{folder: !rootItem.itemId}"
@@ -62,7 +62,7 @@ export default {
       retainToggles: []
     }
   },
-  props: ['folders', 'items'],
+  props: ['folders', 'items', 'openItem'],
   methods: {
     createArray (folders, items) {
       let key = 0
@@ -149,13 +149,6 @@ export default {
     createFolder () {
       if (this.newFolderName) {
         this.createChecklistFolder(this.newFolderName)
-      }
-    },
-    openItem (folderItem) {
-      if (!folderItem.folder) {
-        this.$store.commit('EDIT_CHECKLIST', this.$store.state.checklists.find(checklist => {
-          return checklist._id === folderItem.itemId
-        }))
       }
     },
     toggleChildren (rootItem) {

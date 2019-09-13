@@ -4,7 +4,7 @@
 
     <section id="main">
       <panel>
-          <div id="createFolderLine">
+          <!-- <div id="createFolderLine">
             <b-form-input
               placeholder="Create New Folder Name"
               v-model="newFolderName"
@@ -16,7 +16,7 @@
               class="self-center">
               <font-awesome-icon icon="plus" />
             </span>
-          </div>
+          </div> -->
           <md-list>
             <md-list-item
               v-for="rootItem in folderArray"
@@ -45,10 +45,24 @@
           <checklist></checklist>
       </panel>
       <panel>
-          <folder-display
-              v-if="this.$store.state.appData.checklistFolders && folderDisplayItems"
-              :folders="this.$store.state.appData.checklistFolders"
-              :items="folderDisplayItems" />
+        <div id="createFolderLine">
+          <b-form-input
+            placeholder="Create New Folder Name"
+            v-model="newFolderName"
+            v-on:keyup.enter="createFolder">
+          </b-form-input>
+          <span
+            @click="createFolder"
+            :class="{pointer: newFolderName, notAllowed: !newFolderName}"
+            class="self-center">
+            <font-awesome-icon icon="plus" />
+          </span>
+        </div>
+        <folder-display
+            v-if="this.$store.state.appData.checklistFolders && folderDisplayItems"
+            :folders="this.$store.state.appData.checklistFolders"
+            :items="folderDisplayItems"
+            :openItem="openItem" />
       </panel>
     </section>
 
@@ -115,6 +129,13 @@ export default {
         } else {
           this.$store.commit('EDIT_CHECKLIST', item._rec)
         }
+      }
+    },
+    openItem (folderItem) {
+      if (!folderItem.folder) {
+        this.$store.commit('EDIT_CHECKLIST', this.$store.state.checklists.find(checklist => {
+          return checklist._id === folderItem.itemId
+        }))
       }
     },
     ...mapActions([
