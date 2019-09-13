@@ -1,46 +1,64 @@
 <template>
-  <ul id="folderDisplay">
-    <li class="rootItem"
-        :class="{folder: !rootItem.itemId}"
-        v-for="rootItem in displayData"
-        :key="rootItem.key">
-      <div class="lineItem">
-        <font-awesome-icon
-            icon="caret-up"
-            class="fa-lg"
-            v-if="!rootItem.childrenToggle && !rootItem.itemId"
-            @click="toggleChildren(rootItem)" />
-        <font-awesome-icon
-            icon="caret-down"
-            class="fa-lg"
-            v-if="rootItem.childrenToggle && !rootItem.itemId"
-            @click="toggleChildren(rootItem)" />
-        <font-awesome-icon
-            icon="caret-right"
-            v-if="rootItem.itemId" />
-        <span @click="openItem(rootItem)">{{ rootItem.itemName }}</span>
-      </div>
-      <ul class="children"
-          v-if="rootItem.children.length && rootItem.childrenToggle">
-        <li class="childItem"
-            v-for="child in rootItem.children"
-            :key="child.key">
-          <div class="lineItem">
-            <font-awesome-icon icon="caret-right" />
-            <span @click="openItem(child)">{{ child.itemName }}</span>
-          </div>
-        </li>
-      </ul>
-    </li>
-  </ul>
+  <div id= "folderDisplay">
+    <div id="createFolderLine">
+      <b-form-input
+        placeholder="Create New Folder Name"
+        v-model="newFolderName"
+        v-on:keyup.enter="createFolder">
+      </b-form-input>
+      <span
+        @click="createFolder"
+        :class="{pointer: newFolderName, notAllowed: !newFolderName}"
+        class="self-center">
+        <font-awesome-icon icon="plus" />
+      </span>
+    </div>
+    <ul id="folderList">
+      <li class="rootItem"
+          :class="{folder: !rootItem.itemId}"
+          v-for="rootItem in displayData"
+          :key="rootItem.key">
+        <div class="lineItem">
+          <font-awesome-icon
+              icon="caret-up"
+              class="fa-lg"
+              v-if="!rootItem.childrenToggle && !rootItem.itemId"
+              @click="toggleChildren(rootItem)" />
+          <font-awesome-icon
+              icon="caret-down"
+              class="fa-lg"
+              v-if="rootItem.childrenToggle && !rootItem.itemId"
+              @click="toggleChildren(rootItem)" />
+          <font-awesome-icon
+              icon="caret-right"
+              v-if="rootItem.itemId" />
+          <span @click="openItem(rootItem)">{{ rootItem.itemName }}</span>
+        </div>
+        <ul class="children"
+            v-if="rootItem.children.length && rootItem.childrenToggle">
+          <li class="childItem"
+              v-for="child in rootItem.children"
+              :key="child.key">
+            <div class="lineItem">
+              <font-awesome-icon icon="caret-right" />
+              <span @click="openItem(child)">{{ child.itemName }}</span>
+            </div>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
+import { mapActions } from 'Vuex'
+
 export default {
   name: 'FolderDisplay',
   data () {
     return {
       displayData: this.createArray(this.folders, this.items),
+      newFolderName: '',
       retainToggles: []
     }
   },
@@ -128,6 +146,11 @@ export default {
 
       return folderArray
     },
+    createFolder () {
+      if (this.newFolderName) {
+        this.createChecklistFolder(this.newFolderName)
+      }
+    },
     openItem (folderItem) {
       if (!folderItem.folder) {
         this.$store.commit('EDIT_CHECKLIST', this.$store.state.checklists.find(checklist => {
@@ -145,7 +168,10 @@ export default {
       } else {
         this.retainToggles.push({ itemName: rootItem.itemName, childrenToggle: rootItem.childrenToggle })
       }
-    }
+    },
+    ...mapActions([
+      'createChecklistFolder'
+    ])
   },
   watch: {
     folders (newVal, oldVal) {
@@ -159,7 +185,7 @@ export default {
 </script>
 
 <style scoped>
-#folderDisplay {
+#folderList {
   padding-inline-start: 0;
   line-height: 2em;
   font-size: 1.12em;
@@ -178,7 +204,7 @@ export default {
   background: #e4e4e4;
 }
 .lineItem span {
-  flex: 1; 
+  flex: 1;
 }
 .rootItem svg {
   cursor: pointer;
