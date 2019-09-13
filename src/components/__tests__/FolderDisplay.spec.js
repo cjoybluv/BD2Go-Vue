@@ -21,32 +21,16 @@ function createStore (overrides) {
 function createWrapper (overrides) {
   const defaultMountingOptions = {
     localVue,
-    propsData: {},
+    propsData: {
+      folders: testFolders,
+      items: testItems
+    },
     store: createStore()
   }
   return shallowMount(FolderDisplay, merge(defaultMountingOptions, overrides))
 }
 
 describe('FolderDisplay', () => {
-  const data = [
-    { key: '1',
-      itemName: 'KAYAK',
-      children: [
-        { key: '1-1', itemName: 'Load on Car', itemId: '8237459' },
-        { key: '1-2', itemName: 'Unload car', itemId: '1231423' }
-      ],
-      childrenToggle: false },
-    { key: '2',
-      itemName: 'SKI',
-      children: [
-        { key: '2-1', itemName: 'load car', itemId: '293847i' }
-      ],
-      childrenToggle: false },
-    { key: '3', itemName: 'TEST', children: [], childrenToggle: false },
-    { key: '4', itemName: 'Honey Doo', children: [], childrenToggle: false, itemId: '0945674' },
-    { key: '5', itemName: 'Freddies', children: [], childrenToggle: false, itemId: '23549238' }
-  ]
-
   test('component id is folderDisplay', () => {
     const store = createStore({})
     const wrapper = createWrapper({ store })
@@ -57,10 +41,10 @@ describe('FolderDisplay', () => {
     const store = createStore({})
     const wrapper = createWrapper({ store })
 
-    expect(wrapper.findAll('.rootItem')).toHaveLength(5)
+    expect(wrapper.findAll('.rootItem')).toHaveLength(6)
   })
   test('toggles caret-up/down icon for folders using childrenToggle property', () => {
-    let displayData = [...data]
+    let displayData = [...testDisplayData]
     const store = createStore({})
     const wrapper = createWrapper({ store })
 
@@ -72,7 +56,7 @@ describe('FolderDisplay', () => {
     wrapper.setData({displayData})
     expect(wrapper.find('.rootItem').html()).toContain('data-icon="caret-down"')
 
-    // toggle 1st folder closed, 2nd folder open
+    // // toggle 1st folder closed, 2nd folder open
     displayData[0].childrenToggle = false
     displayData[1].childrenToggle = true
     wrapper.setData({displayData})
@@ -80,17 +64,17 @@ describe('FolderDisplay', () => {
     expect(wrapper.findAll('.rootItem').at(1).html()).toContain('data-icon="caret-down"')
   })
   test('renders a li for each childItem of a open folder', () => {
-    let displayData = [...data]
+    let displayData = [...testDisplayData]
     const store = createStore({})
     const wrapper = createWrapper({ store })
 
     displayData[0].childrenToggle = true
     displayData[1].childrenToggle = true
     wrapper.setData({displayData})
-    expect(wrapper.findAll('.childItem')).toHaveLength(3)
+    expect(wrapper.findAll('.childItem')).toHaveLength(4)
   })
   test('renders a caret-right icon for childItems', () => {
-    let displayData = [...data]
+    let displayData = [...testDisplayData]
     const store = createStore({})
     const wrapper = createWrapper({ store })
 
@@ -98,30 +82,147 @@ describe('FolderDisplay', () => {
     wrapper.setData({displayData})
     expect(wrapper.find('.childItem').html()).toContain('data-icon="caret-right"')
   })
-  xtest('creates a Folder Array from items & folders props', () => {
-    // const test = {
-    //   folders: [ 'KAYAK', 'SKI', 'TESTING' ],
-    //   items: [
-    //     { _id: '79w8yer', name: 'Unload Car', folderName: 'KAYAK' },
-    //     { _id: '84753', name: 'Load Car', folderName: 'SKI' },
-    //     { _id: 'aidiausdf', name: 'Honey Doo', folderName: '' },
-    //     { _id: '23423', name: 'Load Car', folderName: 'KAYAK' },
-    //     { _id: '23423', name: 'Freddies', folderName: '' }
-    //   ],
-    //   folderArray: []
-    // }
-    // const store = createStore({})
-
-    // const mountingOptions = {
-    //   localVue,
-    //   propsData: {
-    //     folders: test.folders,
-    //     items: test.items
-    //   },
-    //   store: createStore()
-    // }
-    // const wrapper = shallowMount(FolderDisplay, merge(mountingOptions, store))
-
-    // expect(wrapper)
-  })
 })
+
+const testFolders = ['KAYAK', 'SKI', 'SHOPPING', 'TEST', 'testing']
+
+const testItems = [{'_id': '5d79e0507863eb3cebce1f06', 'name': '2019-9-11 23:5:56 / DAVE', 'folderName': 'TEST'}, {'_id': '5d71e1ea8593b8801dce1687', 'name': '2019-9-5 21:34:45 / DAVE', 'folderName': 'TEST'}, {'_id': '5d69a37240d938e28738fe84', 'name': 'DAVE', 'folderName': '__vue_devtool_undefined__'}, {'_id': '5d6a1e196ece72f4fafd6a03', 'name': 'Freddies', 'folderName': 'SHOPPING'}, {'_id': '5d69a40040d938e28738fe87', 'name': 'GeoFetching', 'folderName': 'TEST'}, {'_id': '5d698b5d40d938e28738fe64', 'name': 'Launch', 'folderName': 'KAYAK'}, {'_id': '5d672266f130b48a9e862103', 'name': 'Load on Car', 'folderName': 'KAYAK'}, {'_id': '5d7729e07863eb3cebce1ef9', 'name': 'Pack Car', 'folderName': 'SKI'}, {'_id': '5d67402f946a6abba5d24f93', 'name': 'Unload Car', 'folderName': 'KAYAK'}]
+
+const testDisplayData = [
+  {
+    'key': 0,
+    'itemName': 'KAYAK',
+    'children': [
+      {
+        'key': 10,
+        'itemName': 'Launch',
+        'children': [
+
+        ],
+        'childrenToggle': false,
+        'folder': false,
+        'itemId': '5d698b5d40d938e28738fe64'
+      },
+      {
+        'key': 11,
+        'itemName': 'Load on Car',
+        'children': [
+
+        ],
+        'childrenToggle': false,
+        'folder': false,
+        'itemId': '5d672266f130b48a9e862103'
+      },
+      {
+        'key': 13,
+        'itemName': 'Unload Car',
+        'children': [
+
+        ],
+        'childrenToggle': false,
+        'folder': false,
+        'itemId': '5d67402f946a6abba5d24f93'
+      }
+    ],
+    'childrenToggle': false,
+    'folder': true,
+    'itemId': null
+  },
+  {
+    'key': 2,
+    'itemName': 'SHOPPING',
+    'children': [
+      {
+        'key': 8,
+        'itemName': 'Freddies',
+        'children': [
+
+        ],
+        'childrenToggle': false,
+        'folder': false,
+        'itemId': '5d6a1e196ece72f4fafd6a03'
+      }
+    ],
+    'childrenToggle': false,
+    'folder': true,
+    'itemId': null
+  },
+  {
+    'key': 1,
+    'itemName': 'SKI',
+    'children': [
+      {
+        'key': 12,
+        'itemName': 'Pack Car',
+        'children': [
+
+        ],
+        'childrenToggle': false,
+        'folder': false,
+        'itemId': '5d7729e07863eb3cebce1ef9'
+      }
+    ],
+    'childrenToggle': false,
+    'folder': true,
+    'itemId': null
+  },
+  {
+    'key': 3,
+    'itemName': 'TEST',
+    'children': [
+      {
+        'key': 5,
+        'itemName': '2019-9-11 23:5:56 / DAVE',
+        'children': [
+
+        ],
+        'childrenToggle': false,
+        'folder': false,
+        'itemId': '5d79e0507863eb3cebce1f06'
+      },
+      {
+        'key': 6,
+        'itemName': '2019-9-5 21:34:45 / DAVE',
+        'children': [
+
+        ],
+        'childrenToggle': false,
+        'folder': false,
+        'itemId': '5d71e1ea8593b8801dce1687'
+      },
+      {
+        'key': 9,
+        'itemName': 'GeoFetching',
+        'children': [
+
+        ],
+        'childrenToggle': false,
+        'folder': false,
+        'itemId': '5d69a40040d938e28738fe87'
+      }
+    ],
+    'childrenToggle': false,
+    'folder': true,
+    'itemId': null
+  },
+  {
+    'key': 4,
+    'itemName': 'testing',
+    'children': [
+
+    ],
+    'childrenToggle': false,
+    'folder': true,
+    'itemId': null
+  },
+  {
+    'key': 7,
+    'itemName': 'DAVE',
+    'children': [
+
+    ],
+    'childrenToggle': false,
+    'folder': false,
+    'itemId': '5d69a37240d938e28738fe84'
+  }
+]
