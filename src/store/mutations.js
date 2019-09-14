@@ -16,9 +16,8 @@ import {
   CONTACT_SUCCESS,
   CONTACTS_REQUEST,
   CONTACTS_SUCCESS,
-  CREATE_CHECKLIST_FOLDER_ARRAY,
-  CREATE_CHECKLIST_FOLDER_REQUEST,
-  CREATE_CHECKLIST_FOLDER_SUCCESS,
+  CREATE_FOLDER_REQUEST,
+  CREATE_FOLDER_SUCCESS,
   EDIT_CHECKLIST,
   EDIT_CONTACT_COMPLETE,
   EDIT_CONTACT_REQUEST,
@@ -119,62 +118,12 @@ export default {
     state.contacts = contacts
     state.loading = false
   },
-  [CREATE_CHECKLIST_FOLDER_ARRAY]: (state, checklists) => {
-    let key = 0
-    let folderArray = []
-    let folders = state.appData.checklistFolders
-    folders.forEach((folder) => {
-      folderArray.push({
-        key: key++,
-        folder: true,
-        title: folder,
-        items: []
-      })
-    })
-    checklists.forEach((checklist) => {
-      if (checklist.folderName) {
-        let idx = folderArray.findIndex((folder) => {
-          return folder.title === checklist.folderName
-        })
-        if (idx !== -1) {
-          folderArray[idx].items.push(checklist)
-        } else {
-          folderArray.push({
-            key: key++,
-            title: checklist.title,
-            folder: false,
-            _rec: checklist
-          })
-        }
-      } else {
-        folderArray.push({
-          key: key++,
-          title: checklist.title,
-          folder: false,
-          _rec: checklist
-        })
-      }
-    })
-    state.contentControls.checklistFolderArray = folderArray.sort((a, b) => {
-      if (a.title > b.title) {
-        return 0
-      } else {
-        return -1
-      }
-    }).sort((a, b) => {
-      if (a.folder > b.folder) {
-        return -1
-      } else {
-        return 0
-      }
-    })
-  },
-  [CREATE_CHECKLIST_FOLDER_REQUEST]: (state, folderName) => {
+  [CREATE_FOLDER_REQUEST]: (state, folderName) => {
     state.loading = true
   },
-  [CREATE_CHECKLIST_FOLDER_SUCCESS]: (state, folderName) => {
+  [CREATE_FOLDER_SUCCESS]: (state, user) => {
     state.loading = false
-    state.appData.checklistFolders.push(folderName)
+    state.user = user
   },
   [EDIT_CHECKLIST]: (state, checklist) => {
     if (checklist.masterChecklist) {

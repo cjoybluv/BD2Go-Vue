@@ -222,7 +222,7 @@ export function deleteLocation (payload) {
   })
 }
 
-export function getUser (payload) {
+export function getUser (payload) { // payload = email
   return new Promise((resolve, reject) => {
     Vue.http.get(PATHNAME + '/users?email=' + payload).then(user => {
       resolve(user)
