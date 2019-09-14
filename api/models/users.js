@@ -16,6 +16,9 @@ const UserSchema = new Schema({
   },
   meContactId: {
     type: Schema.Types.ObjectId
+  },
+  folders: {
+    type: Array
   }
 })
 

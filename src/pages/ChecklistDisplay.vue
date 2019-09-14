@@ -60,7 +60,7 @@
         </div>
         <folder-display
             v-if="this.$store.state.appData.checklistFolders && folderDisplayItems"
-            :folders="this.$store.state.appData.checklistFolders"
+            :folders="this.$store.state.user.folders"
             :items="folderDisplayItems"
             :openItem="openItem" />
       </panel>
