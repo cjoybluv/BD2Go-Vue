@@ -58,6 +58,7 @@ router.beforeEach((to, from, next) => {
       store.dispatch('fetchAppData', 'relationshipData')
       store.dispatch('fetchAppData', 'checklistFolders')
 
+      store.dispatch('fetchUser', user.email)
       store.dispatch('fetchChecklists', user._id)
       store.dispatch('fetchContacts', user._id)
       store.dispatch('fetchItems', user._id)

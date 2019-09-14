@@ -1,18 +1,5 @@
 <template>
   <div id= "folderDisplay">
-    <!-- <div id="createFolderLine">
-      <b-form-input
-        placeholder="Create New Folder Name"
-        v-model="newFolderName"
-        v-on:keyup.enter="createFolder">
-      </b-form-input>
-      <span
-        @click="createFolder"
-        :class="{pointer: newFolderName, notAllowed: !newFolderName}"
-        class="self-center">
-        <font-awesome-icon icon="plus" />
-      </span>
-    </div> -->
     <ul id="folderList">
       <li class="rootItem"
           :class="{folder: !rootItem.itemId}"

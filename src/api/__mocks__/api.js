@@ -1,6 +1,8 @@
 import { promises } from 'dns'
 
 export const getUser = jest.fn(() => Promise.resolve([]))
+export const putUser = jest.fn(() => Promise.resolve([]))
+
 export const postLogin = jest.fn(() => Promise.resolve([]))
 export const postSignup = jest.fn(() => Promise.resolve([]))
 
@@ -27,8 +29,6 @@ export const getLocation = jest.fn(() => Promise.resolve([]))
 export const postLocation = jest.fn(() => Promise.resolve([]))
 export const putLocation = jest.fn(() => Promise.resolve([]))
 export const deleteLocation = jest.fn(() => Promise.resolve([]))
-
-export const putUser = jest.fn(() => Promise.resolve([]))
 
 export const postSetRelationship = jest.fn(() => Promise.resolve([]))
 

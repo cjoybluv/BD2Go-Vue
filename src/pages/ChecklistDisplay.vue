@@ -15,7 +15,7 @@
           <checklist></checklist>
       </panel>
       <panel>
-        
+
       </panel>
     </section>
 
@@ -59,9 +59,6 @@ export default {
     currentUser () {
       return this.$store.state.user
     },
-    folderArray () {
-      return this.$store.state.contentControls.checklistFolderArray
-    },
     folderDisplayItems () {
       return this.checklists.map(checklist => {
         return { _id: checklist._id, name: checklist.title, folderName: checklist.folderName }
@@ -77,15 +74,6 @@ export default {
         this.createChecklistFolder(this.newFolderName)
       }
     },
-    openFolderItem (item) {
-      if (!item.folder) {
-        if (!item._rec) {
-          this.$store.commit('EDIT_CHECKLIST', item)
-        } else {
-          this.$store.commit('EDIT_CHECKLIST', item._rec)
-        }
-      }
-    },
     openItem (folderItem) {
       if (!folderItem.folder) {
         this.$store.commit('EDIT_CHECKLIST', this.$store.state.checklists.find(checklist => {
@@ -94,11 +82,9 @@ export default {
       }
     },
     ...mapActions([
-      'createChecklistFolder'
+      'createChecklistFolder',
+      'fetchUser'
     ])
-  },
-  mounted () {
-    this.user = this.currentUser
   }
 }
 </script>

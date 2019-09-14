@@ -15,7 +15,6 @@ import {
   postLocation,
   postLogin,
   postSignup,
-  putAppData,
   putChecklist,
   putContact,
   putUser
@@ -97,7 +96,7 @@ describe('actions', () => {
     actions.addChecklist(context, payload)
     await flushPromises()
 
-    expect(context.commit).toHaveBeenCalledTimes(3)
+    expect(context.commit).toHaveBeenCalledTimes(2)
     expect(context.commit).toHaveBeenCalledWith(ADD_CHECKLIST_REQUEST, payload)
     expect(context.commit).toHaveBeenCalledWith(ADD_CHECKLIST_SUCCESS, payload.body)
   })
@@ -151,42 +150,6 @@ describe('actions', () => {
     expect(context.commit).toHaveBeenCalledWith(ADD_LOCATION_REQUEST, payload)
     expect(context.commit).toHaveBeenLastCalledWith(ADD_LOCATION_SUCCESS, payload.body)
   })
-  test('createFolder: commits CREATE_FOLDER_REQUEST / SUCCESS', async () => {
-    const newFolderName = 'Testing two'
-    const err = { error: 'not found' }
-    const data = {
-      body: {
-        _id: '123',
-        folders: ['testing one', 'Testing two']
-      }
-    }
-    const context = {
-      state: {
-        user: {
-          _id: '123',
-          folders: ['testing one']
-        }
-      },
-      commit: jest.fn()
-    }
-    getUser.mockImplementation(calledWith => {
-      return calledWith === context.state.user._id
-        ? Promise.resolve(data)
-        : Promise.reject(err)
-    })
-    putUser.mockImplementation(calledWith => {
-      return calledWith === data.body
-        ? Promise.resolve('success')
-        : Promise.reject(err)
-    })
-
-    actions.createFolder(context, newFolderName)
-    await flushPromises()
-
-    expect(context.commit).toHaveBeenCalledTimes(3)
-    expect(context.commit).toHaveBeenCalledWith(CREATE_FOLDER_REQUEST, newFolderName)
-    expect(context.commit).toHaveBeenCalledWith(CREATE_FOLDER_SUCCESS, data.body)
-  })
   test('fetchAppData: commits APP_DATA_REQUEST, APP_DATA_SUCCESS', async () => {
     const payload = 'someAppKey'
     const data = {
@@ -225,7 +188,7 @@ describe('actions', () => {
     actions.fetchChecklists(context, payload)
     await flushPromises()
 
-    expect(context.commit).toHaveBeenCalledTimes(3)
+    expect(context.commit).toHaveBeenCalledTimes(2)
     expect(context.commit).toHaveBeenCalledWith(CHECKLISTS_REQUEST, payload)
     expect(context.commit).toHaveBeenCalledWith(CHECKLISTS_SUCCESS, data.body)
   })
@@ -413,7 +376,7 @@ describe('actions', () => {
     actions.updateChecklist(context, payload)
     await flushPromises()
 
-    expect(context.commit).toHaveBeenCalledTimes(3)
+    expect(context.commit).toHaveBeenCalledTimes(2)
     expect(context.commit).toHaveBeenCalledWith(UPDATE_CHECKLIST_REQUEST, payload)
     expect(context.commit).toHaveBeenCalledWith(UPDATE_CHECKLIST_SUCCESS, data.body)
   })

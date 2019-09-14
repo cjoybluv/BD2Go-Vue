@@ -92,24 +92,6 @@ export default {
       })
     })
   },
-
-  createFolder: ({ commit, state }, newFolderName) => {
-    commit(CREATE_FOLDER_REQUEST, newFolderName)
-    return new Promise((resolve, reject) => {
-      getUser(state.user.email).then(data => {
-        data.body.folders
-          ? data.body.folders.push(newFolderName)
-          : data.body.folders = [newFolderName]
-        putUser(data.body).then(data => {
-          commit(CREATE_FOLDER_SUCCESS, data.body)
-          resolve(data)
-        })
-      }).catch(err => {
-        reject(err)
-      })
-    })
-  },
-
   fetchAppData: ({ commit }, payload) => {
     commit(APP_DATA_REQUEST, payload)
     return new Promise((resolve, reject) => {
@@ -177,7 +159,7 @@ export default {
       })
     })
   },
-  fetchUser: ({ commit, dispatch }, payload) => {
+  fetchUser: ({ commit }, payload) => {
     commit(USER_REQUEST)
     return new Promise((resolve, reject) => {
       getUser(payload).then(user => {
@@ -216,8 +198,7 @@ export default {
       })
     })
   },
-
-  updateChecklist: ({ state, commit }, payload) => {
+  updateChecklist: ({ commit }, payload) => {
     commit(UPDATE_CHECKLIST_REQUEST, payload)
     return new Promise((resolve, reject) => {
       putChecklist(payload).then(function (data) {
