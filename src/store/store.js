@@ -39,7 +39,8 @@ const state = {
     _id: '',
     email: '',
     username: '',
-    meContactId: ''
+    meContactId: '',
+    folders: []
   },
   me: {},
   token: null,
