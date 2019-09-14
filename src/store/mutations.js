@@ -16,8 +16,6 @@ import {
   CONTACT_SUCCESS,
   CONTACTS_REQUEST,
   CONTACTS_SUCCESS,
-  CREATE_FOLDER_REQUEST,
-  CREATE_FOLDER_SUCCESS,
   EDIT_CHECKLIST,
   EDIT_CONTACT_COMPLETE,
   EDIT_CONTACT_REQUEST,
@@ -117,13 +115,6 @@ export default {
   [CONTACTS_SUCCESS]: (state, contacts) => {
     state.contacts = contacts
     state.loading = false
-  },
-  [CREATE_FOLDER_REQUEST]: (state, folderName) => {
-    state.loading = true
-  },
-  [CREATE_FOLDER_SUCCESS]: (state, user) => {
-    state.loading = false
-    state.user = user
   },
   [EDIT_CHECKLIST]: (state, checklist) => {
     if (checklist.masterChecklist) {

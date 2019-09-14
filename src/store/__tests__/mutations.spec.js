@@ -16,8 +16,6 @@ import {
   CONTACT_SUCCESS,
   CONTACTS_REQUEST,
   CONTACTS_SUCCESS,
-  CREATE_FOLDER_REQUEST,
-  CREATE_FOLDER_SUCCESS,
   EDIT_CHECKLIST,
   EDIT_CONTACT_COMPLETE,
   EDIT_CONTACT_REQUEST,
@@ -271,34 +269,6 @@ describe('mutations', () => {
 
     expect(state.contacts).toEqual(contacts)
     expect(state.loading).toBe(false)
-  })
-  test('CREATE_FOLDER_REQUEST, set loading', () => {
-    const state = {
-      loading: false
-    }
-    const folderName = 'TEST'
-    mutations[CREATE_FOLDER_REQUEST](state, folderName)
-
-    expect(state.loading).toBe(true)
-  })
-  test('CREATE_FOLDER_SUCCESS, clear loading, append foldername to appData', () => {
-    const state = {
-      loading: true,
-      user: {
-        folders: [ 'ONE', 'TWO' ]
-      }
-    }
-    const data = {
-      body: {
-        folders: [ 'ONE', 'TWO', 'TEST' ]
-      }
-    }
-    const folderName = 'TEST'
-    mutations[CREATE_FOLDER_SUCCESS](state, data.body)
-
-    expect(state.loading).toBe(false)
-    expect(state.user.folders.length).toBe(3)
-    expect(state.user.folders[2]).toBe(folderName)
   })
   test('EDIT_CHECKLIST, master? create new checklist with DateTime title : set currentChecklist', () => {
     let state = {
