@@ -14,7 +14,6 @@ import {
   postLocation,
   putUser,
   getAppData,
-  putAppData,
   postSetRelationship
 } from '../api/api'
 
@@ -33,9 +32,6 @@ import {
   CONTACT_SUCCESS,
   CONTACTS_REQUEST,
   CONTACTS_SUCCESS,
-  CREATE_CHECKLIST_FOLDER_ARRAY,
-  CREATE_CHECKLIST_FOLDER_REQUEST,
-  CREATE_CHECKLIST_FOLDER_SUCCESS,
   ITEMS_REQUEST,
   ITEMS_SUCCESS,
   LOCATIONS_REQUEST,
@@ -66,7 +62,6 @@ export default {
     return new Promise((resolve, reject) => {
       postChecklist(payload).then(function (data) {
         commit(ADD_CHECKLIST_SUCCESS, data.body)
-        commit(CREATE_CHECKLIST_FOLDER_ARRAY, state.checklists)
         resolve(data)
       }).catch(err => {
         reject(err)
@@ -95,23 +90,6 @@ export default {
       })
     })
   },
-
-  createChecklistFolder: ({ commit, state }, newFolderName) => {
-    commit(CREATE_CHECKLIST_FOLDER_REQUEST, newFolderName)
-    return new Promise((resolve, reject) => {
-      getAppData('checklistFolders').then(function (data) {
-        data.body.data.push(newFolderName)
-        putAppData(data.body).then(function (data) {
-          commit(CREATE_CHECKLIST_FOLDER_SUCCESS, newFolderName)
-          commit(CREATE_CHECKLIST_FOLDER_ARRAY, state.checklists)
-          resolve(data)
-        })
-      }).catch(err => {
-        reject(err)
-      })
-    })
-  },
-
   fetchAppData: ({ commit }, payload) => {
     commit(APP_DATA_REQUEST, payload)
     return new Promise((resolve, reject) => {
@@ -128,7 +106,6 @@ export default {
     return new Promise((resolve, reject) => {
       getChecklists(payload).then(function (data) {
         commit(CHECKLISTS_SUCCESS, data.body)
-        commit(CREATE_CHECKLIST_FOLDER_ARRAY, data.body)
         resolve(data)
       }).catch(err => {
         reject(err)
@@ -180,7 +157,7 @@ export default {
       })
     })
   },
-  fetchUser: ({ commit, dispatch }, payload) => {
+  fetchUser: ({ commit }, payload) => {
     commit(USER_REQUEST)
     return new Promise((resolve, reject) => {
       getUser(payload).then(user => {
@@ -219,13 +196,11 @@ export default {
       })
     })
   },
-
-  updateChecklist: ({ state, commit }, payload) => {
+  updateChecklist: ({ commit }, payload) => {
     commit(UPDATE_CHECKLIST_REQUEST, payload)
     return new Promise((resolve, reject) => {
       putChecklist(payload).then(function (data) {
         commit(UPDATE_CHECKLIST_SUCCESS, data.body)
-        commit(CREATE_CHECKLIST_FOLDER_ARRAY, state.checklists)
         resolve(data)
       }).catch(err => {
         reject(err)

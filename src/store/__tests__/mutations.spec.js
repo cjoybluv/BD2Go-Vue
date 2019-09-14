@@ -16,9 +16,6 @@ import {
   CONTACT_SUCCESS,
   CONTACTS_REQUEST,
   CONTACTS_SUCCESS,
-  CREATE_CHECKLIST_FOLDER_ARRAY,
-  CREATE_CHECKLIST_FOLDER_REQUEST,
-  CREATE_CHECKLIST_FOLDER_SUCCESS,
   EDIT_CHECKLIST,
   EDIT_CONTACT_COMPLETE,
   EDIT_CONTACT_REQUEST,
@@ -272,50 +269,6 @@ describe('mutations', () => {
 
     expect(state.contacts).toEqual(contacts)
     expect(state.loading).toBe(false)
-  })
-  test('CREATE_CHECKLIST_FOLDER_ARRAY, integrate folders & checklists, then sort', () => {
-    const state = {
-      appData: {
-        checklistFolders: [ 'ONE', 'TWO' ]
-      },
-      contentControls: {
-        checklistFolderArray: []
-      }
-    }
-    const checklists = [
-      { _id: 1, title: 'ZZ One-1', folderName: 'ONE' },
-      { _id: 2, title: 'Two-2', folderName: 'TWO' },
-      { _id: 3, title: '3' },
-      { _id: 4, title: 'One-4', folderName: 'ONE' }
-    ]
-    mutations[CREATE_CHECKLIST_FOLDER_ARRAY](state, checklists)
-
-    expect(state.contentControls.checklistFolderArray).toEqual(
-      [{'folder': true, 'items': [{'_id': 1, 'folderName': 'ONE', 'title': 'ZZ One-1'}, {'_id': 4, 'folderName': 'ONE', 'title': 'One-4'}], 'key': 0, 'title': 'ONE'}, {'folder': true, 'items': [{'_id': 2, 'folderName': 'TWO', 'title': 'Two-2'}], 'key': 1, 'title': 'TWO'}, {'_rec': {'_id': 3, 'title': '3'}, 'folder': false, 'key': 2, 'title': '3'}]
-    )
-  })
-  test('CREATE_CHECKLIST_FOLDER_REQUEST, set loading', () => {
-    const state = {
-      loading: false
-    }
-    const folderName = 'TEST'
-    mutations[CREATE_CHECKLIST_FOLDER_REQUEST](state, folderName)
-
-    expect(state.loading).toBe(true)
-  })
-  test('CREATE_CHECKLIST_FOLDER_SUCCESS, clear loading, append foldername to appData', () => {
-    const state = {
-      loading: true,
-      appData: {
-        checklistFolders: [ 'ONE', 'TWO' ]
-      }
-    }
-    const folderName = 'TEST'
-    mutations[CREATE_CHECKLIST_FOLDER_SUCCESS](state, folderName)
-
-    expect(state.loading).toBe(false)
-    expect(state.appData.checklistFolders.length).toBe(3)
-    expect(state.appData.checklistFolders[2]).toBe(folderName)
   })
   test('EDIT_CHECKLIST, master? create new checklist with DateTime title : set currentChecklist', () => {
     let state = {
